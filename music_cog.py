@@ -45,10 +45,18 @@ class MusicCog(commands.Cog):
         return self.song_queues[guild_id]
 
     async def extract_info(self, url):
-        """Lấy thông tin bài hát từ YouTube (bất đồng bộ)"""
+        """Lấy thông tin bài hát từ YouTube/SoundCloud (bất đồng bộ)"""
         loop = asyncio.get_event_loop()
-        data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=False))
-        
+        try:
+            data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=False))
+        except Exception as e:
+            logger.warning(f"Lỗi YouTube (Có thể do chặn IP): {e}. Chuyển sang tìm bằng SoundCloud...")
+            # Fallback sang SoundCloud nếu YouTube chặn IP (Lỗi 403)
+            fallback_opts = dict(YTDL_OPTIONS)
+            fallback_opts['default_search'] = 'scsearch'
+            fallback_ytdl = yt_dlp.YoutubeDL(fallback_opts)
+            data = await loop.run_in_executor(None, lambda: fallback_ytdl.extract_info(url, download=False))
+            
         if 'entries' in data:
             # Nếu là kết quả tìm kiếm, lấy kết quả đầu tiên
             data = data['entries'][0]
@@ -129,7 +137,8 @@ class MusicCog(commands.Cog):
                     await ctx.reply(f"✅ Tớ đã ghi nhớ yêu cầu: **{song_info['title']}** vào danh sách chờ rồi nhé!")
             except Exception as e:
                 logger.error(f"Lỗi khi tìm bài hát: {e}")
-                await ctx.reply("Tớ xin lỗi, có vẻ như bản nhạc này quá khó tìm hoặc đã bị phong ấn ở Inazuma... Cậu thử bài khác nhé! ❄️")
+                error_msg = str(e)[:200] # Lấy 200 ký tự lỗi đầu tiên
+                await ctx.reply(f"Tớ xin lỗi... Có vẻ bài hát này đã bị phong ấn. Lỗi hệ thống: `{error_msg}` ❄️")
 
     @commands.command(name="skip", aliases=["s"])
     async def skip(self, ctx):
