@@ -23,6 +23,9 @@ class SysCog(commands.Cog):
     async def daily_greeting(self):
         now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=7)))
         is_morning = now.hour == 6
+        await self._run_greeting(is_morning)
+
+    async def _run_greeting(self, is_morning):
         
         # 1. Sinh nội dung bằng AI
         from ai_brain import client
@@ -61,12 +64,13 @@ class SysCog(commands.Cog):
         await self.bot.wait_until_ready()
 
     @commands.command(name="testgreeting")
-    @commands.has_permissions(administrator=True)
     async def testgreeting(self, ctx):
         """Lệnh ẩn để test thử tính năng báo thức"""
-        await ctx.send("Đang kích hoạt chạy thử kịch bản báo thức/chúc ngủ ngon...")
-        await self.daily_greeting()
-        await ctx.send("Đã chạy xong hàm daily_greeting.")
+        await ctx.send("⏳ Đang kích hoạt chạy thử kịch bản báo thức/chúc ngủ ngon...")
+        now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=7)))
+        is_morning = now.hour == 6
+        await self._run_greeting(is_morning)
+        await ctx.send("✅ Đã chạy xong kịch bản.")
 
     @commands.command(name="sysinfo", aliases=["hardware", "status"])
     async def sysinfo(self, ctx):
