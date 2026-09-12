@@ -1,11 +1,65 @@
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 import psutil
 import platform
+import datetime
+from zoneinfo import ZoneInfo
+import logging
+import asyncio
+
+logger = logging.getLogger("SysCog")
 
 class SysCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.daily_greeting.start()
+        
+    def cog_unload(self):
+        self.daily_greeting.cancel()
+
+    @tasks.loop(time=[
+        datetime.time(hour=6, minute=0, tzinfo=ZoneInfo("Asia/Ho_Chi_Minh")),
+        datetime.time(hour=22, minute=0, tzinfo=ZoneInfo("Asia/Ho_Chi_Minh"))
+    ])
+    async def daily_greeting(self):
+        now = datetime.datetime.now(ZoneInfo("Asia/Ho_Chi_Minh"))
+        is_morning = now.hour == 6
+        
+        # 1. Sinh nội dung bằng AI
+        from ai_brain import client
+        import config
+        if not client:
+            logger.error("Gemini client chưa được khởi tạo. Bỏ qua daily_greeting.")
+            return
+            
+        try:
+            if is_morning:
+                prompt = "Bây giờ là 6 giờ sáng. Dưới góc độ nhân vật Kamisato Ayaka (Genshin Impact), hãy viết một lời chào buổi sáng ngắn gọn (khoảng 2-3 câu), thật dễ thương, lịch sự đến các 'Nhà Lữ Hành' trong hiệp hội Yashiro. Nhớ nhắc họ chú ý thời tiết hoặc giữ gìn sức khỏe cho ngày mới nhé!"
+            else:
+                prompt = "Bây giờ là 10 giờ tối. Dưới góc độ nhân vật Kamisato Ayaka (Genshin Impact), hãy viết một lời chúc ngủ ngon ngắn gọn (khoảng 2-3 câu), thật dễ thương và ân cần đến các 'Nhà Lữ Hành' trong hiệp hội Yashiro. Nhắc họ đi ngủ sớm để giữ sức khỏe."
+                
+            loop = asyncio.get_event_loop()
+            response = await loop.run_in_executor(
+                None, 
+                lambda: client.models.generate_content(model=config.GEMINI_MODEL_NAME, contents=prompt)
+            )
+            message_text = response.text
+        except Exception as e:
+            logger.error(f"Lỗi khi tạo tin nhắn báo thức: {e}")
+            message_text = "🌸 Chào buổi sáng mọi người! Chúc mọi người một ngày an lành." if is_morning else "❄️ Đã muộn rồi, mọi người nhớ nghỉ ngơi sớm nhé!"
+
+        # 2. Tìm kênh và gửi
+        for guild in self.bot.guilds:
+            target_channel = discord.utils.get(guild.text_channels, name="bản-tin-hiệp-hội-yashiro")
+            if target_channel:
+                try:
+                    await target_channel.send(message_text)
+                except Exception as e:
+                    logger.error(f"Không thể gửi tin nhắn cho server {guild.name}: {e}")
+
+    @daily_greeting.before_loop
+    async def before_daily_greeting(self):
+        await self.bot.wait_until_ready()
 
     @commands.command(name="sysinfo", aliases=["hardware", "status"])
     async def sysinfo(self, ctx):

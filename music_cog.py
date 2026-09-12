@@ -19,8 +19,9 @@ YTDL_OPTIONS = {
     'logtostderr': False,
     'quiet': True,
     'no_warnings': True,
-    'default_search': 'auto',
+    'default_search': 'ytsearch', # Thay auto bằng ytsearch để chính xác hơn
     'source_address': '0.0.0.0', # Để tránh các vấn đề IPv6
+    'extractor_args': {'youtube': {'player_client': ['android', 'web']}} # Chống lỗi 403 trên Cloud
 }
 
 # Cấu hình FFmpeg để truyền stream ổn định
@@ -76,8 +77,8 @@ class MusicCog(commands.Cog):
             
             vc = ctx.voice_client
             if vc and vc.is_connected():
-                # Tạo audio source
-                source = discord.FFmpegPCMAudio(url, executable="ffmpeg.exe", **FFMPEG_OPTIONS)
+                # Tạo audio source (sử dụng ffmpeg cho Linux trên Render)
+                source = discord.FFmpegPCMAudio(url, executable="ffmpeg", **FFMPEG_OPTIONS)
                 # Khi phát xong tự động gọi lại play_next
                 vc.play(source, after=lambda e: self.play_next(ctx))
                 
