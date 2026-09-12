@@ -61,6 +61,14 @@ class SysCog(commands.Cog):
     async def before_daily_greeting(self):
         await self.bot.wait_until_ready()
 
+    @commands.command(name="testgreeting")
+    @commands.has_permissions(administrator=True)
+    async def testgreeting(self, ctx):
+        """Lệnh ẩn để test thử tính năng báo thức"""
+        await ctx.send("Đang kích hoạt chạy thử kịch bản báo thức/chúc ngủ ngon...")
+        await self.daily_greeting()
+        await ctx.send("Đã chạy xong hàm daily_greeting.")
+
     @commands.command(name="sysinfo", aliases=["hardware", "status"])
     async def sysinfo(self, ctx):
         """Báo cáo trạng thái phần cứng của máy chủ Host"""
