@@ -3,7 +3,6 @@ from discord.ext import commands, tasks
 import psutil
 import platform
 import datetime
-from zoneinfo import ZoneInfo
 import logging
 import asyncio
 
@@ -18,11 +17,11 @@ class SysCog(commands.Cog):
         self.daily_greeting.cancel()
 
     @tasks.loop(time=[
-        datetime.time(hour=6, minute=0, tzinfo=ZoneInfo("Asia/Ho_Chi_Minh")),
-        datetime.time(hour=22, minute=0, tzinfo=ZoneInfo("Asia/Ho_Chi_Minh"))
+        datetime.time(hour=6, minute=0, tzinfo=datetime.timezone(datetime.timedelta(hours=7))),
+        datetime.time(hour=22, minute=0, tzinfo=datetime.timezone(datetime.timedelta(hours=7)))
     ])
     async def daily_greeting(self):
-        now = datetime.datetime.now(ZoneInfo("Asia/Ho_Chi_Minh"))
+        now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=7)))
         is_morning = now.hour == 6
         
         # 1. Sinh nội dung bằng AI
