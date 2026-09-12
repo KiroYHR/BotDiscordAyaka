@@ -1,0 +1,408 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+:root {
+    --primary-color: #8ACBEB; /* Cyan from Ayaka's dress */
+    --secondary-color: #ffb7c5; /* Sakura pink */
+    --bg-dark: #DEEFF7; /* Soft light blue */
+    --glass-bg: rgba(255, 255, 255, 0.65);
+    --glass-border: rgba(138, 203, 235, 0.4);
+    --text-primary: #2D3176; /* Dark navy text */
+    --text-secondary: #4A5568;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top right, #E3F6FD 0%, #ECF6FB 50%, #DEEFF7 100%);
+    z-index: -2;
+}
+
+/* Hiệu ứng làm trong suốt viền trắng của ảnh và hiển thị mẫu Ayaka */
+.ayaka-model {
+    position: fixed;
+    bottom: -5vh;
+    right: -2vw;
+    height: 105vh;
+    z-index: -1;
+    opacity: 0.9;
+    mix-blend-mode: multiply; /* Loại bỏ nền trắng */
+    pointer-events: none;
+    filter: contrast(1.1);
+    
+    /* Làm mờ mượt mà viền trái của ảnh để xóa vạch kẻ dọc */
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%);
+    mask-image: linear-gradient(to right, transparent 0%, black 15%);
+}
+
+/* Hiệu ứng tuyết rơi/Hạt sáng lấp lánh (Sparkles) được Render bằng JS */
+#particles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    top: -10%;
+    user-select: none;
+    cursor: default;
+    opacity: 0.8;
+}
+
+.particle.snow {
+    color: var(--primary-color);
+    text-shadow: 0 0 5px rgba(107, 214, 214, 0.5);
+    animation: fall linear infinite, sway ease-in-out infinite alternate;
+}
+
+.particle.sakura {
+    filter: drop-shadow(0 0 3px rgba(255, 183, 197, 0.6));
+    animation: fall linear infinite, sway-sakura ease-in-out infinite alternate;
+}
+
+@keyframes fall {
+    0% { top: -10%; }
+    100% { top: 110%; }
+}
+
+@keyframes sway {
+    0% { transform: translateX(0px) rotate(0deg); }
+    100% { transform: translateX(50px) rotate(360deg); }
+}
+
+@keyframes sway-sakura {
+    0% { transform: translateX(0px) rotate(0deg); }
+    100% { transform: translateX(-40px) rotate(180deg); }
+}
+
+.container {
+    width: 100%;
+    max-width: 1000px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Header mượt mà như Logitech G Hub */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2.5rem;
+    border-radius: 15px;
+    background: linear-gradient(to right, rgba(0, 229, 255, 0.1) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0.9) 100%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.15), inset 0 0 10px rgba(0, 229, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 40%; height: 100%;
+    background: linear-gradient(90deg, rgba(0,229,255,0.1), transparent);
+    z-index: 0;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    z-index: 1;
+}
+
+.avatar {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 0 15px rgba(140, 225, 230, 0.6);
+    background-color: var(--bg-dark);
+}
+
+.title-group h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    text-shadow: 0 0 5px rgba(138, 203, 235, 0.3);
+    letter-spacing: 1px;
+}
+
+/* Header Right flex container */
+.header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.2rem;
+    z-index: 1;
+}
+
+/* Signature text style */
+.signature {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    opacity: 0.8;
+    margin-right: 15px;
+    transform: rotate(-5deg);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    pointer-events: none;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.status-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(140, 225, 230, 0.1);
+    color: var(--primary-color);
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: 1px solid var(--glass-border);
+    z-index: 1;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--primary-color);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(140, 225, 230, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(140, 225, 230, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(140, 225, 230, 0); }
+}
+
+.glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.glass:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5), 0 0 20px rgba(140, 225, 230, 0.1);
+    border-color: rgba(140, 225, 230, 0.5);
+}
+
+.metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.icon {
+    font-size: 2.2rem;
+    color: var(--primary-color);
+    text-shadow: 0 0 10px rgba(140, 225, 230, 0.5);
+    background: transparent;
+}
+
+.card-info h3 {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 5px;
+}
+
+.value {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.modules {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+}
+
+.large-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem;
+}
+
+.large-card h2 {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+}
+
+.music-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.empty-state i {
+    font-size: 2.5rem;
+    opacity: 0.5;
+}
+
+.track-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    gap: 15px;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.track-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--glass-bg);
+    border: 1px solid var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(140,225,230,0.3);
+}
+
+.track-info h4 {
+    font-size: 1rem;
+    margin-bottom: 3px;
+    color: var(--text-primary);
+}
+
+.track-info p {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* Khu vực Tâm trạng (Mood Box) */
+.mood-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1rem;
+}
+.mood-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 15px;
+    object-fit: cover;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    border: 2px solid var(--primary-color);
+}
+.mood-text {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+}
+
+.system-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sys-row {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+}
+
+.sys-row span {
+    color: var(--text-secondary);
+}
+
+footer {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-top: 2rem;
+    opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+    .modules {
+        grid-template-columns: 1fr;
+    }
+    header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    .signature {
+        display: none;
+    }
+}

@@ -1,0 +1,13 @@
+.env
+.venv
+__pycache__
+backup_pre_voice/
+backup_phase_5/
+ayaka_data.db
+ffmpeg.exe
+.git
+.gitignore
+ROADMAP.md
+plan.md
+SUMMARY.md
+COMMANDS_LIST.md

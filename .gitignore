@@ -1,0 +1,15 @@
+# Virtual environment
+.venv/
+__pycache__/
+*.pyc
+
+# Environment secrets
+.env
+
+# Audio temporary files
+temp_audio/
+*.mp3
+*.wav
+*.webm
+ayaka_data.db
+ffmpeg.exe
