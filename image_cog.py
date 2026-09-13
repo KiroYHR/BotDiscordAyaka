@@ -3,7 +3,11 @@ from discord.ext import commands
 import io
 import asyncio
 from PIL import Image, ImageFilter
-from rembg import remove
+try:
+    from rembg import remove, new_session
+    HAS_REMBG = True
+except ImportError:
+    HAS_REMBG = False
 import logging
 
 logger = logging.getLogger("AyakaImage")
@@ -37,7 +41,12 @@ class ImageCog(commands.Cog):
         - human: Chuyên tách người (cosplay) - Mặc định
         - anime: Chuyên tách ảnh anime 2D
         - hq: Chất lượng cao nhất (rất chậm)
+        - hq: Chất lượng cao nhất (rất chậm)
         """
+        if not HAS_REMBG:
+            await ctx.reply("❌ Rất tiếc, tính năng xóa phông nền AI (Rembg) tạm thời bị vô hiệu hóa do bộ nhớ của máy chủ đám mây miễn phí quá nhỏ (chỉ 512MB RAM), không đủ không gian để nạp lõi AI này.")
+            return
+            
         image_bytes = await self.get_image_bytes(ctx)
         if not image_bytes:
             return
@@ -60,7 +69,6 @@ class ImageCog(commands.Cog):
         async with ctx.typing():
             try:
                 loop = asyncio.get_event_loop()
-                from rembg import new_session
                 
                 def process_rmbg():
                     session = new_session(session_name)

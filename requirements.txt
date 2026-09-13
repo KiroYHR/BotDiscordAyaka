@@ -13,4 +13,3 @@ tzdata
 psutil
 genshin
 Pillow
-rembg
