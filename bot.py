@@ -35,12 +35,12 @@ async def setup_hook():
         'rag_cog',
         'level_cog' # Load hệ thống level
     ]
-    try:
-        for extension in initial_extensions:
+    for extension in initial_extensions:
+        try:
             await bot.load_extension(extension)
             logger.info(f"Đã tải module {extension} thành công!")
-    except Exception as e:
-        logger.error(f"Lỗi khi tải module: {e}")
+        except Exception as e:
+            logger.error(f"Lỗi khi tải module {extension}: {e}")
 
 from web_dashboard import start_web_server
 

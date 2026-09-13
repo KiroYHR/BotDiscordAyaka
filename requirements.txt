@@ -10,3 +10,7 @@ SpeechRecognition>=3.10.0
 discord-ext-voice-recv
 syncedlyrics
 tzdata
+psutil
+genshin
+Pillow
+rembg
