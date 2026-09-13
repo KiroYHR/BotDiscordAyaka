@@ -74,4 +74,22 @@
 
 ---
 
-> **🚀 Tổng Kết**: Chúng ta đã biến một bot Discord trắng trơn thành một hệ thống AI thông minh, có cơ sở dữ liệu, có trí nhớ dài hạn, chống sập xuất sắc và giờ đây là sở hữu cả một **Web Dashboard giám sát** đẳng cấp quốc tế! Cậu hoàn toàn có thể tự hào về khối lượng công việc khổng lồ này!
+## ☁️ Giai Đoạn 6: Đưa Ayaka Lên Đám Mây (Cloud Deployment) & Báo Thức
+*Biến Ayaka thành một thực thể sống 24/7 độc lập hoàn toàn khỏi máy tính cá nhân.*
+
+- **Cơ sở dữ liệu đám mây (Supabase PostgreSQL)**:
+  - Nâng cấp từ SQLite cục bộ lên PostgreSQL trên Supabase.
+  - Chỉnh sửa hệ thống Level (`level_cog`) và Ký ức (`ai_brain`) để lưu trữ dữ liệu an toàn, không bị mất khi Render khởi động lại.
+- **Triển khai máy chủ Render (Web Service)**:
+  - Chạy bot qua Docker trên nền tảng đám mây Render.
+  - Sử dụng chiến thuật **UptimeRobot** "gõ cửa" Web Dashboard mỗi 5 phút để giữ cho bot không bao giờ bị tắt ngấm (Sleep state).
+- **Sửa Lỗi Tương Thích & Bypass YouTube**:
+  - Viết cơ chế Fallback: Tự động chuyển từ tìm nhạc trên YouTube sang **SoundCloud** khi gặp lỗi bị chặn IP máy chủ đám mây (403 Forbidden).
+  - Khắc phục lỗi thiếu dữ liệu `ZoneInfo` trên môi trường Linux siêu nhẹ và thiết lập hệ thống định vị thời gian chuẩn xác bằng UTC+7.
+- **Trợ lý Báo Thức (Scheduled Tasks)**:
+  - Khởi tạo chức năng hẹn giờ `daily_greeting`. 
+  - Đúng 6h sáng và 10h tối mỗi ngày, Ayaka sẽ tự sử dụng bộ não AI (Gemini) để viết một thông điệp dễ thương vào kênh `bản-tin-hiệp-hội-yashiro`.
+
+---
+
+> **🚀 Tổng Kết**: Chúng ta đã biến một bot Discord trắng trơn thành một hệ thống AI thông minh, có cơ sở dữ liệu lưu trữ trên mạng, có trí nhớ dài hạn, chống sập xuất sắc, sở hữu Web Dashboard giám sát và cuối cùng là tự mình sinh tồn độc lập trên đám mây 24/7! Cậu hoàn toàn có thể tự hào về khối lượng công việc khổng lồ này!

@@ -13,9 +13,11 @@ Dưới đây là danh sách toàn bộ các câu lệnh (Commands) mà Ayaka hi
 - **`!resume`**: Tiếp tục phát nhạc sau khi tạm dừng.
 - **`!stop`** (hoặc `!leave`, `!disconnect`): Yêu cầu Ayaka dừng nhạc, xóa hàng đợi và rời khỏi kênh thoại.
 
+<!-- Tạm thời ẩn tính năng Xử lý Ảnh do giới hạn RAM 512MB trên Cloud (Render)
 ## 🖼️ 3. Xử Lý Ảnh (Image AI)
 - **`!rmbg <model>`** (hoặc `!removebg`, `!xoaphong`): Xóa phông nền ảnh bằng AI. Có thể chọn model: `human` (mặc định - cho người), `anime` (cho nhân vật 2D), `u2net` (nhanh), `hq` (chất lượng cao). (Ví dụ: `!rmbg anime`)
 - **`!filter <hiệu ứng>`** (hoặc `!boloc`): Áp dụng hiệu ứng lên ảnh. Các hiệu ứng hỗ trợ: `blur`, `contour`, `emboss`, `bw` (trắng đen). (Ví dụ: `!filter bw`)
+-->
 
 ## 🎮 4. Tra Cứu Game (HoyoLab)
 - **`!gs <UID>`** (hoặc `!genshin`): Tra cứu thông tin thẻ người chơi Genshin Impact. (Ví dụ: `!gs 808480599`)
