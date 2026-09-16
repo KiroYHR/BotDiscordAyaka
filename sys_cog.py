@@ -32,11 +32,48 @@ class SysCog(commands.Cog):
             
             for schedule in schedules:
                 if schedule['time_str'] == current_time_str:
-                    # Kích hoạt chạy
-                    asyncio.create_task(self._process_single_schedule(schedule, current_time_str, current_date_str))
+                    # Kích hoạt chạy nhắc nhở tùy chỉnh
+                    asyncio.create_task(self._process_single_schedule(schedule))
+                    
+            # --- Báo thức Cố định 6h sáng (Ngày tháng & Thời tiết mặc định) ---
+            if current_time_str == "06:00":
+                asyncio.create_task(self._run_6am_greeting(current_date_str))
         except Exception as e:
             logger.error(f"Lỗi trong vòng lặp daily_greeting: {e}")
                 
+    async def _run_6am_greeting(self, date_str: str):
+        from ai_brain import client
+        if not client: return
+        
+        weather_info = await self.fetch_weather("Hanoi,VN") # Mặc định thời tiết Hà Nội
+        full_prompt = (
+            f"Hôm nay là ngày {date_str}, bây giờ là 06:00 sáng.\n"
+            f"Dưới góc độ nhân vật Kamisato Ayaka (Genshin Impact), hãy viết một lời chào buổi sáng thật dễ thương, "
+            f"kèm theo thông tin ngày tháng hiện tại để gửi đến các 'Nhà Lữ Hành' trong hiệp hội Yashiro.\n"
+            f"{weather_info}\n"
+            f"(Hãy khéo léo lồng ghép thời tiết nếu có. Giữ tin nhắn ngắn gọn tầm 3-4 câu)."
+        )
+        
+        try:
+            loop = asyncio.get_event_loop()
+            response = await loop.run_in_executor(
+                None, 
+                lambda: client.models.generate_content(model=config.GEMINI_MODEL_NAME, contents=full_prompt)
+            )
+            message_text = response.text
+        except Exception as e:
+            logger.error(f"Lỗi AI 6am greeting: {e}")
+            message_text = f"🌸 Chào buổi sáng mọi người! Hôm nay là ngày {date_str}, chúc các Nhà Lữ Hành một ngày mới an lành và tràn đầy năng lượng nhé!"
+            
+        # Tìm kênh bản-tin-hiệp-hội-yashiro ở tất cả các server
+        for guild in self.bot.guilds:
+            target_channel = discord.utils.get(guild.text_channels, name="bản-tin-hiệp-hội-yashiro")
+            if target_channel:
+                try:
+                    await target_channel.send(message_text)
+                except:
+                    pass
+
     async def fetch_weather(self, location: str) -> str:
         if not location or not config.WEATHER_API_KEY:
             return ""
@@ -56,7 +93,7 @@ class SysCog(commands.Cog):
             logger.error(f"Lỗi fetch weather: {e}")
             return ""
 
-    async def _process_single_schedule(self, schedule: dict, time_str: str, date_str: str):
+    async def _process_single_schedule(self, schedule: dict):
         from ai_brain import client
         if not client:
             return
@@ -65,21 +102,21 @@ class SysCog(commands.Cog):
         channel_id = schedule['channel_id']
         user_prompt = schedule['prompt']
         location = schedule.get('weather_location', '')
+        time_str = schedule['time_str']
         
         guild = self.bot.get_guild(int(guild_id))
         if not guild: return
         channel = guild.get_channel(int(channel_id))
         if not channel: return
         
-        weather_info = await self.fetch_weather(location)
+        weather_info = await self.fetch_weather(location) if location else ""
         
-        # Xây dựng prompt
+        # Xây dựng prompt dành riêng cho nhắc nhở
         full_prompt = (
-            f"Hôm nay là ngày {date_str}, bây giờ là {time_str}.\n"
-            f"Dưới góc độ nhân vật Kamisato Ayaka (Genshin Impact), hãy thực hiện yêu cầu sau của Nhà Lữ Hành một cách dễ thương và tự nhiên nhất:\n"
-            f"Yêu cầu: {user_prompt}\n"
+            f"Dưới góc độ nhân vật Kamisato Ayaka (Genshin Impact), hãy nhắc nhở Nhà Lữ Hành một cách dễ thương và tự nhiên nhất về việc sau:\n"
+            f"Lời nhắc: {user_prompt}\n"
             f"{weather_info}\n"
-            f"(Nếu có thông tin thời tiết, hãy khéo léo lồng ghép vào lời nói. Giữ tin nhắn ngắn gọn tầm 3-4 câu)."
+            f"(Nếu có thông tin thời tiết, hãy khéo léo lồng ghép vào. Giữ tin nhắn nhắc nhở ngắn gọn tầm 3-4 câu)."
         )
         
         try:
