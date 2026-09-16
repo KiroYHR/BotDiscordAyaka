@@ -109,7 +109,8 @@ async def ask_ayaka(channel_id: int, user_name: str, message_text: str) -> str:
     def send_sync():
         return chat.send_message(user_prompt)
 
-    max_retries = 3
+    max_retries = 5
+    base_delay = 2
     for attempt in range(max_retries):
         try:
             # Chạy đồng bộ trong ThreadPool để chống lỗi nghẽn mạng
@@ -124,16 +125,17 @@ async def ask_ayaka(channel_id: int, user_name: str, message_text: str) -> str:
             return reply
 
         except Exception as e:
-            error_msg = str(e)
-            if "503" in error_msg and "UNAVAILABLE" in error_msg:
+            error_msg = str(e).lower()
+            if "503" in error_msg or "unavailable" in error_msg or "429" in error_msg or "quota" in error_msg or "rate limit" in error_msg:
                 if attempt < max_retries - 1:
-                    logger.warning(f"Gặp lỗi 503, đang thử lại lần {attempt + 1}/{max_retries}...")
-                    await asyncio.sleep(2) # Đợi 2 giây rồi thử lại
+                    delay = base_delay * (2 ** attempt)
+                    logger.warning(f"Gặp lỗi máy chủ/quá tải (503/429), đang thử lại lần {attempt + 1}/{max_retries} sau {delay}s...")
+                    await asyncio.sleep(delay)
                     continue
                 else:
-                    logger.error(f"Lỗi 503 liên tục sau {max_retries} lần thử.")
+                    logger.error(f"Lỗi 503/429 liên tục sau {max_retries} lần thử.")
                     await clear_history(channel_id)
-                    return "❌ Băng thông kết nối tới máy chủ Google hiện đang quá tải (Lỗi 503). Ayaka đã cố gắng kết nối lại 3 lần nhưng không thành công. Cậu đợi một lúc rồi chat lại nhé! 🌸"
+                    return "❌ Băng thông kết nối tới máy chủ Google hiện đang quá tải nghiêm trọng. Ayaka đã cố gắng ròng rã suốt nhiều giây nhưng vẫn không thành công. Cậu thông cảm đợi một lát rồi gọi lại tớ nhé! 🌸"
             
             # Nếu là lỗi khác, hoặc không phải 503 thì báo lỗi luôn
             logger.error(f"Lỗi khi giao tiếp với Gemini AI: {e}", exc_info=True)
