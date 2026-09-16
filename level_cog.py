@@ -29,8 +29,8 @@ class LevelCog(commands.Cog):
             
         self.cooldowns[user_id] = now
         
-        # Nhận ngẫu nhiên 10 - 20 EXP mỗi phút
-        exp_to_add = random.randint(10, 20)
+        # Nhận cố định 5 EXP mỗi tin nhắn (Cooldown 1 phút)
+        exp_to_add = 5
         
         try:
             result = await db_manager.add_exp(user_id, exp_to_add)
@@ -44,6 +44,22 @@ class LevelCog(commands.Cog):
                 await message.channel.send(embed=embed)
         except Exception as e:
             logger.error(f"Lỗi khi cộng EXP: {e}")
+
+    @commands.command(name="reset_exp_all")
+    @commands.has_permissions(administrator=True)
+    async def reset_exp_all(self, ctx):
+        """(Admin) Xóa toàn bộ điểm EXP của tất cả mọi người."""
+        if not db_manager.pool:
+            await ctx.reply("❌ Không thể kết nối đến cơ sở dữ liệu.")
+            return
+            
+        try:
+            async with db_manager.pool.acquire() as db:
+                await db.execute('DELETE FROM users')
+            await ctx.reply("✅ Đã reset toàn bộ điểm EXP của tất cả Nhà Lữ Hành về 0!")
+        except Exception as e:
+            logger.error(f"Lỗi khi reset EXP: {e}")
+            await ctx.reply("❌ Đã xảy ra lỗi khi reset EXP.")
 
     @commands.command(name="rank", aliases=["level", "capdo"])
     async def check_rank(self, ctx, member: discord.Member = None):
