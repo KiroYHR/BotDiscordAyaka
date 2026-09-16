@@ -233,7 +233,7 @@ class HelpSelect(discord.ui.Select):
             embed.description = (
                 "• Tương tác (nhắn tin) trong server sẽ giúp cậu nhận được EXP.\n"
                 "• `!rank`, `!level` hoặc `!capdo`: Xem Thẻ Cấp Độ của cậu hoặc người khác.\n"
-                "• **Bảng Xếp Hạng:** Xem danh sách Top server tại `http://localhost:928/leaderboard`"
+                "• **Bảng Xếp Hạng:** Xem danh sách Top server tại [ayaka-bot-0ywq.onrender.com/leaderboard](https://ayaka-bot-0ywq.onrender.com/leaderboard)"
             )
         elif self.values[0] == "sys":
             embed.title = "⚙️ Lệnh Hệ Thống"
