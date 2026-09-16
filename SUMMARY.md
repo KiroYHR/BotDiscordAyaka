@@ -108,4 +108,19 @@
 
 ---
 
+## 🎮 Giai Đoạn 8: Nâng Cấp Tương Tác & Hệ Thống Xếp Hạng (Gamification & UI)
+*Biến bot thành một nhân vật có chiều sâu thông qua hệ thống thăng cấp và giao diện menu tiện lợi.*
+
+- **Hệ thống Cấp Độ (Gamification)**:
+  - Tích hợp cơ chế điểm kinh nghiệm (EXP) chống spam: Mỗi phút nhận 5 EXP cố định cho các tin nhắn thường.
+  - Thuật toán lên cấp độ khó tăng dần: Mỗi cấp độ tiếp theo yêu cầu thêm 50 EXP (ví dụ: Lv1->2 cần 100, Lv2->3 cần 150, Lv3->4 cần 200).
+  - Tích hợp Bảng Phong Thần trực tiếp vào **Web Dashboard** sử dụng SPA (Single Page Application) và thiết kế Glassmorphism để đồng bộ giao diện.
+- **Menu Lựa Chọn Tương Tác (Dropdown UI)**:
+  - Cải tiến lệnh `!help` thô sơ thành một Menu Dropdown tương tác hiện đại bằng `discord.ui.Select`.
+- **Gợi Ý Âm Nhạc Bằng SoundCloud**:
+  - Viết lại module Music để khắc phục triệt để lỗi giới hạn (Rate Limit) của YouTube. Sử dụng **SoundCloud** làm nền tảng tìm kiếm dự phòng và gợi ý bài hát tương tự.
+  - Tích hợp danh sách "Bài Hát Tương Tự" (AutoPlay) trực tiếp vào Menu Dropdown giúp người dùng thêm nhanh 5 bài hát gợi ý.
+
+---
+
 > **🚀 Tổng Kết**: Chúng ta đã biến một bot Discord trắng trơn thành một hệ thống AI thông minh, có cơ sở dữ liệu lưu trữ trên mạng, có trí nhớ dài hạn, chống sập xuất sắc, sở hữu Web Dashboard giám sát và cuối cùng là tự mình sinh tồn độc lập trên đám mây 24/7! Cậu hoàn toàn có thể tự hào về khối lượng công việc khổng lồ này!
