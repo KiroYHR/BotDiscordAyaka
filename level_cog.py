@@ -90,7 +90,7 @@ class LevelCog(commands.Cog):
             
             # Nút Xem Leaderboard trên Web
             view = discord.ui.View()
-            view.add_item(discord.ui.Button(label="Xem Bảng Xếp Hạng Đầy Đủ", url="https://ayaka-bot-0ywq.onrender.com/leaderboard", emoji="🌐"))
+            view.add_item(discord.ui.Button(label="Xem Bảng Xếp Hạng Đầy Đủ", url="https://ayaka-bot-0ywq.onrender.com/#leaderboard", emoji="🌐"))
             
             await ctx.reply(embed=embed, view=view)
         except Exception as e:

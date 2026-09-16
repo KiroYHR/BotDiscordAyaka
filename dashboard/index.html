@@ -35,6 +35,9 @@
                 <button class="nav-btn" onclick="switchTab('schedule')" id="btn-tab-schedule">
                     <i class="fa-solid fa-clock"></i> Lịch Trình
                 </button>
+                <button class="nav-btn" onclick="switchTab('leaderboard')" id="btn-tab-leaderboard">
+                    <i class="fa-solid fa-trophy"></i> Bảng Xếp Hạng
+                </button>
                 <button class="nav-btn" onclick="switchTab('system')" id="btn-tab-system">
                     <i class="fa-solid fa-microchip"></i> Hệ Thống
                 </button>
@@ -142,7 +145,30 @@
                 </section>
             </div>
 
-            <!-- Tab 3: Hệ Thống (System) -->
+            <!-- Tab 3: Bảng Xếp Hạng (Leaderboard) -->
+            <div id="tab-leaderboard" class="tab-pane">
+                <header class="tab-header">
+                    <h2><i class="fa-solid fa-trophy"></i> Bảng Phong Thần</h2>
+                </header>
+                <section class="modules">
+                    <div class="card full-width glass">
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <p>Tôn vinh những Nhà Lữ Hành chăm chỉ tương tác nhất cùng Ayaka 🌸</p>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="lb-table" style="width: 100%; border-collapse: separate; border-spacing: 0 10px;">
+                                <tbody id="lb-body">
+                                    <tr>
+                                        <td colspan="4" style="text-align: center; padding: 2rem;">Đang tải dữ liệu...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Tab 4: Hệ Thống (System) -->
             <div id="tab-system" class="tab-pane">
                 <header class="tab-header">
                     <h2><i class="fa-solid fa-microchip"></i> Thông Tin Hệ Thống Bot</h2>

@@ -155,8 +155,7 @@ class WebDashboard:
             return web.Response(text=f.read(), content_type='text/html')
             
     async def serve_leaderboard(self, request):
-        with open('dashboard/leaderboard.html', 'r', encoding='utf-8') as f:
-            return web.Response(text=f.read(), content_type='text/html')
+        raise web.HTTPFound('/')
 
     async def serve_css(self, request):
         with open('dashboard/style.css', 'r', encoding='utf-8') as f:

@@ -518,3 +518,73 @@ body {
     .nav-btn { flex: 1; justify-content: center; padding: 10px; font-size: 0.9rem; }
     .schedule-container { grid-template-columns: 1fr; }
 }
+
+/* --- Leaderboard Styles --- */
+.lb-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+.lb-row {
+    background: rgba(240, 248, 255, 0.5);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.dark-mode .lb-row {
+    background: rgba(50, 50, 60, 0.5);
+}
+.lb-row:hover {
+    transform: scale(1.01);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+.lb-cell {
+    padding: 1rem;
+    vertical-align: middle;
+}
+.lb-row td:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-align: center;
+    width: 80px;
+}
+.lb-row td:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    text-align: right;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+.rank-1 td:first-child { color: gold; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); font-size: 2rem;}
+.rank-2 td:first-child { color: silver; text-shadow: 0 0 10px rgba(192, 192, 192, 0.5); font-size: 1.8rem;}
+.rank-3 td:first-child { color: #cd7f32; text-shadow: 0 0 10px rgba(205, 127, 50, 0.5); font-size: 1.6rem;}
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 0 10px rgba(138, 203, 235, 0.5);
+}
+.user-name {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+.user-tag {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+.level-badge {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}

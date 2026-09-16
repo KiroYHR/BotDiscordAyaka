@@ -347,3 +347,65 @@ window.switchTab = function(tabId) {
     // Hiện tab tương ứng
     document.getElementById('tab-' + tabId).classList.add('active');
 };
+
+// --- Logic Bảng Xếp Hạng (Leaderboard) ---
+window.fetchLeaderboard = async function() {
+    try {
+        const response = await fetch('/api/leaderboard');
+        const users = await response.json();
+        const tbody = document.getElementById('lb-body');
+        if (!tbody) return;
+        
+        if (users.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">Chưa có ai trong danh sách!</td></tr>';
+            return;
+        }
+
+        let html = '';
+        users.forEach(user => {
+            let rankClass = '';
+            if (user.rank === 1) rankClass = 'rank-1';
+            else if (user.rank === 2) rankClass = 'rank-2';
+            else if (user.rank === 3) rankClass = 'rank-3';
+
+            html += `
+                <tr class="lb-row ${rankClass}">
+                    <td class="lb-cell">#${user.rank}</td>
+                    <td class="lb-cell">
+                        <div class="user-info">
+                            <img src="${user.avatar}" alt="Avatar" class="user-avatar">
+                            <div>
+                                <div class="user-name">${user.display_name}</div>
+                                <div class="user-tag">@${user.username}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="lb-cell">
+                        <span class="level-badge">Lv. ${user.level}</span>
+                    </td>
+                    <td class="lb-cell">
+                        ✨ ${user.exp.toLocaleString()} EXP
+                    </td>
+                </tr>
+            `;
+        });
+        tbody.innerHTML = html;
+    } catch (error) {
+        console.error("Lỗi:", error);
+        const tbody = document.getElementById('lb-body');
+        if(tbody) tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: red;">Lỗi tải dữ liệu!</td></tr>';
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    window.fetchLeaderboard();
+    setInterval(window.fetchLeaderboard, 60000);
+    
+    // Kiểm tra URL Hash để mở đúng tab
+    if (window.location.hash) {
+        const hash = window.location.hash.substring(1); // Xóa dấu #
+        if (['dashboard', 'schedule', 'leaderboard', 'system'].includes(hash)) {
+            window.switchTab(hash);
+        }
+    }
+});
