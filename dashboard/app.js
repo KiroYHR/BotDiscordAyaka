@@ -160,6 +160,51 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateMood, 10000);
 });
 
+// --- Logic Custom Modal ---
+window.showModal = function(title, message, isConfirm = false, onConfirm = null) {
+    const modal = document.getElementById('custom-modal');
+    const titleEl = document.getElementById('modal-title');
+    const msgEl = document.getElementById('modal-message');
+    const btnOk = document.getElementById('modal-btn-ok');
+    const btnCancel = document.getElementById('modal-btn-cancel');
+    const iconEl = document.getElementById('modal-icon');
+    
+    titleEl.textContent = title;
+    msgEl.textContent = message;
+    
+    // Đổi icon tùy loại
+    if (isConfirm) {
+        iconEl.innerHTML = '<i class="fa-solid fa-circle-question"></i>';
+        iconEl.className = 'modal-icon warning';
+        btnCancel.style.display = 'block';
+    } else if (title.toLowerCase().includes('lỗi')) {
+        iconEl.innerHTML = '<i class="fa-solid fa-circle-xmark"></i>';
+        iconEl.className = 'modal-icon warning';
+        btnCancel.style.display = 'none';
+    } else {
+        iconEl.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+        iconEl.className = 'modal-icon';
+        btnCancel.style.display = 'none';
+    }
+    
+    modal.classList.add('active');
+    
+    // Xóa sự kiện cũ
+    const newBtnOk = btnOk.cloneNode(true);
+    const newBtnCancel = btnCancel.cloneNode(true);
+    btnOk.parentNode.replaceChild(newBtnOk, btnOk);
+    btnCancel.parentNode.replaceChild(newBtnCancel, btnCancel);
+    
+    newBtnOk.onclick = () => {
+        modal.classList.remove('active');
+        if (onConfirm) onConfirm();
+    };
+    
+    newBtnCancel.onclick = () => {
+        modal.classList.remove('active');
+    };
+};
+
 // --- Logic Quản lý Lịch Trình (Schedules) ---
 let channelsData = [];
 
@@ -206,7 +251,7 @@ window.saveSchedule = async function() {
     const prompt = document.getElementById('prompt-input').value;
     
     if (!guild_id || !channel_id || !time_str || !prompt) {
-        alert('Vui lòng điền đầy đủ các trường bắt buộc!');
+        window.showModal('Thông Báo', 'Vui lòng điền đầy đủ các trường bắt buộc!');
         return;
     }
     
@@ -222,17 +267,17 @@ window.saveSchedule = async function() {
         });
         const data = await res.json();
         if (data.success) {
-            alert('Đã lưu lịch trình thành công!');
+            window.showModal('Thành Công', 'Đã lưu lịch trình thành công!');
             // Reset form
             document.getElementById('time-input').value = '';
             document.getElementById('weather-input').value = '';
             document.getElementById('prompt-input').value = '';
             window.loadSchedules();
         } else {
-            alert('Lỗi: ' + data.error);
+            window.showModal('Lỗi', data.error);
         }
     } catch (e) {
-        alert('Lỗi kết nối: ' + e);
+        window.showModal('Lỗi', 'Lỗi kết nối: ' + e);
     }
     btn.textContent = 'Lưu Lịch Trình';
     btn.disabled = false;
@@ -269,20 +314,20 @@ window.loadSchedules = async function() {
     }
 };
 
-window.deleteSchedule = async function(id) {
-    if (!confirm('Bạn có chắc muốn xóa lịch trình này?')) return;
-    
-    try {
-        const res = await fetch('/api/schedules?id=' + id, { method: 'DELETE' });
-        const data = await res.json();
-        if (data.success) {
-            window.loadSchedules();
-        } else {
-            alert('Lỗi khi xóa: ' + data.error);
+window.deleteSchedule = function(id) {
+    window.showModal('Xác Nhận', 'Bạn có chắc muốn xóa lịch trình này?', true, async () => {
+        try {
+            const res = await fetch('/api/schedules?id=' + id, { method: 'DELETE' });
+            const data = await res.json();
+            if (data.success) {
+                window.loadSchedules();
+            } else {
+                window.showModal('Lỗi', 'Lỗi khi xóa: ' + data.error);
+            }
+        } catch (e) {
+            window.showModal('Lỗi', 'Lỗi kết nối: ' + e);
         }
-    } catch (e) {
-        alert('Lỗi kết nối: ' + e);
-    }
+    });
 };
 
 document.addEventListener('DOMContentLoaded', () => {

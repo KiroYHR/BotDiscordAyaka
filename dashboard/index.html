@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kamisato Ayaka - Bảng Điều Khiển</title>
-    <link rel="stylesheet" href="style.css?v=4">
+    <link rel="stylesheet" href="style.css?v=5">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -179,6 +179,21 @@
         </main>
     </div>
 
-    <script src="app.js?v=4"></script>
+    <!-- Custom Modal cho Thông Báo và Xác Nhận -->
+    <div id="custom-modal" class="modal-overlay">
+        <div class="modal-content glass">
+            <div class="modal-icon" id="modal-icon">
+                <i class="fa-solid fa-bell"></i>
+            </div>
+            <h3 id="modal-title">Thông báo</h3>
+            <p id="modal-message">Nội dung thông báo...</p>
+            <div class="modal-actions" id="modal-actions">
+                <button id="modal-btn-ok" class="btn-primary">Đồng Ý</button>
+                <button id="modal-btn-cancel" class="btn-secondary" style="display: none;">Hủy</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js?v=5"></script>
 </body>
 </html>
