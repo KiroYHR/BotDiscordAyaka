@@ -76,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
         "Muốn gặp nhà lữ hành 🗡️",
         "Hơi xấu hổ một chút 😳",
         "Nhớ nhà 🎐",
-
     ];
 
     function updateMood() {
@@ -291,17 +290,15 @@ document.addEventListener('DOMContentLoaded', () => {
     window.loadSchedules();
 });
 
-
-// --- Logic Chuy?n Tab (Navigation) ---
+// --- Logic Chuyển Tab (Navigation) ---
 window.switchTab = function(tabId) {
-    // X�a active kh?i t?t c? c�c n�t
+    // Xóa active khỏi tất cả các nút
     document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-    // ?n t?t c? c�c tab
+    // Ẩn tất cả các tab
     document.querySelectorAll('.tab-pane').forEach(tab => tab.classList.remove('active'));
     
-    // Th�m active cho n�t du?c b?m
+    // Thêm active cho nút được bấm
     document.getElementById('btn-tab-' + tabId).classList.add('active');
-    // Hi?n tab tuong ?ng
+    // Hiện tab tương ứng
     document.getElementById('tab-' + tabId).classList.add('active');
 };
-
