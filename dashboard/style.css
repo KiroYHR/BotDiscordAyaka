@@ -423,3 +423,123 @@ footer {
 .btn-delete:hover { background: #cc0000; }
 @media (max-width: 768px) { .schedule-container { grid-template-columns: 1fr; } }
 
+/* --- Layout Chính --- */
+.app-layout {
+    display: flex;
+    width: 100%;
+    max-width: 1300px;
+    height: 92vh;
+    margin-top: 4vh;
+    gap: 25px;
+    padding: 0 20px;
+    z-index: 1;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1.5rem;
+    gap: 2rem;
+    border-radius: 20px;
+    flex-shrink: 0;
+}
+
+.sidebar-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 5px;
+}
+.sidebar-header h3 {
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-top: 10px;
+}
+.sidebar-header .subtitle {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+.avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary-color);
+    box-shadow: 0 0 20px rgba(140, 225, 230, 0.6);
+    background-color: var(--bg-dark);
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+}
+.nav-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    text-align: left;
+    padding: 15px 20px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.nav-btn i { font-size: 1.2rem; width: 20px; text-align: center; }
+.nav-btn:hover {
+    background: rgba(138, 203, 235, 0.15);
+    color: var(--primary-color);
+    transform: translateX(5px);
+}
+.nav-btn.active {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    box-shadow: 0 4px 15px rgba(138, 203, 235, 0.4);
+}
+.nav-btn.active:hover { transform: none; color: white; }
+
+.sidebar-footer { text-align: center; color: var(--text-secondary); font-size: 0.85rem; line-height: 1.5; opacity: 0.7;}
+
+/* --- Main Content & Tabs --- */
+.main-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 10px; /* offset scrollbar */
+}
+/* Tu? ch?nh Scrollbar */
+.main-content::-webkit-scrollbar { width: 6px; }
+.main-content::-webkit-scrollbar-thumb { background: rgba(138,203,235,0.5); border-radius: 10px; }
+.main-content::-webkit-scrollbar-track { background: transparent; }
+
+.tab-pane {
+    display: none;
+    animation: fadeIn 0.4s ease forwards;
+}
+.tab-pane.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.tab-header { margin-bottom: 25px; padding-bottom: 10px; border-bottom: 2px solid rgba(138,203,235,0.2); }
+.tab-header h2 { font-size: 1.8rem; color: var(--text-primary); }
+
+/* Make modules stack vertically if needed */
+.modules { display: flex; flex-direction: column; gap: 1.5rem; }
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .app-layout { flex-direction: column; height: auto; }
+    .sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; justify-content: space-between; padding: 1rem; }
+    .sidebar-header { flex-direction: row; text-align: left; }
+    .sidebar-header .avatar { width: 60px; height: 60px; }
+    .sidebar-nav { flex-direction: row; width: 100%; overflow-x: auto; }
+    .nav-btn { flex: 1; justify-content: center; padding: 10px; font-size: 0.9rem; }
+}

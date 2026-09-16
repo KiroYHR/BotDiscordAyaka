@@ -290,3 +290,18 @@ document.addEventListener('DOMContentLoaded', () => {
     window.loadChannels();
     window.loadSchedules();
 });
+
+
+// --- Logic Chuy?n Tab (Navigation) ---
+window.switchTab = function(tabId) {
+    // Xóa active kh?i t?t c? các nút
+    document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+    // ?n t?t c? các tab
+    document.querySelectorAll('.tab-pane').forEach(tab => tab.classList.remove('active'));
+    
+    // Thêm active cho nút du?c b?m
+    document.getElementById('btn-tab-' + tabId).classList.add('active');
+    // Hi?n tab tuong ?ng
+    document.getElementById('tab-' + tabId).classList.add('active');
+};
+

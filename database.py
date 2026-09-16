@@ -137,19 +137,19 @@ class AyakaDatabase:
             return {"exp": 0, "level": 1}
 
     # --- Các hàm cho Lịch Trình (Scheduled Tasks) ---
-    async def add_schedule(self, guild_id: str, channel_id: str, time_str: str, prompt: str, weather_location: str = None) -> bool:
+    async def add_schedule(self, guild_id: str, channel_id: str, time_str: str, prompt: str, weather_location: str = None) -> tuple[bool, str]:
         """Thêm một lịch trình mới vào DB."""
-        if not self.pool: return False
+        if not self.pool: return False, "Database không được khởi tạo (pool is None)."
         try:
             async with self.pool.acquire() as db:
                 await db.execute('''
                     INSERT INTO scheduled_tasks (guild_id, channel_id, time_str, prompt, weather_location)
                     VALUES ($1, $2, $3, $4, $5)
                 ''', str(guild_id), str(channel_id), time_str, prompt, weather_location)
-            return True
+            return True, "Thành công"
         except Exception as e:
             logger.error(f"Lỗi khi thêm lịch trình: {e}")
-            return False
+            return False, str(e)
 
     async def get_schedules(self, guild_id: str = None) -> list:
         """Lấy danh sách lịch trình. Nếu truyền guild_id thì lấy theo server."""

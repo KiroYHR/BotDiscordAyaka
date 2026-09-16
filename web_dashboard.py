@@ -100,8 +100,11 @@ class WebDashboard:
                 return web.json_response({"success": False, "error": "Thiếu dữ liệu"})
 
             from database import db_manager
-            success = await db_manager.add_schedule(guild_id, channel_id, time_str, prompt, weather_location)
-            return web.json_response({"success": success})
+            success, err_msg = await db_manager.add_schedule(guild_id, channel_id, time_str, prompt, weather_location)
+            if success:
+                return web.json_response({"success": True})
+            else:
+                return web.json_response({"success": False, "error": err_msg})
         except Exception as e:
             logger.error(f"Lỗi POST /api/schedules: {e}")
             return web.json_response({"success": False, "error": str(e)})

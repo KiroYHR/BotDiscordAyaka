@@ -16,132 +16,163 @@
         <img src="/assets/emojis/ayaka_model.png" class="ayaka-model" alt="Ayaka Model">
     </div>
 
-    <div class="container">
-        <header>
-            <div class="header-content">
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar glass">
+            <div class="sidebar-header">
                 <img src="/assets/emojis/default_avatar.png" alt="Ayaka Avatar" class="avatar" id="ayaka-avatar">
-                <div class="title-group">
-                    <h1>Kamisato Ayaka</h1>
-                    <p class="subtitle">Tiểu Thư Nhà Kamisato - Hiệp Hội Yashiro</p>
+                <h3>Kamisato Ayaka</h3>
+                <p class="subtitle">Hiệp Hội Yashiro</p>
+                <div class="status-badge online" style="margin-top: 10px;">
+                    <span class="dot"></span> Đang Thức Giấc
                 </div>
             </div>
             
-            <div class="header-right">
-                <div class="status-badge online">
-                    <span class="dot"></span> Đang Thức Giấc
-                </div>
-                <div class="signature">Ayaka</div>
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" onclick="switchTab('dashboard')" id="btn-tab-dashboard">
+                    <i class="fa-solid fa-house"></i> Tổng Quan
+                </button>
+                <button class="nav-btn" onclick="switchTab('schedule')" id="btn-tab-schedule">
+                    <i class="fa-solid fa-clock"></i> Lịch Trình
+                </button>
+                <button class="nav-btn" onclick="switchTab('system')" id="btn-tab-system">
+                    <i class="fa-solid fa-microchip"></i> Hệ Thống
+                </button>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <p>Thiết kế bởi<br>🌸 Nhà Lữ Hành ❄️</p>
             </div>
-        </header>
+        </aside>
 
-        <main>
-            <section class="metrics">
-                <div class="card glass">
-                    <i class="fa-solid fa-server icon"></i>
-                    <div class="card-info">
-                        <h3>Máy Chủ</h3>
-                        <p id="guild-count" class="value">--</p>
-                    </div>
-                </div>
-                
-                <div class="card glass">
-                    <i class="fa-solid fa-users icon"></i>
-                    <div class="card-info">
-                        <h3>Nhà Lữ Hành</h3>
-                        <p id="user-count" class="value">--</p>
-                    </div>
-                </div>
-
-                <div class="card glass">
-                    <i class="fa-solid fa-bolt icon"></i>
-                    <div class="card-info">
-                        <h3>Độ Trễ</h3>
-                        <p id="ping-value" class="value">-- ms</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="modules">
-                <div class="card large-card glass">
-                    <h2><i class="fa-solid fa-music"></i> Âm Nhạc Đang Phát</h2>
-                    <div id="music-container" class="music-list">
-                        <div class="empty-state">
-                            <i class="fa-solid fa-compact-disc fa-spin"></i>
-                            <p>Không có âm điệu nào đang được gảy...</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card large-card glass">
-                    <h2><i class="fa-solid fa-microchip"></i> Hệ Thống</h2>
-                    <div class="system-info">
-                        <div class="sys-row">
-                            <span>Tên Bot:</span>
-                            <strong id="bot-name">Đang tải...</strong>
-                        </div>
-                        <div class="sys-row">
-                            <span>Mô Hình AI:</span>
-                            <strong>Gemini 3.8 Flash</strong>
-                        </div>
-                        <div class="sys-row">
-                            <span>Trí Nhớ:</span>
-                            <strong>PostgreSQL Đã Kết Nối</strong>
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Tab 1: Tổng Quan (Dashboard) -->
+            <div id="tab-dashboard" class="tab-pane active">
+                <header class="tab-header">
+                    <h2><i class="fa-solid fa-house"></i> Tổng Quan Hoạt Động</h2>
+                </header>
+                <section class="metrics">
+                    <div class="card glass">
+                        <i class="fa-solid fa-server icon"></i>
+                        <div class="card-info">
+                            <h3>Máy Chủ</h3>
+                            <p id="guild-count" class="value">--</p>
                         </div>
                     </div>
                     
-                    <div class="mood-box">
-                        <img src="/assets/emojis/AyakaEmoji.jpg" id="mood-avatar" class="mood-img">
-                        <p class="mood-text" id="mood-text">Tâm trạng: Vui vẻ 🌸</p>
-                    </div>
-                </div>
-            </section>
-            </section>
-
-            <section class="modules">
-                <div class="card full-width glass">
-                    <h2><i class="fa-solid fa-clock"></i> Lịch Trình Ayaka (Báo Thức & Thời Tiết)</h2>
-                    <div class="schedule-container">
-                        <div class="schedule-form">
-                            <h3><i class="fa-solid fa-plus"></i> Thêm Lịch Mới</h3>
-                            <div class="form-group">
-                                <label>Máy Chủ:</label>
-                                <select id="guild-select" onchange="loadChannels()"><option value="">-- Chọn Máy Chủ --</option></select>
-                            </div>
-                            <div class="form-group">
-                                <label>Kênh Thông Báo:</label>
-                                <select id="channel-select"><option value="">-- Chọn Kênh --</option></select>
-                            </div>
-                            <div class="form-group">
-                                <label>Giờ Kích Hoạt (UTC+7):</label>
-                                <input type="time" id="time-input" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Báo Thời Tiết Tại (Tùy chọn):</label>
-                                <input type="text" id="weather-input" placeholder="Vd: Hanoi,VN">
-                            </div>
-                            <div class="form-group">
-                                <label>Chỉ Đạo Nhắc Nhở (Prompt AI):</label>
-                                <textarea id="prompt-input" rows="3" placeholder="Vd: Viết lời chúc buổi sáng thật dễ thương..."></textarea>
-                            </div>
-                            <button id="btn-save-schedule" class="btn-primary" onclick="saveSchedule()">Lưu Lịch Trình</button>
+                    <div class="card glass">
+                        <i class="fa-solid fa-users icon"></i>
+                        <div class="card-info">
+                            <h3>Nhà Lữ Hành</h3>
+                            <p id="user-count" class="value">--</p>
                         </div>
-                        <div class="schedule-list-container">
-                            <h3><i class="fa-solid fa-list-check"></i> Lịch Đang Hoạt Động</h3>
-                            <div id="schedule-list" class="schedule-list">
-                                <div class="empty-state">
-                                    <i class="fa-solid fa-spinner fa-spin"></i>
-                                    <p>Đang tải lịch trình...</p>
+                    </div>
+
+                    <div class="card glass">
+                        <i class="fa-solid fa-bolt icon"></i>
+                        <div class="card-info">
+                            <h3>Độ Trễ</h3>
+                            <p id="ping-value" class="value">-- ms</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="modules">
+                    <div class="card full-width glass">
+                        <h2><i class="fa-solid fa-music"></i> Âm Nhạc Đang Phát</h2>
+                        <div id="music-container" class="music-list">
+                            <div class="empty-state">
+                                <i class="fa-solid fa-compact-disc fa-spin"></i>
+                                <p>Không có âm điệu nào đang được gảy...</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Tab 2: Lịch Trình (Schedules) -->
+            <div id="tab-schedule" class="tab-pane">
+                <header class="tab-header">
+                    <h2><i class="fa-solid fa-clock"></i> Quản Lý Lịch Trình & Báo Thức</h2>
+                </header>
+                <section class="modules">
+                    <div class="card full-width glass">
+                        <div class="schedule-container">
+                            <div class="schedule-form">
+                                <h3><i class="fa-solid fa-plus"></i> Thêm Lịch Mới</h3>
+                                <div class="form-group">
+                                    <label>Máy Chủ:</label>
+                                    <select id="guild-select" onchange="loadChannels()"><option value="">-- Chọn Máy Chủ --</option></select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Kênh Thông Báo:</label>
+                                    <select id="channel-select"><option value="">-- Chọn Kênh --</option></select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Giờ Kích Hoạt (UTC+7):</label>
+                                    <input type="time" id="time-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Báo Thời Tiết Tại (Tùy chọn):</label>
+                                    <input type="text" id="weather-input" placeholder="Vd: Hanoi,VN">
+                                </div>
+                                <div class="form-group">
+                                    <label>Chỉ Đạo Nhắc Nhở (Prompt AI):</label>
+                                    <textarea id="prompt-input" rows="3" placeholder="Vd: Viết lời chúc buổi sáng thật dễ thương..."></textarea>
+                                </div>
+                                <button id="btn-save-schedule" class="btn-primary" onclick="saveSchedule()">Lưu Lịch Trình</button>
+                            </div>
+                            <div class="schedule-list-container">
+                                <h3><i class="fa-solid fa-list-check"></i> Lịch Đang Hoạt Động</h3>
+                                <div id="schedule-list" class="schedule-list">
+                                    <div class="empty-state">
+                                        <i class="fa-solid fa-spinner fa-spin"></i>
+                                        <p>Đang tải lịch trình...</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
+
+            <!-- Tab 3: Hệ Thống (System) -->
+            <div id="tab-system" class="tab-pane">
+                <header class="tab-header">
+                    <h2><i class="fa-solid fa-microchip"></i> Thông Tin Hệ Thống Bot</h2>
+                </header>
+                <section class="modules">
+                    <div class="card large-card glass">
+                        <h2><i class="fa-solid fa-info-circle"></i> Thông Số Kỹ Thuật</h2>
+                        <div class="system-info">
+                            <div class="sys-row">
+                                <span>Tên Bot:</span>
+                                <strong id="bot-name">Đang tải...</strong>
+                            </div>
+                            <div class="sys-row">
+                                <span>Mô Hình AI:</span>
+                                <strong>Gemini 3.8 Flash</strong>
+                            </div>
+                            <div class="sys-row">
+                                <span>Trí Nhớ:</span>
+                                <strong>PostgreSQL Đã Kết Nối</strong>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card large-card glass">
+                        <h2><i class="fa-solid fa-face-smile"></i> Tâm Trạng Của Ayaka</h2>
+                        <div class="mood-box">
+                            <img src="/assets/emojis/AyakaEmoji.jpg" id="mood-avatar" class="mood-img">
+                            <p class="mood-text" id="mood-text">Tâm trạng: Vui vẻ 🌸</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
         </main>
-        
-        <footer>
-            <p>Được thiết kế với 🌸 và ❄️ bởi Nhà Lữ Hành</p>
-        </footer>
     </div>
 
     <script src="app.js"></script>
