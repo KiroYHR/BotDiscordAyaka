@@ -62,6 +62,9 @@ class LevelCog(commands.Cog):
                     rank = f"#{i + 1}"
                     break
             
+            if rank == "?":
+                rank = f"#{len(top_users) + 1}"
+            
             # Tính toán EXP cần thiết cho cấp tiếp theo (level = exp//100 + 1)
             current_level_base_exp = (level - 1) * 100
             next_level_base_exp = level * 100
