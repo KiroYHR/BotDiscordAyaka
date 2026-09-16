@@ -2,7 +2,7 @@
 
 Dưới đây là danh sách toàn bộ các câu lệnh (Commands) mà Ayaka hiện đang hỗ trợ, được phân loại theo từng tính năng cụ thể. Cậu nhớ sử dụng dấu chấm than `!` ở trước mỗi lệnh nhé.
 
-## 💬 1. Giao Tiếp & Trò Chuyện (AI Chat)
+## 🗣️ 1. Giao Tiếp & Trò Chuyện (AI Chat)
 - **Tag tên bot (`@Kamisato Ayaka <nội dung>`)**: Trò chuyện tự do với Ayaka. Ayaka có trí nhớ theo từng kênh và sẽ giữ tính cách dễ thương.
 
 ## 🎵 2. Trình Phát Nhạc (Music)
@@ -12,12 +12,11 @@ Dưới đây là danh sách toàn bộ các câu lệnh (Commands) mà Ayaka hi
 - **`!pause`**: Tạm dừng bài hát đang phát.
 - **`!resume`**: Tiếp tục phát nhạc sau khi tạm dừng.
 - **`!stop`** (hoặc `!leave`, `!disconnect`): Yêu cầu Ayaka dừng nhạc, xóa hàng đợi và rời khỏi kênh thoại.
+- **`!lyrics`** (hoặc `!loibaihat`): Tìm lời bài hát cho ca khúc đang phát.
 
-<!-- Tạm thời ẩn tính năng Xử lý Ảnh do giới hạn RAM 512MB trên Cloud (Render)
-## 🖼️ 3. Xử Lý Ảnh (Image AI)
-- **`!rmbg <model>`** (hoặc `!removebg`, `!xoaphong`): Xóa phông nền ảnh bằng AI. Có thể chọn model: `human` (mặc định - cho người), `anime` (cho nhân vật 2D), `u2net` (nhanh), `hq` (chất lượng cao). (Ví dụ: `!rmbg anime`)
-- **`!filter <hiệu ứng>`** (hoặc `!boloc`): Áp dụng hiệu ứng lên ảnh. Các hiệu ứng hỗ trợ: `blur`, `contour`, `emboss`, `bw` (trắng đen). (Ví dụ: `!filter bw`)
--->
+## 🏆 3. Cấp Độ & Bảng Xếp Hạng (Rank)
+- **`!rank`** (hoặc `!level`, `!capdo`): Tra cứu thẻ cấp độ (Rank Card) và điểm kinh nghiệm hiện tại của cậu hoặc người khác (ví dụ: `!rank @user`).
+- **Tương tác**: Cậu có thể nhận EXP bằng cách nhắn tin trên server (Cooldown: 1 phút / lần). Xem Leaderboard đầy đủ trên Web Dashboard.
 
 ## 🎮 4. Tra Cứu Game (HoyoLab)
 - **`!gs <UID>`** (hoặc `!genshin`): Tra cứu thông tin thẻ người chơi Genshin Impact. (Ví dụ: `!gs 808480599`)
@@ -29,8 +28,9 @@ Dưới đây là danh sách toàn bộ các câu lệnh (Commands) mà Ayaka hi
 - **`!summary <số lượng>`** (hoặc `!tomtat`, `!hongbien`): Tổng hợp và tóm tắt lịch sử chat trong kênh. Mặc định là 50 tin nhắn gần nhất. (Ví dụ: `!summary 100`)
 
 ## ⚙️ 6. Hệ Thống (System)
-- **`!sysinfo`** (hoặc `!hardware`, `!status`): Kiểm tra tình trạng phần cứng của máy chủ đang chạy bot (CPU, RAM, Ổ cứng).
-- **`!help`** (hoặc `!help_ayaka`): Hiện danh sách các lệnh và hướng dẫn tương tác với Ayaka.
+- **`!sysinfo`** (hoặc `!hardware`, `!status`): Kiểm tra tình trạng phần cứng của máy chủ đang chạy bot (CPU, RAM, ổ cứng).
+- **`!help`** (hoặc `!trogiup`): Hiện Menu tương tác các lệnh và hướng dẫn sử dụng bot.
+- **`!reset`** (hoặc `!clear`): Xóa bộ nhớ trí tuệ nhân tạo ở đoạn chat hiện tại.
 
 ---
 *Lưu ý: Để sử dụng lệnh nhạc, cậu phải đang ở trong một kênh thoại (Voice Channel). Với các lệnh về hình ảnh và PDF, cậu nhớ đính kèm file cùng lúc khi gửi lệnh nhé!*

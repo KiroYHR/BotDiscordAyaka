@@ -20,9 +20,11 @@ class WebDashboard:
         self.app.router.add_get('/api/schedules', self.api_get_schedules)
         self.app.router.add_post('/api/schedules', self.api_post_schedules)
         self.app.router.add_delete('/api/schedules', self.api_delete_schedules)
+        self.app.router.add_get('/api/leaderboard', self.api_leaderboard)
         
         # Static file routes
         self.app.router.add_get('/', self.serve_index)
+        self.app.router.add_get('/leaderboard', self.serve_leaderboard)
         self.app.router.add_get('/style.css', self.serve_css)
         self.app.router.add_get('/app.js', self.serve_js)
         
@@ -127,9 +129,33 @@ class WebDashboard:
             logger.error(f"Lỗi DELETE /api/schedules: {e}")
             return web.json_response({"success": False, "error": str(e)})
 
+    async def api_leaderboard(self, request):
+        """Trả về danh sách top 50 người dùng có EXP cao nhất."""
+        from database import db_manager
+        top_users = await db_manager.get_top_users(limit=50)
+        
+        result = []
+        for i, u in enumerate(top_users):
+            user = self.bot.get_user(int(u['user_id']))
+            if user:
+                result.append({
+                    "rank": i + 1,
+                    "id": str(user.id),
+                    "username": str(user.name),
+                    "display_name": user.display_name,
+                    "avatar": user.avatar.url if user.avatar else "https://cdn.discordapp.com/embed/avatars/0.png",
+                    "exp": u['exp'],
+                    "level": u['level']
+                })
+        return web.json_response(result)
+
     # Các hàm phục vụ file tĩnh (Frontend)
     async def serve_index(self, request):
         with open('dashboard/index.html', 'r', encoding='utf-8') as f:
+            return web.Response(text=f.read(), content_type='text/html')
+            
+    async def serve_leaderboard(self, request):
+        with open('dashboard/leaderboard.html', 'r', encoding='utf-8') as f:
             return web.Response(text=f.read(), content_type='text/html')
 
     async def serve_css(self, request):

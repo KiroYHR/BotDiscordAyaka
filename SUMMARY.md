@@ -92,4 +92,20 @@
 
 ---
 
+## 📅 Giai Đoạn 7: Lập Trình Lịch Trình Qua Web (Web Scheduling & Resilience)
+*Giao quyền quản lý thời gian và báo thức trực tiếp cho người dùng thông qua giao diện Web.*
+
+- **Quản lý Lịch Trình Tùy Chỉnh**:
+  - Xây dựng API và giao diện Web cho phép người dùng thêm/xóa lịch nhắc nhở tùy chỉnh (chọn máy chủ, kênh, giờ phút, lời nhắc, báo thời tiết).
+  - Áp dụng kỹ thuật Glassmorphism Modal UI do tự thiết kế để thay thế hoàn toàn cảnh báo `alert` thô cứng của trình duyệt.
+- **Tách biệt kịch bản thông minh**:
+  - **Báo thức 6h sáng**: Cố định báo thức tổng hợp thời tiết 3 miền (Bắc-Trung-Nam) mỗi 6h sáng vào kênh bản tin.
+  - **Nhắc nhở cá nhân**: Kích hoạt chính xác tới từng phút theo yêu cầu của người dùng, lược bỏ văn phong cố định ngày giờ để tập trung vào lời nhắc.
+- **Độ tin cậy tuyệt đối (Resilience)**:
+  - Bổ sung hệ thống **Tin nhắn dự phòng (Fallback)**: Đảm bảo báo thức luôn kêu đúng giờ bằng tin nhắn cơ bản kể cả khi Google AI bị sập hoàn toàn.
+  - Bọc bảo vệ vòng lặp vô tận (Try-Catch Loop): Ngăn chặn nguy cơ vòng lặp đếm thời gian bị crash do mất kết nối Database.
+  - Triển khai thuật toán **Exponential Backoff** cho `ai_brain` để lách qua giới hạn chặn băng thông (503/429) của máy chủ Google.
+
+---
+
 > **🚀 Tổng Kết**: Chúng ta đã biến một bot Discord trắng trơn thành một hệ thống AI thông minh, có cơ sở dữ liệu lưu trữ trên mạng, có trí nhớ dài hạn, chống sập xuất sắc, sở hữu Web Dashboard giám sát và cuối cùng là tự mình sinh tồn độc lập trên đám mây 24/7! Cậu hoàn toàn có thể tự hào về khối lượng công việc khổng lồ này!

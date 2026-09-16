@@ -1,41 +1,52 @@
 import discord
 from discord.ext import commands
 import logging
+import time
+import random
 from database import db_manager
-import math
 
 logger = logging.getLogger("AyakaLevel")
 
 class LevelCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.cooldowns = {} # {user_id: last_message_timestamp}
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
-        """Lắng nghe tin nhắn để cộng EXP cho người dùng."""
-        if message.author.bot:
+        if message.author.bot or not message.guild:
             return
             
-        # Không cộng EXP cho các lệnh bot
         if message.content.startswith("!"):
             return
 
-        # Tính toán lượng EXP dựa trên độ dài tin nhắn (tối đa 5 EXP mỗi tin)
-        # Mỗi 10 ký tự = 1 EXP, tối thiểu 1 EXP, tối đa 5 EXP
-        exp_to_add = max(1, min(5, len(message.content) // 10))
+        user_id = str(message.author.id)
+        now = time.time()
+        
+        # Cooldown 60s để chống spam
+        if now - self.cooldowns.get(user_id, 0) < 60:
+            return
+            
+        self.cooldowns[user_id] = now
+        
+        # Nhận ngẫu nhiên 10 - 20 EXP mỗi phút
+        exp_to_add = random.randint(10, 20)
         
         try:
-            result = await db_manager.add_exp(str(message.author.id), exp_to_add)
+            result = await db_manager.add_exp(user_id, exp_to_add)
             if result.get("leveled_up"):
                 new_level = result["new_level"]
-                # Gửi thông báo chúc mừng lên cấp
-                await message.channel.send(f"🎉 Chúc mừng {message.author.mention}! Sự rèn luyện của cậu đã đơm hoa kết trái. Cậu vừa đạt **Cấp độ {new_level}**! 🌸")
+                embed = discord.Embed(
+                    title="🎉 Lên Cấp!", 
+                    description=f"Chúc mừng {message.author.mention}! Cậu vừa đột phá lên **Cấp {new_level}**! 🌸",
+                    color=discord.Color.gold()
+                )
+                await message.channel.send(embed=embed)
         except Exception as e:
             logger.error(f"Lỗi khi cộng EXP: {e}")
 
     @commands.command(name="rank", aliases=["level", "capdo"])
     async def check_rank(self, ctx, member: discord.Member = None):
-        """Kiểm tra cấp độ hiện tại của cậu hoặc người khác."""
         target = member or ctx.author
         
         try:
@@ -43,28 +54,45 @@ class LevelCog(commands.Cog):
             level = stats["level"]
             exp = stats["exp"]
             
-            # Tính toán EXP cần thiết cho cấp tiếp theo
-            # Theo công thức trong database: level = (exp // 100) + 1
-            # => EXP cần để đạt level N là (N-1) * 100
-            next_level_exp = level * 100
+            # Lấy top users để tìm hạng (Rank)
+            top_users = await db_manager.get_top_users(limit=1000)
+            rank = "?"
+            for i, u in enumerate(top_users):
+                if u["user_id"] == str(target.id):
+                    rank = f"#{i + 1}"
+                    break
             
-            embed = discord.Embed(title=f"🌸 Hồ Sơ Rèn Luyện: {target.display_name}", color=discord.Color.blue())
+            # Tính toán EXP cần thiết cho cấp tiếp theo (level = exp//100 + 1)
+            current_level_base_exp = (level - 1) * 100
+            next_level_base_exp = level * 100
+            
+            exp_in_current_level = exp - current_level_base_exp
+            exp_needed = 100 # Cố định 100 exp mỗi cấp
+            
+            embed = discord.Embed(title=f"🌸 Hồ Sơ Rèn Luyện: {target.display_name}", color=0xFFB6C1)
             
             if target.avatar:
                 embed.set_thumbnail(url=target.avatar.url)
                 
-            embed.add_field(name="Cấp Độ Tinh Thông", value=f"**Lv. {level}**", inline=True)
-            embed.add_field(name="Kinh Nghiệm", value=f"**{exp} / {next_level_exp} EXP**", inline=True)
+            embed.add_field(name="🏆 Thứ Hạng", value=f"**{rank}**", inline=True)
+            embed.add_field(name="🔰 Cấp Độ", value=f"**Lv. {level}**", inline=True)
+            embed.add_field(name="✨ Kinh Nghiệm", value=f"**{exp}**", inline=True)
             
             # Thanh tiến trình
-            progress_percent = (exp % 100) / 100
+            progress_percent = exp_in_current_level / exp_needed
             filled_blocks = int(progress_percent * 10)
             empty_blocks = 10 - filled_blocks
-            progress_bar = "▓" * filled_blocks + "░" * empty_blocks
             
-            embed.add_field(name="Tiến Trình Đột Phá", value=f"`{progress_bar}` {int(progress_percent*100)}%", inline=False)
+            # Sử dụng các ký tự đặc biệt để làm thanh tiến trình đẹp hơn
+            progress_bar = "🟦" * filled_blocks + "⬜" * empty_blocks
             
-            await ctx.reply(embed=embed)
+            embed.add_field(name="Tiến Trình Đột Phá", value=f"{progress_bar} {int(progress_percent*100)}%\n(`{exp_in_current_level} / {exp_needed}` để lên cấp tiếp theo)", inline=False)
+            
+            # Nút Xem Leaderboard trên Web
+            view = discord.ui.View()
+            view.add_item(discord.ui.Button(label="Xem Bảng Xếp Hạng Đầy Đủ", url="http://localhost:928/leaderboard", emoji="🌐"))
+            
+            await ctx.reply(embed=embed, view=view)
         except Exception as e:
             logger.error(f"Lỗi kiểm tra rank: {e}")
             await ctx.reply("❌ Không thể tra cứu thông tin cấp độ lúc này cậu ạ.")

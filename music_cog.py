@@ -217,13 +217,15 @@ class MusicCog(commands.Cog):
         }
 
     async def get_suggestions(self, title):
-        """Lấy danh sách bài hát gợi ý từ YouTube dựa trên tên bài hát hiện tại"""
+        """Lấy danh sách bài hát gợi ý từ SoundCloud để tránh Rate Limit"""
         loop = asyncio.get_event_loop()
-        search_opts = {'quiet': True, 'extract_flat': True, 'default_search': 'ytsearch5'}
+        search_opts = {'quiet': True, 'extract_flat': True}
         search_ytdl = yt_dlp.YoutubeDL(search_opts)
         try:
-            # Tìm kiếm các bài hát liên quan (thêm chữ audio hoặc remix để ra kết quả tốt)
-            query = f"{title} audio"
+            clean_track = re.sub(r'\(.*?\) | \[.*?\]', '', title).strip()
+            clean_track = clean_track.replace("Official", "").replace("MV", "").strip()
+            
+            query = f"scsearch5:{clean_track}"
             data = await loop.run_in_executor(None, lambda: search_ytdl.extract_info(query, download=False))
             
             suggestions = []
@@ -233,7 +235,7 @@ class MusicCog(commands.Cog):
                         suggestions.append({
                             'title': e['title'],
                             'url': e['url'],
-                            'channel': e.get('uploader', 'YouTube')
+                            'channel': e.get('uploader', 'SoundCloud')
                         })
             return suggestions
         except Exception as e:

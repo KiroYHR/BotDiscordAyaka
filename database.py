@@ -136,6 +136,13 @@ class AyakaDatabase:
                 return {"exp": row['exp'], "level": row['level']}
             return {"exp": 0, "level": 1}
 
+    async def get_top_users(self, limit: int = 50) -> list:
+        """Lấy danh sách người dùng top EXP."""
+        if not self.pool: return []
+        async with self.pool.acquire() as db:
+            rows = await db.fetch('SELECT user_id, exp, level FROM users ORDER BY exp DESC LIMIT $1', limit)
+            return [dict(row) for row in rows]
+
     # --- Các hàm cho Lịch Trình (Scheduled Tasks) ---
     async def add_schedule(self, guild_id: str, channel_id: str, time_str: str, prompt: str, weather_location: str = None) -> tuple[bool, str]:
         """Thêm một lịch trình mới vào DB."""

@@ -198,3 +198,74 @@ class SysCog(commands.Cog):
 
 async def setup(bot):
     await bot.add_cog(SysCog(bot))
+class HelpSelect(discord.ui.Select):
+    def __init__(self, bot):
+        self.bot = bot
+        options = [
+            discord.SelectOption(label="Trợ Giúp Cơ Bản", description="Cách giao tiếp với Ayaka", emoji="🌸", value="basic"),
+            discord.SelectOption(label="Âm Nhạc", description="Lệnh liên quan đến trình phát nhạc", emoji="🎵", value="music"),
+            discord.SelectOption(label="Cấp Độ & Bảng Xếp Hạng", description="Tính năng kinh nghiệm (EXP)", emoji="🏆", value="level"),
+            discord.SelectOption(label="Hệ Thống", description="Các lệnh về máy chủ và bot", emoji="⚙️", value="sys")
+        ]
+        super().__init__(placeholder="Chọn danh mục cần hướng dẫn...", min_values=1, max_values=1, options=options)
+
+    async def callback(self, interaction: discord.Interaction):
+        embed = discord.Embed(color=0xFFB6C1)
+        
+        if self.values[0] == "basic":
+            embed.title = "🌸 Trợ Giúp Cơ Bản"
+            embed.description = (
+                "• **Trò chuyện:** Gõ `@Kamisato Ayaka <nội dung>` hoặc *Reply* tin nhắn của tớ.\n"
+                "• **Tin nhắn riêng (DM):** Nhắn trực tiếp, tớ sẽ trả lời mọi lúc.\n"
+                "• `!reset` hoặc `!clear`: Xóa trí nhớ cuộc hội thoại hiện tại.\n"
+            )
+        elif self.values[0] == "music":
+            embed.title = "🎵 Trợ Giúp Âm Nhạc"
+            embed.description = (
+                "• `!play <tên bài>` hoặc `!p`: Tìm và phát nhạc.\n"
+                "• `!skip` hoặc `!s`: Bỏ qua bài hiện tại.\n"
+                "• `!stop` hoặc `!leave`: Dừng phát và rời kênh thoại.\n"
+                "• `!lyrics` hoặc `!loibaihat`: Tìm lời bài hát đang phát.\n"
+                "*(Cậu cũng có thể dùng trực tiếp các nút bấm trên giao diện Trình Phát Nhạc nhé!)*"
+            )
+        elif self.values[0] == "level":
+            embed.title = "🏆 Hệ Thống Cấp Độ"
+            embed.description = (
+                "• Tương tác (nhắn tin) trong server sẽ giúp cậu nhận được EXP.\n"
+                "• `!rank`, `!level` hoặc `!capdo`: Xem Thẻ Cấp Độ của cậu hoặc người khác.\n"
+                "• **Bảng Xếp Hạng:** Xem danh sách Top server tại `http://localhost:928/leaderboard`"
+            )
+        elif self.values[0] == "sys":
+            embed.title = "⚙️ Lệnh Hệ Thống"
+            embed.description = (
+                "• `!ping`: Xem độ trễ kết nối.\n"
+                "• `!sysinfo`, `!hardware`: Trạng thái máy chủ Host.\n"
+            )
+            
+        await interaction.response.edit_message(embed=embed, view=self.view)
+
+class HelpView(discord.ui.View):
+    def __init__(self, bot):
+        super().__init__(timeout=120)
+        self.add_item(HelpSelect(bot))
+
+class HelpCog(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+
+    @commands.command(name="help", aliases=["trogiup", "h"])
+    async def help_command(self, ctx: commands.Context):
+        """Bảng hướng dẫn tương tác toàn diện."""
+        embed = discord.Embed(
+            title="🌸 Sách Hướng Dẫn Hiệp Hội Yashiro",
+            description="Xin chào, tớ là Kamisato Ayaka! Cậu cần tớ hướng dẫn về tính năng nào? Hãy chọn trong menu bên dưới nhé. 🍵",
+            color=0xFFB6C1
+        )
+        if self.bot.user.avatar:
+            embed.set_thumbnail(url=self.bot.user.avatar.url)
+            
+        await ctx.reply(embed=embed, view=HelpView(self.bot))
+
+async def setup(bot):
+    await bot.add_cog(SysCog(bot))
+    await bot.add_cog(HelpCog(bot))
