@@ -48,18 +48,6 @@ class AyakaDatabase:
                         ai_channel_id TEXT
                     )
                 ''')
-                
-                # Bảng Lịch Trình (Scheduled Tasks)
-                await db.execute('''
-                    CREATE TABLE IF NOT EXISTS scheduled_tasks (
-                        id SERIAL PRIMARY KEY,
-                        guild_id TEXT NOT NULL,
-                        channel_id TEXT NOT NULL,
-                        time_str TEXT NOT NULL,
-                        prompt TEXT NOT NULL,
-                        weather_location TEXT
-                    )
-                ''')
             logger.info("Đã kết nối và khởi tạo Database PostgreSQL thành công!")
         except Exception as e:
             logger.error(f"Lỗi khởi tạo Database PostgreSQL: {e}")
@@ -135,42 +123,6 @@ class AyakaDatabase:
             if row:
                 return {"exp": row['exp'], "level": row['level']}
             return {"exp": 0, "level": 1}
-
-    # --- Các hàm cho Lịch Trình (Scheduled Tasks) ---
-    async def add_schedule(self, guild_id: str, channel_id: str, time_str: str, prompt: str, weather_location: str = None) -> bool:
-        """Thêm một lịch trình mới vào DB."""
-        if not self.pool: return False
-        try:
-            async with self.pool.acquire() as db:
-                await db.execute('''
-                    INSERT INTO scheduled_tasks (guild_id, channel_id, time_str, prompt, weather_location)
-                    VALUES ($1, $2, $3, $4, $5)
-                ''', str(guild_id), str(channel_id), time_str, prompt, weather_location)
-            return True
-        except Exception as e:
-            logger.error(f"Lỗi khi thêm lịch trình: {e}")
-            return False
-
-    async def get_schedules(self, guild_id: str = None) -> list:
-        """Lấy danh sách lịch trình. Nếu truyền guild_id thì lấy theo server."""
-        if not self.pool: return []
-        async with self.pool.acquire() as db:
-            if guild_id:
-                rows = await db.fetch('SELECT * FROM scheduled_tasks WHERE guild_id = $1', str(guild_id))
-            else:
-                rows = await db.fetch('SELECT * FROM scheduled_tasks')
-            return [dict(row) for row in rows]
-
-    async def delete_schedule(self, schedule_id: int) -> bool:
-        """Xóa một lịch trình theo ID."""
-        if not self.pool: return False
-        try:
-            async with self.pool.acquire() as db:
-                result = await db.execute('DELETE FROM scheduled_tasks WHERE id = $1', schedule_id)
-                return result != "DELETE 0"
-        except Exception as e:
-            logger.error(f"Lỗi khi xóa lịch trình: {e}")
-            return False
 
 # Tạo một instance duy nhất (Singleton pattern) để dùng chung
 db_manager = AyakaDatabase()

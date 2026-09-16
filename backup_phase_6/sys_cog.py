@@ -5,9 +5,6 @@ import platform
 import datetime
 import logging
 import asyncio
-import aiohttp
-import config
-from database import db_manager
 
 logger = logging.getLogger("SysCog")
 
@@ -19,76 +16,48 @@ class SysCog(commands.Cog):
     def cog_unload(self):
         self.daily_greeting.cancel()
 
-    @tasks.loop(minutes=1)
+    @tasks.loop(time=[
+        datetime.time(hour=6, minute=0, tzinfo=datetime.timezone(datetime.timedelta(hours=7))),
+        datetime.time(hour=22, minute=0, tzinfo=datetime.timezone(datetime.timedelta(hours=7)))
+    ])
     async def daily_greeting(self):
-        # Lấy giờ hiện tại (Việt Nam UTC+7)
         now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=7)))
-        current_time_str = now.strftime("%H:%M")
-        current_date_str = now.strftime("%d/%m/%Y")
-        
-        # Lấy tất cả lịch trình
-        schedules = await db_manager.get_schedules()
-        
-        for schedule in schedules:
-            if schedule['time_str'] == current_time_str:
-                # Kích hoạt chạy
-                asyncio.create_task(self._process_single_schedule(schedule, current_time_str, current_date_str))
-                
-    async def fetch_weather(self, location: str) -> str:
-        if not location or not config.WEATHER_API_KEY:
-            return ""
-        try:
-            url = f"http://api.openweathermap.org/data/2.5/weather?q={location}&appid={config.WEATHER_API_KEY}&units=metric&lang=vi"
-            async with aiohttp.ClientSession() as session:
-                async with session.get(url) as resp:
-                    if resp.status == 200:
-                        data = await resp.json()
-                        desc = data['weather'][0]['description']
-                        temp = data['main']['temp']
-                        humidity = data['main']['humidity']
-                        city = data['name']
-                        return f"(Thời tiết thực tế tại {city}: {desc}, Nhiệt độ {temp}°C, Độ ẩm {humidity}%)"
-            return ""
-        except Exception as e:
-            logger.error(f"Lỗi fetch weather: {e}")
-            return ""
+        is_morning = now.hour == 6
+        await self._run_greeting(is_morning)
 
-    async def _process_single_schedule(self, schedule: dict, time_str: str, date_str: str):
+    async def _run_greeting(self, is_morning):
+        
+        # 1. Sinh nội dung bằng AI
         from ai_brain import client
+        import config
         if not client:
+            logger.error("Gemini client chưa được khởi tạo. Bỏ qua daily_greeting.")
             return
             
-        guild_id = schedule['guild_id']
-        channel_id = schedule['channel_id']
-        user_prompt = schedule['prompt']
-        location = schedule.get('weather_location', '')
-        
-        guild = self.bot.get_guild(int(guild_id))
-        if not guild: return
-        channel = guild.get_channel(int(channel_id))
-        if not channel: return
-        
-        weather_info = await self.fetch_weather(location)
-        
-        # Xây dựng prompt
-        full_prompt = (
-            f"Hôm nay là ngày {date_str}, bây giờ là {time_str}.\n"
-            f"Dưới góc độ nhân vật Kamisato Ayaka (Genshin Impact), hãy thực hiện yêu cầu sau của Nhà Lữ Hành một cách dễ thương và tự nhiên nhất:\n"
-            f"Yêu cầu: {user_prompt}\n"
-            f"{weather_info}\n"
-            f"(Nếu có thông tin thời tiết, hãy khéo léo lồng ghép vào lời nói. Giữ tin nhắn ngắn gọn tầm 3-4 câu)."
-        )
-        
         try:
+            if is_morning:
+                prompt = "Bây giờ là 6 giờ sáng. Dưới góc độ nhân vật Kamisato Ayaka (Genshin Impact), hãy viết một lời chào buổi sáng ngắn gọn (khoảng 2-3 câu), thật dễ thương, lịch sự đến các 'Nhà Lữ Hành' trong hiệp hội Yashiro. Nhớ nhắc họ chú ý thời tiết hoặc giữ gìn sức khỏe cho ngày mới nhé!"
+            else:
+                prompt = "Bây giờ là 10 giờ tối. Dưới góc độ nhân vật Kamisato Ayaka (Genshin Impact), hãy viết một lời chúc ngủ ngon ngắn gọn (khoảng 2-3 câu), thật dễ thương và ân cần đến các 'Nhà Lữ Hành' trong hiệp hội Yashiro. Nhắc họ đi ngủ sớm để giữ sức khỏe."
+                
             loop = asyncio.get_event_loop()
             response = await loop.run_in_executor(
                 None, 
-                lambda: client.models.generate_content(model=config.GEMINI_MODEL_NAME, contents=full_prompt)
+                lambda: client.models.generate_content(model=config.GEMINI_MODEL_NAME, contents=prompt)
             )
             message_text = response.text
-            await channel.send(message_text)
         except Exception as e:
-            logger.error(f"Lỗi AI schedule: {e}")
+            logger.error(f"Lỗi khi tạo tin nhắn báo thức: {e}")
+            message_text = "🌸 Chào buổi sáng mọi người! Chúc mọi người một ngày an lành." if is_morning else "❄️ Đã muộn rồi, mọi người nhớ nghỉ ngơi sớm nhé!"
+
+        # 2. Tìm kênh và gửi
+        for guild in self.bot.guilds:
+            target_channel = discord.utils.get(guild.text_channels, name="bản-tin-hiệp-hội-yashiro")
+            if target_channel:
+                try:
+                    await target_channel.send(message_text)
+                except Exception as e:
+                    logger.error(f"Không thể gửi tin nhắn cho server {guild.name}: {e}")
 
     @daily_greeting.before_loop
     async def before_daily_greeting(self):
@@ -97,7 +66,11 @@ class SysCog(commands.Cog):
     @commands.command(name="testgreeting")
     async def testgreeting(self, ctx):
         """Lệnh ẩn để test thử tính năng báo thức"""
-        await ctx.send("⏳ Tính năng test thủ công đã được vô hiệu hóa. Báo thức giờ chạy bằng hệ thống Lập lịch qua Web Dashboard!")
+        await ctx.send("⏳ Đang kích hoạt chạy thử kịch bản báo thức/chúc ngủ ngon...")
+        now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=7)))
+        is_morning = now.hour == 6
+        await self._run_greeting(is_morning)
+        await ctx.send("✅ Đã chạy xong kịch bản.")
 
     @commands.command(name="sysinfo", aliases=["hardware", "status"])
     async def sysinfo(self, ctx):

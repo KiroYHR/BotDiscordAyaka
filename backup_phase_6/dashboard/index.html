@@ -85,55 +85,13 @@
                         </div>
                         <div class="sys-row">
                             <span>Trí Nhớ:</span>
-                            <strong>PostgreSQL Đã Kết Nối</strong>
+                            <strong>SQLite Đã Kết Nối</strong>
                         </div>
                     </div>
                     
                     <div class="mood-box">
                         <img src="/assets/emojis/AyakaEmoji.jpg" id="mood-avatar" class="mood-img">
                         <p class="mood-text" id="mood-text">Tâm trạng: Vui vẻ 🌸</p>
-                    </div>
-                </div>
-            </section>
-            </section>
-
-            <section class="modules">
-                <div class="card full-width glass">
-                    <h2><i class="fa-solid fa-clock"></i> Lịch Trình Ayaka (Báo Thức & Thời Tiết)</h2>
-                    <div class="schedule-container">
-                        <div class="schedule-form">
-                            <h3><i class="fa-solid fa-plus"></i> Thêm Lịch Mới</h3>
-                            <div class="form-group">
-                                <label>Máy Chủ:</label>
-                                <select id="guild-select" onchange="loadChannels()"><option value="">-- Chọn Máy Chủ --</option></select>
-                            </div>
-                            <div class="form-group">
-                                <label>Kênh Thông Báo:</label>
-                                <select id="channel-select"><option value="">-- Chọn Kênh --</option></select>
-                            </div>
-                            <div class="form-group">
-                                <label>Giờ Kích Hoạt (UTC+7):</label>
-                                <input type="time" id="time-input" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Báo Thời Tiết Tại (Tùy chọn):</label>
-                                <input type="text" id="weather-input" placeholder="Vd: Hanoi,VN">
-                            </div>
-                            <div class="form-group">
-                                <label>Chỉ Đạo Nhắc Nhở (Prompt AI):</label>
-                                <textarea id="prompt-input" rows="3" placeholder="Vd: Viết lời chúc buổi sáng thật dễ thương..."></textarea>
-                            </div>
-                            <button id="btn-save-schedule" class="btn-primary" onclick="saveSchedule()">Lưu Lịch Trình</button>
-                        </div>
-                        <div class="schedule-list-container">
-                            <h3><i class="fa-solid fa-list-check"></i> Lịch Đang Hoạt Động</h3>
-                            <div id="schedule-list" class="schedule-list">
-                                <div class="empty-state">
-                                    <i class="fa-solid fa-spinner fa-spin"></i>
-                                    <p>Đang tải lịch trình...</p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </section>

@@ -16,10 +16,6 @@ class WebDashboard:
         # API Routes
         self.app.router.add_get('/api/status', self.api_status)
         self.app.router.add_get('/api/music', self.api_music)
-        self.app.router.add_get('/api/channels', self.api_channels)
-        self.app.router.add_get('/api/schedules', self.api_get_schedules)
-        self.app.router.add_post('/api/schedules', self.api_post_schedules)
-        self.app.router.add_delete('/api/schedules', self.api_delete_schedules)
         
         # Static file routes
         self.app.router.add_get('/', self.serve_index)
@@ -64,61 +60,6 @@ class WebDashboard:
             "playing": len(playing_tracks) > 0,
             "tracks": playing_tracks
         })
-
-    async def api_channels(self, request):
-        """Trả về danh sách các kênh văn bản bot có thể truy cập."""
-        channels = []
-        for guild in self.bot.guilds:
-            for channel in guild.text_channels:
-                # Bỏ qua kênh không có quyền gửi tin
-                permissions = channel.permissions_for(guild.me)
-                if permissions.send_messages:
-                    channels.append({
-                        "id": str(channel.id),
-                        "name": f"#{channel.name} ({guild.name})",
-                        "guild_id": str(guild.id)
-                    })
-        return web.json_response(channels)
-
-    async def api_get_schedules(self, request):
-        """Lấy danh sách báo thức."""
-        from database import db_manager
-        schedules = await db_manager.get_schedules()
-        return web.json_response(schedules)
-
-    async def api_post_schedules(self, request):
-        """Thêm lịch báo thức mới."""
-        try:
-            data = await request.json()
-            guild_id = data.get("guild_id")
-            channel_id = data.get("channel_id")
-            time_str = data.get("time_str")
-            prompt = data.get("prompt")
-            weather_location = data.get("weather_location", "")
-
-            if not all([guild_id, channel_id, time_str, prompt]):
-                return web.json_response({"success": False, "error": "Thiếu dữ liệu"})
-
-            from database import db_manager
-            success = await db_manager.add_schedule(guild_id, channel_id, time_str, prompt, weather_location)
-            return web.json_response({"success": success})
-        except Exception as e:
-            logger.error(f"Lỗi POST /api/schedules: {e}")
-            return web.json_response({"success": False, "error": str(e)})
-
-    async def api_delete_schedules(self, request):
-        """Xóa lịch báo thức."""
-        try:
-            schedule_id = request.query.get("id")
-            if not schedule_id:
-                return web.json_response({"success": False, "error": "Thiếu ID"})
-                
-            from database import db_manager
-            success = await db_manager.delete_schedule(int(schedule_id))
-            return web.json_response({"success": success})
-        except Exception as e:
-            logger.error(f"Lỗi DELETE /api/schedules: {e}")
-            return web.json_response({"success": False, "error": str(e)})
 
     # Các hàm phục vụ file tĩnh (Frontend)
     async def serve_index(self, request):

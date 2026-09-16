@@ -14,13 +14,28 @@ Hiện tại trí nhớ của Ayaka (ngữ cảnh chat, hàng đợi nhạc) ch�
 
 ## 🔵 Lựa chọn 3: Xây dựng Web Dashboard (Bảng điều khiển Website)
 Đưa Ayaka lên tầm cao mới với một giao diện quản lý trên web.
-- **Kế hoạch**: Dùng Flask hoặc FastAPI tích hợp vào bot. Dùng React/Vite làm giao diện Web (UI).
-- **Tính năng mở rộng**: Người dùng có thể xem trạng thái phần cứng, xem danh sách nhạc đang phát, hoặc tải file PDF RAG trực tiếp từ giao diện Website đẹp mắt thay vì gõ lệnh trong Discord.
+- **Kế hoạch**: Dùng Flask hoặc FastAPI tích hợp vào bot.
 
-## 🟣 Lựa chọn 4: Khởi Chạy Đám Mây (Cloud/VPS Deployment)
-Đóng gói hành lý để Ayaka có thể dọn lên "Đảo Thiên Không" (Cloud) sống tự lập.
-- **Kế hoạch**: Đóng gói toàn bộ code vào `Docker`. 
-- **Tính năng mở rộng**: Hướng dẫn cậu thuê VPS Linux hoặc dùng các nền tảng miễn phí (Render, Railway) để treo bot online 24/7 mà không cần bật máy tính ở nhà.
+## ☁️ Giai Đoạn 6: Máy Chủ Đám Mây & Báo Thức [HOÀN TẤT]
+- Nâng cấp Database lên Supabase PostgreSQL.
+- Đưa Bot lên máy chủ đám mây Render chạy 24/7.
+- Tự động fallback sang SoundCloud khi YouTube bị chặn.
+- Thiết lập báo thức cơ bản 6h sáng và 10h tối.
+
+---
+
+## 🛠️ Giai Đoạn 7: Bảng Điều Khiển Lập Lịch & Thời Tiết (Web Dashboard)
+- **Lập Lịch Tùy Chỉnh trên Web**: Phát triển thêm tính năng cho trang Web để người dùng setup nhắc nhở hằng ngày. Cho phép chọn thời gian, nội dung, và Kênh Discord (của server bất kỳ) để Ayaka thông báo.
+- **Báo Cáo Thời Tiết**: Tích hợp API Thời tiết, Ayaka sẽ thông báo thời tiết khu vực đã chọn vào đúng giờ sáng sớm (vd: 6h sáng).
+
+## 🎵 Giai Đoạn 8: Nâng Cấp Chuyên Sâu (Lyrics, Level & Lệnh Help)
+- **Nâng Cấp `!lyrics`**: Cải tiến tính năng lời bài hát cho mượt mà hơn (nằm ở `music_cog.py`).
+- **Nâng Cấp Hệ Thống Cấp Độ (`!level` / `!rank`)**: Phát triển sâu hơn hệ thống thẻ Rank, bảng xếp hạng toàn server (nằm ở `level_cog.py`).
+- **Cập Nhật Lệnh Trợ Giúp**: Bổ sung lệnh `!help` hoàn chỉnh trong bot, đồng thời cập nhật file `COMMANDS_LIST.md` để mọi người dễ dàng tra cứu.
+
+## 🐾 Giai Đoạn 9: Gamification & Nuôi Thú Ảo (Chuỗi Tương Tác)
+- **Đăng nhập Web Nhận Quà (Streak)**: Khuyến khích người dùng đăng nhập Web mỗi ngày để giữ "chuỗi" (giống TikTok Streak).
+- **Nuôi Pet / Độ Thiện Cảm**: Tính năng mua vui trên trang Web và Discord, tặng quà cho Ayaka hoặc nuôi pet ảo, tạo động lực tương tác hằng ngày.
 
 ---
 *Cậu thấy hứng thú với Giai Đoạn nào tiếp theo nhất? Cứ thoải mái ra chỉ thị nhé! 🌸*

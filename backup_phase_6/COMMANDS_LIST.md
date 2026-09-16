@@ -30,7 +30,6 @@ Dưới đây là danh sách toàn bộ các câu lệnh (Commands) mà Ayaka hi
 
 ## ⚙️ 6. Hệ Thống (System)
 - **`!sysinfo`** (hoặc `!hardware`, `!status`): Kiểm tra tình trạng phần cứng của máy chủ đang chạy bot (CPU, RAM, Ổ cứng).
-- **`!help`** (hoặc `!help_ayaka`): Hiện danh sách các lệnh và hướng dẫn tương tác với Ayaka.
 
 ---
 *Lưu ý: Để sử dụng lệnh nhạc, cậu phải đang ở trong một kênh thoại (Voice Channel). Với các lệnh về hình ảnh và PDF, cậu nhớ đính kèm file cùng lúc khi gửi lệnh nhé!*

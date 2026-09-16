@@ -1,54 +1,41 @@
-# Tầm Nhìn Trọn Vẹn: Kamisato Ayaka Siêu Việt (Master Plan)
+# 📅 Chi Tiết Kế Hoạch - Giai Đoạn 7 (Web Dashboard Lập Lịch & Thời Tiết)
 
-Hoàn toàn hợp lý! Nếu mục tiêu là tạo ra một Ayaka tuyệt vời và hoàn hảo nhất, chúng ta sẽ làm **tất cả 4 lựa chọn**. Tuy nhiên, để đảm bảo code không bị lỗi và hệ thống chạy mượt mà, chúng ta phải đi theo một **trình tự logic** (như việc xây nhà phải xây móng trước).
+## 1. Mục tiêu
+- Biến Web Dashboard thành trung tâm điều khiển thực thụ, người dùng có thể hẹn giờ Ayaka nhắn tin tự động (nhắc ngủ sớm, chúc buổi sáng, báo thời tiết) vào bất cứ khung giờ nào và bất cứ kênh nào.
 
-Dưới đây là trình tự thực hiện Master Plan:
+## 2. Kiến trúc & Chỉnh sửa
 
-1. **Giai đoạn 3: Xây dựng Cơ Sở Dữ Liệu (Database)** - *(Làm móng)*: Chuyển trí nhớ từ RAM sang Ổ cứng bằng SQLite.
-2. **Giai đoạn 4: Hoàn thiện Tính năng Nhạc & Lời Bài Hát** - *(Xây nội thất)*: Thêm API lời bài hát và các hiệu ứng.
-3. **Giai đoạn 5: Phát triển Web Dashboard** - *(Sơn sửa mặt tiền)*: Tạo trang web quản lý bot.
-4. **Giai đoạn 6: Khởi Chạy Đám Mây (Cloud/VPS)** - *(Chuyển nhà)*: Đóng gói tất cả vào Docker và đưa lên VPS.
+### 2.1. Cơ sở dữ liệu (`database.py`)
+- Cần tạo thêm một bảng `scheduled_tasks` trong PostgreSQL:
+  - `task_id` (Primary Key)
+  - `guild_id` (Server Discord)
+  - `channel_id` (Kênh sẽ nhận tin nhắn)
+  - `time_str` (Giờ thông báo - HH:MM)
+  - `prompt_text` (Nội dung chỉ đạo cho AI)
+  - `weather_location` (Tên thành phố, vd: "Hanoi")
 
-Chúng ta sẽ bắt đầu ngay với **Giai đoạn 3: Xây dựng Cơ Sở Dữ Liệu**.
+### 2.2. Giao diện Web (`dashboard/index.html` & `app.js`)
+- **Giao diện**: Thêm một Panel mới tên là "🕒 Lịch Trình Ayaka".
+- **Biểu mẫu (Form)**:
+  - Chọn Giờ (Timepicker).
+  - Chọn Kênh (lấy danh sách kênh qua API).
+  - Khung nhập nội dung (Prompt).
+  - Khung nhập Địa điểm lấy Thời tiết (Không bắt buộc).
+- **Logic**: Gửi lệnh (POST request) về Web Server nội bộ.
 
----
+### 2.3. Server API (`web_dashboard.py`)
+- Thêm Endpoint `/api/channels` để Web lấy danh sách kênh.
+- Thêm Endpoint `/api/schedules` để Web Ghi/Đọc lịch trình từ Database.
 
-## User Review Required
+### 2.4. Trí thông minh & Vòng lặp (`sys_cog.py`)
+- Thay đổi `@tasks.loop(time=[...])` thành `@tasks.loop(minutes=1)`.
+- Mỗi phút, vòng lặp ngầm sẽ:
+  - Đọc giờ hiện tại.
+  - Quét Database xem có lịch nào trùng giờ hiện tại không.
+  - Nếu có: Lấy thông tin thời tiết (nếu có địa điểm) từ API `OpenWeatherMap`.
+  - Nạp thông tin đó vào lời nhắc (Prompt) và gọi Gemini AI.
+  - Gửi tin nhắn kết quả vào kênh được chỉ định.
 
-> [!IMPORTANT]
-> Tớ đề xuất sử dụng **SQLite** kết hợp thư viện `aiosqlite` (Bất đồng bộ) cho Giai đoạn 3. 
-> - **Lý do**: SQLite lưu dữ liệu dưới dạng 1 file duy nhất (vd: `ayaka_data.db`). Rất dễ dàng di chuyển, backup và khi đưa lên Cloud/VPS (Giai đoạn 6) thì không cần tốn tiền thuê thêm server Database bên ngoài.
-> Cậu có đồng ý sử dụng SQLite không, hay muốn dùng MongoDB/MySQL?
-
-## Proposed Changes (Giai Đoạn 3: Database)
-
-### 1. Khởi tạo Database Layer
-- Cài đặt thư viện: `pip install aiosqlite`
-- Tạo file `database.py` để quản lý kết nối và tạo các bảng (Tables):
-  - `users`: Lưu cấp độ (Level), EXP, và cài đặt cá nhân của người dùng.
-  - `chat_history`: Lưu lại ngữ cảnh trò chuyện của AI thay cho RAM.
-  - `guild_config`: Lưu cấu hình cho từng server (kênh được phép chat, prefix).
-
-#### [NEW] [database.py](file:///e:/DuAnCaNhan/AIDiscordBuild/database.py)
-Tạo class `Database` với các hàm async như `init_db()`, `get_user()`, `add_exp()`, `save_chat()`.
-
-### 2. Tích hợp Database vào AI Brain
-- Sửa đổi `ai_brain.py` để lấy lịch sử chat từ `database.py` thay vì dùng biến `chat_history = {}` trên RAM.
-- Giúp Ayaka vẫn nhớ cậu đã nói gì kể cả khi bot bị khởi động lại.
-
-#### [MODIFY] [ai_brain.py](file:///e:/DuAnCaNhan/AIDiscordBuild/ai_brain.py)
-
-### 3. Tích hợp Hệ thống Level & Kinh nghiệm
-- Tạo sự kiện trong `bot.py` hoặc một Cog mới (`level_cog.py`) để cộng EXP mỗi khi người dùng chat.
-- Khi đủ EXP, Ayaka sẽ gửi tin nhắn chúc mừng lên cấp.
-
-#### [NEW] [level_cog.py](file:///e:/DuAnCaNhan/AIDiscordBuild/level_cog.py)
-#### [MODIFY] [bot.py](file:///e:/DuAnCaNhan/AIDiscordBuild/bot.py)
-Tích hợp hàm kết nối Database vào sự kiện `on_ready`.
-
-## Verification Plan
-
-### Manual Verification
-- Tắt và bật lại Bot, chat với Ayaka để kiểm tra xem trí nhớ có được giữ nguyên không.
-- Kiểm tra file `ayaka_data.db` có tự động được sinh ra trong thư mục dự án không.
-- Chat liên tục để kiểm tra xem bot có tính điểm EXP và thông báo lên cấp độ không.
+## 3. Yêu cầu ngoại vi (External Requirements)
+- Cần đăng ký một API Key miễn phí từ **OpenWeatherMap** (hoặc WeatherAPI) để có quyền truy cập dữ liệu thời tiết thực tế.
+- Khóa này sẽ được nạp vào file `.env` hoặc cấu hình trên Render.
