@@ -45,13 +45,19 @@ class SysCog(commands.Cog):
         from ai_brain import client
         if not client: return
         
-        weather_info = await self.fetch_weather("Hanoi,VN") # Mặc định thời tiết Hà Nội
+        # Lấy thời tiết 3 miền (Bắc - Trung - Nam)
+        hanoi_weather = await self.fetch_weather("Hanoi,VN")
+        danang_weather = await self.fetch_weather("Da Nang,VN")
+        hcm_weather = await self.fetch_weather("Ho Chi Minh City,VN")
+        
+        weather_info = f"{hanoi_weather}\n{danang_weather}\n{hcm_weather}"
+        
         full_prompt = (
             f"Hôm nay là ngày {date_str}, bây giờ là 06:00 sáng.\n"
             f"Dưới góc độ nhân vật Kamisato Ayaka (Genshin Impact), hãy viết một lời chào buổi sáng thật dễ thương, "
             f"kèm theo thông tin ngày tháng hiện tại để gửi đến các 'Nhà Lữ Hành' trong hiệp hội Yashiro.\n"
-            f"{weather_info}\n"
-            f"(Hãy khéo léo lồng ghép thời tiết nếu có. Giữ tin nhắn ngắn gọn tầm 3-4 câu)."
+            f"Thông tin thời tiết 3 miền hôm nay:\n{weather_info}\n"
+            f"(Hãy khéo léo lồng ghép dự báo thời tiết ở các khu vực vào lời chào. Giữ tin nhắn ngắn gọn tầm 4-5 câu)."
         )
         
         try:
