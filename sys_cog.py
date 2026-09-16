@@ -21,18 +21,21 @@ class SysCog(commands.Cog):
 
     @tasks.loop(minutes=1)
     async def daily_greeting(self):
-        # Lấy giờ hiện tại (Việt Nam UTC+7)
-        now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=7)))
-        current_time_str = now.strftime("%H:%M")
-        current_date_str = now.strftime("%d/%m/%Y")
-        
-        # Lấy tất cả lịch trình
-        schedules = await db_manager.get_schedules()
-        
-        for schedule in schedules:
-            if schedule['time_str'] == current_time_str:
-                # Kích hoạt chạy
-                asyncio.create_task(self._process_single_schedule(schedule, current_time_str, current_date_str))
+        try:
+            # Lấy giờ hiện tại (Việt Nam UTC+7)
+            now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=7)))
+            current_time_str = now.strftime("%H:%M")
+            current_date_str = now.strftime("%d/%m/%Y")
+            
+            # Lấy tất cả lịch trình
+            schedules = await db_manager.get_schedules()
+            
+            for schedule in schedules:
+                if schedule['time_str'] == current_time_str:
+                    # Kích hoạt chạy
+                    asyncio.create_task(self._process_single_schedule(schedule, current_time_str, current_date_str))
+        except Exception as e:
+            logger.error(f"Lỗi trong vòng lặp daily_greeting: {e}")
                 
     async def fetch_weather(self, location: str) -> str:
         if not location or not config.WEATHER_API_KEY:
@@ -89,6 +92,11 @@ class SysCog(commands.Cog):
             await channel.send(message_text)
         except Exception as e:
             logger.error(f"Lỗi AI schedule: {e}")
+            fallback_msg = f"⏰ **Ayaka xin thông báo:** Đã đến giờ hẹn `{time_str}` của cậu rồi nhé!\n*(Lời nhắc: {user_prompt})*\n\n*(Xin lỗi cậu, kết nối tâm thức với máy chủ AI đang bị gián đoạn nên tớ chỉ có thể nhắc nhở đơn giản thế này thôi 🌸)*"
+            try:
+                await channel.send(fallback_msg)
+            except Exception as inner_e:
+                logger.error(f"Lỗi gửi tin nhắn fallback: {inner_e}")
 
     @daily_greeting.before_loop
     async def before_daily_greeting(self):
