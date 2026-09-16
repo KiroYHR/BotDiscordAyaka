@@ -5,7 +5,7 @@
     --secondary-color: #ffb7c5; /* Sakura pink */
     --bg-dark: #DEEFF7; /* Soft light blue */
     --glass-bg: rgba(255, 255, 255, 0.65);
-    --glass-border: rgba(138, 203, 235, 0.4);
+    --glass-border: rgba(0, 0, 0, 0.15);
     --text-primary: #2D3176; /* Dark navy text */
     --text-secondary: #4A5568;
 }
