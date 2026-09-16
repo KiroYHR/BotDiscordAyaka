@@ -1,6 +1,7 @@
 import asyncpg
 import json
 import logging
+import math
 import os
 
 logger = logging.getLogger("AyakaDatabase")
@@ -113,8 +114,8 @@ class AyakaDatabase:
                 level = row['level']
                 await db.execute('UPDATE users SET exp = $1 WHERE user_id = $2', exp, user_id)
             
-            # Tính level mới (công thức đơn giản: level = (exp // 100) + 1)
-            new_level = (exp // 100) + 1
+            # Tính level mới: mỗi cấp cộng thêm 50 EXP (1->2: 100, 2->3: 150, ...)
+            new_level = math.floor((-1 + math.sqrt(9 + 0.16 * exp)) / 2)
             leveled_up = False
             
             if new_level > level:

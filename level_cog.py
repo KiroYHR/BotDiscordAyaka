@@ -81,12 +81,12 @@ class LevelCog(commands.Cog):
             if rank == "?":
                 rank = f"#{len(top_users) + 1}"
             
-            # Tính toán EXP cần thiết cho cấp tiếp theo (level = exp//100 + 1)
-            current_level_base_exp = (level - 1) * 100
-            next_level_base_exp = level * 100
+            # Tính toán EXP cần thiết cho cấp tiếp theo với công thức mới
+            current_level_base_exp = int(25 * (level - 1) * (level + 2))
+            next_level_base_exp = int(25 * level * (level + 3))
             
             exp_in_current_level = exp - current_level_base_exp
-            exp_needed = 100 # Cố định 100 exp mỗi cấp
+            exp_needed = next_level_base_exp - current_level_base_exp
             
             embed = discord.Embed(title=f"🌸 Hồ Sơ Rèn Luyện: {target.display_name}", color=0xFFB6C1)
             
