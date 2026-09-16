@@ -91,67 +91,69 @@ class MusicPlayerView(discord.ui.View):
 
     @discord.ui.button(emoji="⏯️", style=discord.ButtonStyle.primary, row=0)
     async def play_pause(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.defer()
         vc = interaction.guild.voice_client
         if vc:
             if vc.is_playing():
                 vc.pause()
             elif vc.is_paused():
                 vc.resume()
-        await interaction.response.defer()
         await self.cog.update_player_message(self.guild_id)
 
     @discord.ui.button(emoji="⏭️", style=discord.ButtonStyle.secondary, row=0)
     async def skip(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.defer()
         vc = interaction.guild.voice_client
         if vc and vc.is_playing():
             vc.stop()
-        await interaction.response.defer()
+        else:
+            await self.cog.update_player_message(self.guild_id)
 
     @discord.ui.button(emoji="⏹️", style=discord.ButtonStyle.danger, row=0)
     async def stop(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.defer()
         vc = interaction.guild.voice_client
         if vc:
             self.cog.get_queue(self.guild_id).clear()
             self.cog.is_playing[self.guild_id] = False
             self.cog.current_song.pop(self.guild_id, None)
             await vc.disconnect()
-        await interaction.response.defer()
         await self.cog.update_player_message(self.guild_id)
 
     @discord.ui.button(emoji="🔀", style=discord.ButtonStyle.secondary, row=0)
     async def shuffle(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.defer()
         queue = self.cog.get_queue(self.guild_id)
         if len(queue) > 1:
             random.shuffle(queue)
-        await interaction.response.defer()
         await self.cog.update_player_message(self.guild_id)
 
     @discord.ui.button(emoji="🔁", style=discord.ButtonStyle.secondary, row=0)
     async def loop(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.defer()
         current_loop = self.cog.loop_mode.get(self.guild_id, 0)
         self.cog.loop_mode[self.guild_id] = (current_loop + 1) % 3
         # 0: Off, 1: Track, 2: Queue
-        await interaction.response.defer()
         await self.cog.update_player_message(self.guild_id)
 
     @discord.ui.button(emoji="🔉", style=discord.ButtonStyle.secondary, row=1)
     async def vol_down(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.defer()
         vc = interaction.guild.voice_client
         if vc and vc.source and isinstance(vc.source, discord.PCMVolumeTransformer):
             # Giảm 20% âm lượng mỗi lần bấm cho rõ rệt
             vc.source.volume = max(0.1, round(vc.source.volume - 0.2, 1))
             self.cog.volumes[self.guild_id] = vc.source.volume
-        await interaction.response.defer()
         await self.cog.update_player_message(self.guild_id)
 
     @discord.ui.button(emoji="🔊", style=discord.ButtonStyle.secondary, row=1)
     async def vol_up(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.defer()
         vc = interaction.guild.voice_client
         if vc and vc.source and isinstance(vc.source, discord.PCMVolumeTransformer):
             # Tăng 20% âm lượng mỗi lần bấm
             vc.source.volume = min(2.0, round(vc.source.volume + 0.2, 1))
             self.cog.volumes[self.guild_id] = vc.source.volume
-        await interaction.response.defer()
         await self.cog.update_player_message(self.guild_id)
         
     @discord.ui.button(emoji="📜", label="Lyrics", style=discord.ButtonStyle.success, row=1)
@@ -183,6 +185,7 @@ class MusicCog(commands.Cog):
         self.loop_mode = {} 
         self.volumes = {} 
         self.player_messages = {} 
+        self.current_suggestions = {} # Cache gợi ý cho từng guild
         self.last_text_channel = {}
         
     def get_queue(self, guild_id):
@@ -277,8 +280,8 @@ class MusicCog(commands.Cog):
             if current["thumbnail"]:
                 embed.set_thumbnail(url=current["thumbnail"])
                 
-            # Lấy bài hát gợi ý (không chặn luồng chính)
-            suggestions = await self.get_suggestions(current["title"])
+            # Lấy bài hát gợi ý từ cache thay vì block luồng
+            suggestions = self.current_suggestions.get(guild_id, [])
         else:
             embed.title = "Đang tải nhạc..."
 
@@ -347,13 +350,21 @@ class MusicCog(commands.Cog):
                 return
                 
             await self.update_player_message(guild_id)
+            # Fetch gợi ý trong background sau khi cập nhật Player để tránh delay
+            self.bot.loop.create_task(self._fetch_and_update_suggestions(guild_id, song['title']))
         else:
             self.is_playing[guild_id] = False
             self.current_song.pop(guild_id, None)
+            self.current_suggestions.pop(guild_id, None)
             await self.update_player_message(guild_id)
             await asyncio.sleep(60)
             if not self.is_playing.get(guild_id) and guild.voice_client:
                 await guild.voice_client.disconnect()
+
+    async def _fetch_and_update_suggestions(self, guild_id, title):
+        suggestions = await self.get_suggestions(title)
+        self.current_suggestions[guild_id] = suggestions
+        await self.update_player_message(guild_id)
 
     @commands.command(name="play", aliases=["p"])
     async def play(self, ctx, *, search: str = None):

@@ -52,9 +52,13 @@ class WebDashboard:
         playing_tracks = []
         
         if music_cog:
-            for guild_id, title in music_cog.current_song.items():
+            for guild_id, current_data in music_cog.current_song.items():
                 guild = self.bot.get_guild(guild_id)
                 guild_name = guild.name if guild else "Unknown Server"
+                
+                # Sửa lỗi [object Object]: Lấy đúng tên bài hát từ dictionary
+                title = current_data.get("title", "Unknown Title") if isinstance(current_data, dict) else current_data
+                
                 playing_tracks.append({
                     "server": guild_name,
                     "title": title
