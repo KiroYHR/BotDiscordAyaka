@@ -6,6 +6,7 @@ import yt_dlp
 import aiohttp
 import urllib.parse
 import random
+import re
 
 logger = logging.getLogger("AyakaMusic")
 
@@ -40,10 +41,53 @@ def format_duration(seconds):
     return f"{m:02d}:{s:02d}"
 
 class MusicPlayerView(discord.ui.View):
-    def __init__(self, cog, guild_id):
+    def __init__(self, cog, guild_id, suggestions=None):
         super().__init__(timeout=None)
         self.cog = cog
         self.guild_id = guild_id
+        
+        # Thêm Menu thả xuống Gợi ý (Row 2)
+        if suggestions and len(suggestions) > 0:
+            options = []
+            for i, s in enumerate(suggestions[:5]):
+                desc = s.get('channel', 'YouTube')
+                if not desc: desc = "YouTube"
+                options.append(discord.SelectOption(
+                    label=s['title'][:90], # Discord giới hạn 100 ký tự
+                    value=s['url'],
+                    description=desc[:90],
+                    emoji="🎵"
+                ))
+            
+            if options:
+                select = discord.ui.Select(
+                    placeholder="🎶 Chọn bài hát gợi ý tương tự...", 
+                    options=options, 
+                    row=2
+                )
+                select.callback = self.select_callback
+                self.add_item(select)
+
+    async def select_callback(self, interaction: discord.Interaction):
+        # Khi người dùng chọn 1 bài từ danh sách gợi ý
+        url = interaction.data['values'][0]
+        await interaction.response.send_message(f"🔍 Ayaka đang chuẩn bị bài hát gợi ý...", ephemeral=True)
+        
+        try:
+            song_info = await self.cog.extract_info(url, interaction.user.mention)
+            queue = self.cog.get_queue(self.guild_id)
+            queue.append(song_info)
+            
+            vc = interaction.guild.voice_client
+            if not self.cog.is_playing.get(self.guild_id, False) and (not vc or not vc.is_playing()):
+                self.cog.bot.loop.create_task(self.cog._async_play_next(self.guild_id))
+            else:
+                await self.cog.update_player_message(self.guild_id)
+                
+            await interaction.edit_original_response(content=f"✅ Đã thêm **{song_info['title']}** vào hàng đợi!")
+        except Exception as e:
+            logger.error(f"Lỗi gợi ý: {e}")
+            await interaction.edit_original_response(content="❌ Có lỗi xảy ra khi tải bài hát này.")
 
     @discord.ui.button(emoji="⏯️", style=discord.ButtonStyle.primary, row=0)
     async def play_pause(self, interaction: discord.Interaction, button: discord.ui.Button):
@@ -94,7 +138,8 @@ class MusicPlayerView(discord.ui.View):
     async def vol_down(self, interaction: discord.Interaction, button: discord.ui.Button):
         vc = interaction.guild.voice_client
         if vc and vc.source and isinstance(vc.source, discord.PCMVolumeTransformer):
-            vc.source.volume = max(0.1, vc.source.volume - 0.1)
+            # Giảm 20% âm lượng mỗi lần bấm cho rõ rệt
+            vc.source.volume = max(0.1, round(vc.source.volume - 0.2, 1))
             self.cog.volumes[self.guild_id] = vc.source.volume
         await interaction.response.defer()
         await self.cog.update_player_message(self.guild_id)
@@ -103,7 +148,8 @@ class MusicPlayerView(discord.ui.View):
     async def vol_up(self, interaction: discord.Interaction, button: discord.ui.Button):
         vc = interaction.guild.voice_client
         if vc and vc.source and isinstance(vc.source, discord.PCMVolumeTransformer):
-            vc.source.volume = min(2.0, vc.source.volume + 0.1)
+            # Tăng 20% âm lượng mỗi lần bấm
+            vc.source.volume = min(2.0, round(vc.source.volume + 0.2, 1))
             self.cog.volumes[self.guild_id] = vc.source.volume
         await interaction.response.defer()
         await self.cog.update_player_message(self.guild_id)
@@ -118,25 +164,25 @@ class MusicPlayerView(discord.ui.View):
         await interaction.response.defer(ephemeral=True)
         lyrics_text = await self.cog.fetch_lyrics(current['title'])
         if not lyrics_text:
-            await interaction.followup.send("Không tìm thấy lời bài hát!", ephemeral=True)
+            await interaction.followup.send("Tớ không tìm thấy lời bài hát chuẩn cho bản remix/cover này! 😥", ephemeral=True)
             return
         
         if len(lyrics_text) > 3000:
             lyrics_text = lyrics_text[:3000] + "..."
             
-        embed = discord.Embed(title=f"📜 Lời Bài Hát: {current['title']}", description=lyrics_text, color=discord.Color.blue())
+        embed = discord.Embed(title=f"📜 {current['title']}", description=lyrics_text, color=discord.Color.blue())
         await interaction.followup.send(embed=embed, ephemeral=True)
 
 
 class MusicCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.song_queues = {} # {guild_id: [(url, title, duration, thumb, requester), ...]}
+        self.song_queues = {} 
         self.is_playing = {}  
         self.current_song = {} 
-        self.loop_mode = {} # 0: Off, 1: Track, 2: Queue
+        self.loop_mode = {} 
         self.volumes = {} 
-        self.player_messages = {} # {guild_id: message}
+        self.player_messages = {} 
         self.last_text_channel = {}
         
     def get_queue(self, guild_id):
@@ -166,6 +212,30 @@ class MusicCog(commands.Cog):
             'thumbnail': data.get('thumbnail', ''),
             'requester': requester
         }
+
+    async def get_suggestions(self, title):
+        """Lấy danh sách bài hát gợi ý từ YouTube dựa trên tên bài hát hiện tại"""
+        loop = asyncio.get_event_loop()
+        search_opts = {'quiet': True, 'extract_flat': True, 'default_search': 'ytsearch5'}
+        search_ytdl = yt_dlp.YoutubeDL(search_opts)
+        try:
+            # Tìm kiếm các bài hát liên quan (thêm chữ audio hoặc remix để ra kết quả tốt)
+            query = f"{title} audio"
+            data = await loop.run_in_executor(None, lambda: search_ytdl.extract_info(query, download=False))
+            
+            suggestions = []
+            if 'entries' in data:
+                for e in data['entries']:
+                    if e.get('title') and e.get('url') and e.get('title') != title:
+                        suggestions.append({
+                            'title': e['title'],
+                            'url': e['url'],
+                            'channel': e.get('uploader', 'YouTube')
+                        })
+            return suggestions
+        except Exception as e:
+            logger.error(f"Lỗi get suggestions: {e}")
+            return []
         
     async def update_player_message(self, guild_id):
         channel = self.last_text_channel.get(guild_id)
@@ -190,6 +260,7 @@ class MusicCog(commands.Cog):
         vol = int(self.volumes.get(guild_id, 1.0) * 100)
         
         embed = discord.Embed(color=0x99ccff)
+        suggestions = []
         
         if current:
             dur = format_duration(current["duration"])
@@ -205,6 +276,9 @@ class MusicCog(commands.Cog):
             
             if current["thumbnail"]:
                 embed.set_thumbnail(url=current["thumbnail"])
+                
+            # Lấy bài hát gợi ý (không chặn luồng chính)
+            suggestions = await self.get_suggestions(current["title"])
         else:
             embed.title = "Đang tải nhạc..."
 
@@ -222,7 +296,7 @@ class MusicCog(commands.Cog):
         else:
             embed.add_field(name="Up Next:", value="*Trống*", inline=False)
 
-        view = MusicPlayerView(self, guild_id)
+        view = MusicPlayerView(self, guild_id, suggestions=suggestions)
         
         # Cập nhật hoặc gửi tin nhắn mới
         old_msg = self.player_messages.get(guild_id)
@@ -240,7 +314,6 @@ class MusicCog(commands.Cog):
         self.player_messages[guild_id] = new_msg
 
     def play_next(self, guild_id):
-        # Chạy task để không block hàm callback
         self.bot.loop.create_task(self._async_play_next(guild_id))
         
     async def _async_play_next(self, guild_id):
@@ -248,7 +321,6 @@ class MusicCog(commands.Cog):
         current = self.current_song.get(guild_id)
         lmode = self.loop_mode.get(guild_id, 0)
         
-        # Xử lý lặp
         if current:
             if lmode == 1:
                 queue.insert(0, current)
@@ -266,6 +338,7 @@ class MusicCog(commands.Cog):
             
             try:
                 source = discord.FFmpegPCMAudio(song['url'], executable="ffmpeg", **FFMPEG_OPTIONS)
+                # Bọc Transformer với volume hiện tại
                 source = discord.PCMVolumeTransformer(source, volume=self.volumes.get(guild_id, 1.0))
                 vc.play(source, after=lambda e: self.play_next(guild_id))
             except Exception as e:
@@ -352,7 +425,11 @@ class MusicCog(commands.Cog):
 
     async def fetch_lyrics(self, track_name: str) -> str:
         try:
-            clean_track = track_name.lower().split(' (')[0].split(' |')[0].split(' - ')[0]
+            # Dọn dẹp tên bài hát tốt hơn: Xóa mọi thứ trong ngoặc đơn () hoặc ngoặc vuông []
+            clean_track = re.sub(r'\(.*?\) | \[.*?\]', '', track_name).strip()
+            # Xóa các từ khóa Official, MV, Remix nếu có
+            clean_track = clean_track.replace("Official", "").replace("MV", "").replace("Music Video", "").strip()
+            
             track_encoded = urllib.parse.quote(clean_track)
             url = f"https://lrclib.net/api/search?track_name={track_encoded}"
             
@@ -378,7 +455,7 @@ class MusicCog(commands.Cog):
         
         lyrics_text = await self.fetch_lyrics(current['title'])
         if not lyrics_text:
-            await ctx.send("Tớ xin lỗi... Tớ không thể tìm thấy lời của bài hát này! 😥")
+            await ctx.send("Tớ không tìm thấy lời bài hát chuẩn cho bản phối này! 😥")
             return
             
         if len(lyrics_text) > 3000:
