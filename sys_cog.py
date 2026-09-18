@@ -69,7 +69,7 @@ class SysCog(commands.Cog):
             message_text = response.text
         except Exception as e:
             logger.error(f"Lỗi AI 6am greeting: {e}")
-            message_text = f"🌸 Chào buổi sáng mọi người! Hôm nay là ngày {date_str}, chúc các Nhà Lữ Hành một ngày mới an lành và tràn đầy năng lượng nhé!"
+            message_text = f"🌸 Chào buổi sáng mọi người! Hôm nay là ngày {date_str}, chúc các Nhà Lữ Hành một ngày mới an lành và tràn đầy năng lượng nhé!\n\n**Dự báo thời tiết nhanh:**\n{weather_info}"
             
         # Tìm kênh bản-tin-hiệp-hội-yashiro ở tất cả các server
         for guild in self.bot.guilds:
