@@ -109,20 +109,32 @@ async def ask_ayaka(channel_id: int, user_name: str, message_text: str) -> str:
     def send_sync():
         return chat.send_message(user_prompt)
 
-    max_retries = 5
+    max_retries = 2
     base_delay = 2
     for attempt in range(max_retries):
         try:
-            # Chạy đồng bộ trong ThreadPool để chống lỗi nghẽn mạng
+            # Chạy đồng bộ trong ThreadPool và giới hạn thời gian chạy tối đa 10s để tránh treo
             loop = asyncio.get_event_loop()
-            response = await loop.run_in_executor(None, send_sync)
+            response = await asyncio.wait_for(
+                loop.run_in_executor(None, send_sync),
+                timeout=12.0
+            )
             
-            reply = response.text or "Ayaka lắng nghe cậu... nhưng có một làn gió tuyết thoảng qua. Cậu có thể nhắc lại được không ạ? 🌸"
+            reply = response.text or "Ayaka lắng nghe cậu... nhưng có một làn gió tuyết thoảng qua. Cậu có thể nhắc lại được không? 🌸"
             
             # Lưu vào DB sau khi chat
             await sync_history_to_db(channel_id)
             
             return reply
+
+        except asyncio.TimeoutError:
+            logger.warning(f"Lỗi Timeout khi đợi phản hồi từ Google (Lần {attempt + 1}/{max_retries})")
+            if attempt < max_retries - 1:
+                await asyncio.sleep(base_delay)
+                continue
+            else:
+                await clear_history(channel_id)
+                return "❌ Máy chủ Google đang phản hồi quá chậm (Timeout). Tớ đã thử hết sức nhưng kết nối đã bị ngắt, cậu hãy thử lại sau nhé! 🌸"
 
         except Exception as e:
             error_msg = str(e).lower()
@@ -135,7 +147,7 @@ async def ask_ayaka(channel_id: int, user_name: str, message_text: str) -> str:
                 else:
                     logger.error(f"Lỗi 503/429 liên tục sau {max_retries} lần thử.")
                     await clear_history(channel_id)
-                    return "❌ Băng thông kết nối tới máy chủ Google hiện đang quá tải nghiêm trọng. Ayaka đã cố gắng ròng rã suốt nhiều giây nhưng vẫn không thành công. Cậu thông cảm đợi một lát rồi gọi lại tớ nhé! 🌸"
+                    return "❌ Băng thông kết nối tới máy chủ Google hiện đang quá tải. Ayaka không thể liên lạc được tâm thức, cậu thông cảm đợi một lát rồi gọi lại tớ nhé! 🌸"
             
             # Nếu là lỗi khác, hoặc không phải 503 thì báo lỗi luôn
             logger.error(f"Lỗi khi giao tiếp với Gemini AI: {e}", exc_info=True)
