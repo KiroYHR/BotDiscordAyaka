@@ -1,10 +1,17 @@
 import os
 import json
 import logging
+import uuid
+from urllib.parse import urlencode
 from aiohttp import web
+import aiohttp
 import discord
+import config
 
 logger = logging.getLogger("AyakaWeb")
+
+# In-memory session store: {session_id: {"user_id": str, "access_token": str}}
+SESSIONS = {}
 
 class WebDashboard:
     def __init__(self, bot):
@@ -22,6 +29,12 @@ class WebDashboard:
         self.app.router.add_delete('/api/schedules', self.api_delete_schedules)
         self.app.router.add_get('/api/leaderboard', self.api_leaderboard)
         
+        # OAuth2 Routes
+        self.app.router.add_get('/login', self.login)
+        self.app.router.add_get('/callback', self.callback)
+        self.app.router.add_get('/api/me', self.api_me)
+        self.app.router.add_post('/api/daily', self.api_daily)
+        
         # Static file routes
         self.app.router.add_get('/', self.serve_index)
         self.app.router.add_get('/leaderboard', self.serve_leaderboard)
@@ -31,6 +44,106 @@ class WebDashboard:
         # Đường dẫn tuyệt đối để tránh lỗi không tìm thấy file
         assets_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dashboard', 'assets')
         self.app.router.add_static('/assets/', path=assets_path, name='assets')
+
+    async def login(self, request):
+        """Chuyển hướng đến Discord OAuth2."""
+        if not config.DISCORD_CLIENT_ID:
+            return web.Response(text="Thiếu DISCORD_CLIENT_ID", status=500)
+            
+        params = {
+            'client_id': config.DISCORD_CLIENT_ID,
+            'redirect_uri': config.DISCORD_REDIRECT_URI,
+            'response_type': 'code',
+            'scope': 'identify'
+        }
+        url = f"https://discord.com/api/oauth2/authorize?{urlencode(params)}"
+        raise web.HTTPFound(url)
+
+    async def callback(self, request):
+        """Xử lý Discord callback và tạo session."""
+        code = request.query.get('code')
+        if not code:
+            return web.Response(text="Lỗi: Không tìm thấy authorization code.", status=400)
+            
+        data = {
+            'client_id': config.DISCORD_CLIENT_ID,
+            'client_secret': config.DISCORD_CLIENT_SECRET,
+            'grant_type': 'authorization_code',
+            'code': code,
+            'redirect_uri': config.DISCORD_REDIRECT_URI
+        }
+        headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+        
+        async with aiohttp.ClientSession() as session:
+            async with session.post('https://discord.com/api/oauth2/token', data=data, headers=headers) as resp:
+                token_data = await resp.json()
+                
+                if 'access_token' not in token_data:
+                    return web.Response(text=f"Lỗi khi xác thực: {token_data}", status=400)
+                    
+                access_token = token_data['access_token']
+                
+                # Fetch user data
+                headers = {'Authorization': f'Bearer {access_token}'}
+                async with session.get('https://discord.com/api/users/@me', headers=headers) as user_resp:
+                    user_data = await user_resp.json()
+                    
+                    if 'id' not in user_data:
+                        return web.Response(text="Không thể lấy thông tin user từ Discord.", status=400)
+                        
+                    session_id = str(uuid.uuid4())
+                    SESSIONS[session_id] = {
+                        "user_id": user_data['id'],
+                        "discord_data": user_data
+                    }
+                    
+                    response = web.HTTPFound('/')
+                    response.set_cookie('session_token', session_id, max_age=86400 * 7) # 7 ngày
+                    return response
+
+    async def api_me(self, request):
+        """Trả về thông tin user đã đăng nhập kèm DB profile."""
+        session_id = request.cookies.get('session_token')
+        if not session_id or session_id not in SESSIONS:
+            return web.json_response({"authenticated": False})
+            
+        session_data = SESSIONS[session_id]
+        discord_data = session_data["discord_data"]
+        user_id = session_data["user_id"]
+        
+        # Get from DB
+        from database import db_manager
+        db_profile = await db_manager.get_user_profile(user_id)
+        
+        if not db_profile:
+            db_profile = {"exp": 0, "level": 1, "affection": 0, "streak": 0, "selected_character": "airi"}
+            
+        avatar_hash = discord_data.get('avatar')
+        avatar_url = f"https://cdn.discordapp.com/avatars/{user_id}/{avatar_hash}.png" if avatar_hash else "https://cdn.discordapp.com/embed/avatars/0.png"
+        
+        return web.json_response({
+            "authenticated": True,
+            "id": user_id,
+            "username": discord_data.get('username'),
+            "global_name": discord_data.get('global_name'),
+            "avatar": avatar_url,
+            "exp": db_profile.get('exp', 0),
+            "level": db_profile.get('level', 1),
+            "affection": db_profile.get('affection', 0),
+            "streak": db_profile.get('streak', 0),
+            "character": db_profile.get('selected_character', 'airi')
+        })
+
+    async def api_daily(self, request):
+        """Endpoint điểm danh qua web."""
+        session_id = request.cookies.get('session_token')
+        if not session_id or session_id not in SESSIONS:
+            return web.json_response({"success": False, "msg": "Vui lòng đăng nhập trước!"})
+            
+        user_id = SESSIONS[session_id]["user_id"]
+        from database import db_manager
+        result = await db_manager.claim_daily(user_id)
+        return web.json_response(result)
 
     async def api_status(self, request):
         """Trả về thông số trạng thái của bot."""

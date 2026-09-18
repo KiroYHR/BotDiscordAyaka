@@ -409,3 +409,55 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
+
+// --- Logic Phase 9: Đăng Nhập & Hảo Cảm ---
+window.fetchUserProfile = async function() {
+    try {
+        const response = await fetch('/api/me');
+        const data = await response.json();
+        if (data.authenticated) {
+            document.getElementById('user-name').textContent = data.global_name || data.username;
+            document.getElementById('user-avatar').src = data.avatar;
+            document.getElementById('user-subtitle').innerHTML = `<span class="level-badge">Lv. ${data.level}</span> - ${data.exp} EXP`;
+            
+            // Cập nhật tab companion
+            document.getElementById('user-affection').textContent = data.affection;
+            document.getElementById('user-streak').textContent = data.streak;
+            
+            // Hiện nút tab Companion
+            document.getElementById('btn-tab-companion').style.display = 'block';
+            
+            // Ẩn nút đăng nhập
+            const loginBtn = document.querySelector('.status-badge a[href="/login"]');
+            if(loginBtn) loginBtn.parentElement.style.display = 'none';
+        }
+    } catch (e) {
+        console.error("Lỗi lấy thông tin user:", e);
+    }
+};
+
+window.claimDaily = async function() {
+    const btn = document.getElementById('btn-daily-claim');
+    btn.disabled = true;
+    btn.textContent = 'Đang nhận...';
+    try {
+        const response = await fetch('/api/daily', { method: 'POST' });
+        const data = await response.json();
+        if (data.success) {
+            window.showModal('Điểm Danh Thành Công 🌸', `Ayaka rất vui vì cậu đã quay lại! Cậu vừa nhận được ${data.affection_gained} 💖 Hảo Cảm.\n\nChuỗi hiện tại: ${data.streak} ngày 🔥`);
+            document.getElementById('user-affection').textContent = data.affection;
+            document.getElementById('user-streak').textContent = data.streak;
+        } else {
+            window.showModal('Thông Báo', data.msg);
+        }
+    } catch (e) {
+        window.showModal('Lỗi', 'Không thể kết nối đến máy chủ.');
+    }
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-gift"></i> Điểm Danh Ngay';
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    window.fetchUserProfile();
+});

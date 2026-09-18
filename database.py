@@ -33,6 +33,15 @@ class AyakaDatabase:
                     )
                 ''')
                 
+                # Cập nhật schema cho bảng users (Phase 9)
+                try:
+                    await db.execute('ALTER TABLE users ADD COLUMN IF NOT EXISTS affection INTEGER DEFAULT 0')
+                    await db.execute('ALTER TABLE users ADD COLUMN IF NOT EXISTS streak INTEGER DEFAULT 0')
+                    await db.execute('ALTER TABLE users ADD COLUMN IF NOT EXISTS last_daily_claim REAL DEFAULT 0')
+                    await db.execute("ALTER TABLE users ADD COLUMN IF NOT EXISTS selected_character TEXT DEFAULT 'airi'")
+                except Exception as e:
+                    logger.warning(f"Lỗi khi Alter Table users (có thể đã tồn tại): {e}")
+                
                 # Bảng Chat History (Trí nhớ AI)
                 await db.execute('''
                     CREATE TABLE IF NOT EXISTS chat_history (
@@ -136,6 +145,55 @@ class AyakaDatabase:
             if row:
                 return {"exp": row['exp'], "level": row['level']}
             return {"exp": 0, "level": 1}
+
+    async def get_user_profile(self, user_id: str) -> dict:
+        """Lấy toàn bộ profile user cho Web Dashboard."""
+        user_id = str(user_id)
+        if not self.pool: return None
+        async with self.pool.acquire() as db:
+            row = await db.fetchrow('SELECT * FROM users WHERE user_id = $1', user_id)
+            if row:
+                return dict(row)
+            return None
+
+    async def claim_daily(self, user_id: str) -> dict:
+        """Thực hiện điểm danh hàng ngày tăng Hảo cảm."""
+        import time
+        user_id = str(user_id)
+        if not self.pool: return {"success": False, "msg": "Không thể kết nối DB."}
+        now = time.time()
+        
+        async with self.pool.acquire() as db:
+            row = await db.fetchrow('SELECT affection, streak, last_daily_claim FROM users WHERE user_id = $1', user_id)
+            if not row:
+                await db.execute('INSERT INTO users (user_id, affection, streak, last_daily_claim) VALUES ($1, $2, $3, $4)', user_id, 10, 1, now)
+                return {"success": True, "streak": 1, "affection": 10, "affection_gained": 10}
+            
+            last_claim = row['last_daily_claim'] or 0
+            streak = row['streak'] or 0
+            affection = row['affection'] or 0
+            
+            # Thời gian chờ: 20 tiếng
+            if now - last_claim < 72000:
+                hours_left = int((72000 - (now - last_claim)) / 3600) + 1
+                return {"success": False, "msg": f"Cậu đã điểm danh hôm nay rồi! Hãy quay lại sau {hours_left} giờ nữa nhé."}
+            
+            # Mất chuỗi nếu quá 48 tiếng
+            if now - last_claim > 172800:
+                streak = 1
+            else:
+                streak += 1
+                
+            affection_gained = min(10 + (streak * 2), 50)
+            affection += affection_gained
+            
+            await db.execute('''
+                UPDATE users 
+                SET affection = $1, streak = $2, last_daily_claim = $3 
+                WHERE user_id = $4
+            ''', affection, streak, now, user_id)
+            
+            return {"success": True, "streak": streak, "affection": affection, "affection_gained": affection_gained}
 
     async def get_top_users(self, limit: int = 50) -> list:
         """Lấy danh sách người dùng top EXP."""

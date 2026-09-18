@@ -19,18 +19,21 @@
     <div class="app-layout">
         <!-- Sidebar Navigation -->
         <aside class="sidebar glass">
-            <div class="sidebar-header">
-                <img src="/assets/emojis/default_avatar.png" alt="Ayaka Avatar" class="avatar" id="ayaka-avatar">
-                <h3>Kamisato Ayaka</h3>
-                <p class="subtitle">Hiệp Hội Yashiro</p>
-                <div class="status-badge online" style="margin-top: 10px;">
-                    <span class="dot"></span> Đang Thức Giấc
+            <div class="sidebar-header" id="sidebar-profile">
+                <img src="/assets/emojis/default_avatar.png" alt="User Avatar" class="avatar" id="user-avatar">
+                <h3 id="user-name">Khách Lữ Hành</h3>
+                <p class="subtitle" id="user-subtitle">Vui lòng đăng nhập</p>
+                <div class="status-badge" style="margin-top: 10px; background: rgba(88, 101, 242, 0.2); border-color: #5865F2;">
+                    <a href="/login" style="color: #5865F2; text-decoration: none; font-weight: bold;"><i class="fa-brands fa-discord"></i> Đăng nhập Discord</a>
                 </div>
             </div>
             
             <nav class="sidebar-nav">
                 <button class="nav-btn active" onclick="switchTab('dashboard')" id="btn-tab-dashboard">
                     <i class="fa-solid fa-house"></i> Tổng Quan
+                </button>
+                <button class="nav-btn" onclick="switchTab('companion')" id="btn-tab-companion" style="display: none;">
+                    <i class="fa-solid fa-heart"></i> Đồng Hành (Airi)
                 </button>
                 <button class="nav-btn" onclick="switchTab('schedule')" id="btn-tab-schedule">
                     <i class="fa-solid fa-clock"></i> Lịch Trình
@@ -94,6 +97,27 @@
                                 <i class="fa-solid fa-compact-disc fa-spin"></i>
                                 <p>Không có âm điệu nào đang được gảy...</p>
                             </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Tab: Đồng Hành (Airi Companion) -->
+            <div id="tab-companion" class="tab-pane">
+                <header class="tab-header">
+                    <h2><i class="fa-solid fa-heart"></i> Không Gian Đồng Hành</h2>
+                </header>
+                <section class="modules">
+                    <div class="card full-width glass" style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+                        <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                            <div>
+                                <h3 style="margin: 0;">Mô hình Tương Tác: Airi</h3>
+                                <p style="margin: 5px 0 0 0; font-size: 0.9em; opacity: 0.8;">Độ Hảo Cảm: <strong id="user-affection">0</strong> 💖 | Chuỗi: <strong id="user-streak">0</strong> ngày 🔥</p>
+                            </div>
+                            <button id="btn-daily-claim" class="btn-primary" onclick="claimDaily()"><i class="fa-solid fa-gift"></i> Điểm Danh Ngay</button>
+                        </div>
+                        <div style="width: 100%; height: 600px; border-radius: 12px; overflow: hidden; border: 2px solid rgba(255,255,255,0.2);">
+                            <iframe src="https://airi.moeru.ai/" style="width: 100%; height: 100%; border: none;"></iframe>
                         </div>
                     </div>
                 </section>

@@ -61,6 +61,31 @@ class LevelCog(commands.Cog):
             logger.error(f"Lỗi khi reset EXP: {e}")
             await ctx.reply("❌ Đã xảy ra lỗi khi reset EXP.")
 
+    @commands.command(name="daily", aliases=["diemdanh"])
+    async def check_daily(self, ctx):
+        """Điểm danh mỗi ngày để nhận điểm Hảo Cảm với Ayaka."""
+        try:
+            result = await db_manager.claim_daily(str(ctx.author.id))
+            if result.get("success"):
+                streak = result["streak"]
+                affection = result["affection"]
+                gained = result["affection_gained"]
+                
+                embed = discord.Embed(
+                    title="💖 Điểm Danh Thành Công!",
+                    description=f"Ayaka rất vui vì hôm nay lại được gặp {ctx.author.mention}! 🌸\nCậu vừa nhận được **{gained} Điểm Hảo Cảm**.",
+                    color=discord.Color.brand_red()
+                )
+                embed.add_field(name="🔥 Chuỗi Điểm Danh", value=f"**{streak} ngày**", inline=True)
+                embed.add_field(name="💖 Tổng Hảo Cảm", value=f"**{affection} trái tim**", inline=True)
+                embed.set_thumbnail(url=ctx.author.avatar.url if ctx.author.avatar else None)
+                await ctx.reply(embed=embed)
+            else:
+                await ctx.reply(f"❌ {result.get('msg')}")
+        except Exception as e:
+            logger.error(f"Lỗi khi điểm danh: {e}")
+            await ctx.reply("❌ Không thể điểm danh lúc này, có chút lỗi xảy ra cậu ạ.")
+
     @commands.command(name="rank", aliases=["level", "capdo"])
     async def check_rank(self, ctx, member: discord.Member = None):
         target = member or ctx.author
