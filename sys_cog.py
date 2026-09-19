@@ -45,19 +45,20 @@ class SysCog(commands.Cog):
         from ai_brain import client
         if not client: return
         
-        # Lấy thời tiết 3 miền (Bắc - Trung - Nam)
-        hanoi_weather = await self.fetch_weather("Hanoi,VN")
-        danang_weather = await self.fetch_weather("Da Nang,VN")
+        # Lấy thời tiết TP.HCM và các khu vực lân cận
         hcm_weather = await self.fetch_weather("Ho Chi Minh City,VN")
+        q1_weather = await self.fetch_weather("District 1, Ho Chi Minh City, VN")
+        thu_duc_weather = await self.fetch_weather("Thu Duc, Ho Chi Minh City, VN")
+        q7_weather = await self.fetch_weather("District 7, Ho Chi Minh City, VN")
         
-        weather_info = f"{hanoi_weather}\n{danang_weather}\n{hcm_weather}"
+        weather_info = f"TP.HCM chung: {hcm_weather}\nQuận 1: {q1_weather}\nThủ Đức: {thu_duc_weather}\nQuận 7: {q7_weather}"
         
         full_prompt = (
             f"Hôm nay là ngày {date_str}, bây giờ là 06:00 sáng.\n"
             f"Dưới góc độ nhân vật Kamisato Ayaka (Genshin Impact), hãy viết một lời chào buổi sáng thật dễ thương, "
             f"kèm theo thông tin ngày tháng hiện tại để gửi đến các 'Nhà Lữ Hành' trong hiệp hội Yashiro.\n"
-            f"Thông tin thời tiết 3 miền hôm nay:\n{weather_info}\n"
-            f"(Hãy khéo léo lồng ghép dự báo thời tiết ở các khu vực vào lời chào. Giữ tin nhắn ngắn gọn tầm 4-5 câu)."
+            f"Thông tin thời tiết tại khu vực TP.HCM hôm nay:\n{weather_info}\n"
+            f"(Hãy khéo léo lồng ghép dự báo thời tiết của TP.HCM và một vài quận tiêu biểu vào lời chào. Giữ tin nhắn ngắn gọn tầm 4-5 câu)."
         )
         
         try:

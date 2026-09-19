@@ -159,27 +159,45 @@ class AyakaDatabase:
     async def claim_daily(self, user_id: str) -> dict:
         """Thực hiện điểm danh hàng ngày tăng Hảo cảm."""
         import time
+        from datetime import datetime, timedelta
+        import pytz
+        
         user_id = str(user_id)
         if not self.pool: return {"success": False, "msg": "Không thể kết nối DB."}
-        now = time.time()
+        
+        vn_tz = pytz.timezone('Asia/Ho_Chi_Minh')
+        now_vn = datetime.now(vn_tz)
+        now_ts = now_vn.timestamp()
+        
+        # Tính thời điểm 3h sáng gần nhất
+        reset_today = vn_tz.localize(datetime.combine(now_vn.date(), datetime.strptime("03:00", "%H:%M").time()))
+        
+        if now_vn < reset_today:
+            last_reset = reset_today - timedelta(days=1)
+        else:
+            last_reset = reset_today
+            
+        last_reset_ts = last_reset.timestamp()
+        previous_reset_ts = (last_reset - timedelta(days=1)).timestamp()
         
         async with self.pool.acquire() as db:
             row = await db.fetchrow('SELECT affection, streak, last_daily_claim FROM users WHERE user_id = $1', user_id)
             if not row:
-                await db.execute('INSERT INTO users (user_id, affection, streak, last_daily_claim) VALUES ($1, $2, $3, $4)', user_id, 10, 1, now)
+                await db.execute('INSERT INTO users (user_id, affection, streak, last_daily_claim) VALUES ($1, $2, $3, $4)', user_id, 10, 1, now_ts)
                 return {"success": True, "streak": 1, "affection": 10, "affection_gained": 10}
             
             last_claim = row['last_daily_claim'] or 0
             streak = row['streak'] or 0
             affection = row['affection'] or 0
             
-            # Thời gian chờ: 20 tiếng
-            if now - last_claim < 72000:
-                hours_left = int((72000 - (now - last_claim)) / 3600) + 1
-                return {"success": False, "msg": f"Cậu đã điểm danh hôm nay rồi! Hãy quay lại sau {hours_left} giờ nữa nhé."}
+            # Thời gian chờ: Đã điểm danh trong chu kỳ hiện tại (từ 3h sáng gần nhất tới nay)
+            if last_claim >= last_reset_ts:
+                next_reset = last_reset + timedelta(days=1)
+                hours_left = int((next_reset.timestamp() - now_ts) / 3600) + 1
+                return {"success": False, "msg": f"Cậu đã điểm danh hôm nay rồi! Hãy quay lại sau khoảng {hours_left} giờ nữa nhé (từ 03:00 sáng)."}
             
-            # Mất chuỗi nếu quá 48 tiếng
-            if now - last_claim > 172800:
+            # Mất chuỗi nếu claim cũ hơn chu kỳ hôm qua (tức là bỏ lỡ 1 ngày nguyên vẹn)
+            if last_claim < previous_reset_ts:
                 streak = 1
             else:
                 streak += 1
@@ -191,7 +209,7 @@ class AyakaDatabase:
                 UPDATE users 
                 SET affection = $1, streak = $2, last_daily_claim = $3 
                 WHERE user_id = $4
-            ''', affection, streak, now, user_id)
+            ''', affection, streak, now_ts, user_id)
             
             return {"success": True, "streak": streak, "affection": affection, "affection_gained": affection_gained}
 

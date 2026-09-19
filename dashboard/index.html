@@ -116,8 +116,9 @@
                             </div>
                             <button id="btn-daily-claim" class="btn-primary" onclick="claimDaily()"><i class="fa-solid fa-gift"></i> Điểm Danh Ngay</button>
                         </div>
-                        <div style="width: 100%; height: 600px; border-radius: 12px; overflow: hidden; border: 2px solid rgba(255,255,255,0.2);">
-                            <iframe src="https://airi.moeru.ai/" style="width: 100%; height: 100%; border: none;"></iframe>
+                        <div id="live2d-wrapper" style="width: 100%; height: 600px; border-radius: 12px; overflow: hidden; border: 2px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.1); position: relative; display: flex; justify-content: center; align-items: center;">
+                            <div id="live2d-loading" style="position: absolute; color: white; font-size: 1.2rem;"><i class="fa-solid fa-spinner fa-spin"></i> Đang gọi Ayaka...</div>
+                            <canvas id="live2d-canvas" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; cursor: pointer;"></canvas>
                         </div>
                     </div>
                 </section>
@@ -244,6 +245,11 @@
         </div>
     </div>
 
-    <script src="app.js?v=5"></script>
+    <!-- Thư viện Live2D WebGL (PixiJS) -->
+    <script src="https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pixi.js@6.5.2/dist/browser/pixi.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/index.min.js"></script>
+
+    <script src="app.js?v=6"></script>
 </body>
 </html>
