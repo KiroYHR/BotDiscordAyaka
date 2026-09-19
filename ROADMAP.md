@@ -37,5 +37,13 @@ Hiện tại trí nhớ của Ayaka (ngữ cảnh chat, hàng đợi nhạc) ch�
 - **Đăng nhập Web Nhận Quà (Streak)**: Khuyến khích người dùng đăng nhập Web mỗi ngày để giữ "chuỗi" (giống TikTok Streak).
 - **Nuôi Pet / Độ Thiện Cảm**: Tính năng mua vui trên trang Web và Discord, tặng quà cho Ayaka hoặc nuôi pet ảo, tạo động lực tương tác hằng ngày.
 
+## 🌸 Giai Đoạn 10: Không Gian Đồng Hành Trên Web (Live2D/3D Companion) [HOÀN TẤT]
+- **Tích Hợp Trợ Lý Ảo**: Xây dựng Tab "Không Gian Đồng Hành" trên Web Dashboard.
+- **Tương Tác Live2D/3D**: Cho phép hiển thị mô hình Live2D (PixiJS) hoặc 3D (ThreeJS) của nhân vật, tích hợp logic nhận diện độ hảo cảm và điểm danh hằng ngày với hiệu ứng trực quan.
+
+## 🎭 Giai Đoạn 11: Chế Tạo Mô Hình Ayaka Bằng Blender
+- **Nghiên Cứu & Tự Làm Mô Hình**: Do không có sẵn mô hình Ayaka Live2D miễn phí chất lượng cao trên mạng, chúng ta sẽ bắt tay vào tự thiết kế hoặc tinh chỉnh một mô hình 3D (bằng Blender) để chuyển đổi sang Live2D hoặc gán hoạt ảnh (Rigging/Animation) hoàn chỉnh.
+- **Kế Hoạch**: Tìm hiểu Blender, gắn xương (Rigging), tạo các hoạt ảnh cơ bản (Idle, Vẫy tay) và kết xuất (Export) sang định dạng tương thích cho Web Dashboard.
+
 ---
 *Cậu thấy hứng thú với Giai Đoạn nào tiếp theo nhất? Cứ thoải mái ra chỉ thị nhé! 🌸*
