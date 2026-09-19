@@ -524,9 +524,8 @@ window.init3DModel = function() {
         threeModel = gltf.scene;
         
         // Điều chỉnh kích thước và vị trí (tuỳ thuộc mô hình)
-        // Thông thường mô hình Genshin hơi lớn nên có thể phải scale lại
-        threeModel.scale.set(1.5, 1.5, 1.5); 
-        threeModel.position.set(0, -0.5, 0); // Kéo xuống dưới 1 chút cho cân đối
+        threeModel.scale.set(30, 30, 30); 
+        threeModel.position.set(0, -3, 0); 
         
         threeScene.add(threeModel);
         
@@ -557,7 +556,7 @@ window.init3DModel = function() {
         } else if (threeModel) {
             // Procedural floating animation (Lơ lửng nhẹ nhàng)
             const time = Date.now() * 0.0015;
-            threeModel.position.y = -0.5 + Math.sin(time) * 0.05; 
+            threeModel.position.y = -3 + Math.sin(time) * 0.2; 
         }
         
         orbitControls.update(); // Bắt buộc cho Damping
