@@ -7,23 +7,27 @@
 ## 2. Các Bước Thực Hiện Chi Tiết
 
 ### Bước 1: Chuẩn Bị Mô Hình Gốc (Base Model)
-- **Nguồn tài nguyên**: Tìm kiếm các mô hình MMD (MikuMikuDance) của Genshin Impact do Mihoyo cung cấp công khai trên Bilibili (hoặc các nguồn chia sẻ mô hình 3D thô có định dạng `.pmx`, `.fbx`, `.obj`).
-- **Lưu ý bản quyền**: Chỉ sử dụng cho mục đích cá nhân và phi thương mại.
+- **Nguồn tài nguyên chính (Khuyên dùng)**: 
+  - **Aplaybox (模之屋 - aplaybox.com)**: Đây là trang web chính thức mà nhà phát hành MiHoYo (Genshin Impact) dùng để đăng tải các mô hình 3D (MMD) gốc của nhân vật cực kỳ chất lượng. Cậu có thể lên đây tìm từ khóa **神里绫华** (Kamisato Ayaka) để tải về tệp `.pmx`. (Lưu ý: Trang web này cần tạo tài khoản).
+  - **DeviantArt**: Nếu không tạo được tài khoản Aplaybox, cậu có thể lên trang *DeviantArt.com* và tìm kiếm *"Genshin Impact Ayaka MMD official download"*. Cộng đồng quốc tế thường xuyên chia sẻ lại các tệp gốc từ Aplaybox lên đây qua link Google Drive hoặc Mega.
+- **Lưu ý bản quyền**: Các mô hình này được MiHoYo cung cấp miễn phí nhưng đi kèm điều khoản nghiêm ngặt: Chỉ sử dụng cho mục đích cá nhân, học tập, phi thương mại. Tuyệt đối không bán lại.
 
-### Bước 2: Nhập Mô Hình Vào Blender & Chỉnh Sửa
-- **Cài đặt Blender**: Tải và cài đặt phần mềm Blender phiên bản mới nhất.
-- **Import (Nhập) & Clean up**: Nhập mô hình thô vào Blender. Chỉnh sửa lại hệ thống vật liệu (Materials) và lưới (Mesh) nếu bị lỗi kết cấu.
-- **Tối ưu hóa Shader**: Tạo các node Shader đặc biệt (Cel Shading/Toon Shading) trong Blender để giữ nguyên phong cách Anime đặc trưng của Ayaka thay vì đổ bóng chân thực.
+### Bước 2: Nhập Mô Hình Vào Blender (Sử dụng MMD Tools)
+- **Cài đặt Blender & Plugin**: 
+  - Cài đặt phần mềm Blender phiên bản mới nhất (4.2+).
+  - Do Blender mặc định không hỗ trợ tệp `.pmx`, chúng ta phải cài thêm Add-on **[mmd_tools](https://github.com/UuuNyaa/blender_mmd_tools/releases)** (Tải tệp `.zip`, vào Blender chọn *Biên Soạn > Tùy Chọn > Tiện ích > Cài đặt* và nạp tệp zip vào).
+- **Import (Nhập)**: Sử dụng tính năng *Tập Tin > Nhập > MikuMikuDance Model (.pmx)* để đưa Ayaka nguyên bản (có đầy đủ xương và vật liệu) vào Blender.
 
 ### Bước 3: Gắn Xương (Rigging) và Tạo Hoạt Ảnh (Animation)
-- **Phương án 1: Dùng Mixamo (Tự động & Nhanh chóng)**
-  - Xuất mô hình thô (.fbx) không kèm xương từ Blender.
-  - Tải lên trang web Mixamo của Adobe để thuật toán tự động nhận diện và gắn xương (Auto-Rigger).
-  - Chọn các hoạt ảnh ưng ý (Idle, Vẫy tay, Đi bộ) và tải về.
-- **Phương án 2: Tự làm trong Blender (Nâng cao)**
-  - Sử dụng khung xương (Armature) có sẵn hoặc tự tạo khung xương mới.
-  - Áp dụng các kỹ thuật Weight Painting để xương di chuyển không làm biến dạng váy/tóc.
-  - Mở Dope Sheet / Timeline để gán Keyframe tạo cử động nhịp nhàng (thở, chớp mắt).
+- **Phương án 1: Dùng Mixamo (Cơ bản - Dễ nhất)**
+  - Mặc dù mô hình MMD đã có sẵn xương, nhưng hệ thống xương này rườm rà và khó tương thích trực tiếp với Web 3D.
+  - Chúng ta sẽ xuất mô hình từ Blender ra định dạng `.fbx`.
+  - Tải lên trang web Mixamo của Adobe để thuật toán tự động gắn lại bộ xương chuẩn quốc tế (Humanoid Skeleton).
+  - Chọn các hoạt ảnh ưng ý (Idle, Vẫy tay) và tải về.
+- **Phương án 2: Giữ nguyên xương MMD và làm Animation thủ công (Nâng cao)**
+  - Giữ nguyên bộ xương siêu chi tiết của MMD (có cả xương váy, xương tóc, xương mặt).
+  - Áp dụng các tính năng vật lý (Physics) của MMD Tools để tóc và váy tự đung đưa.
+  - Tự gán Keyframe trong Timeline của Blender để tạo hoạt ảnh.
 
 ### Bước 4: Xuất Tệp (Export) và Tích Hợp Web
 - **Định dạng 3D (.glb)**:
