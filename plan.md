@@ -18,11 +18,11 @@
   - Do Blender mặc định không hỗ trợ tệp `.pmx`, chúng ta phải cài thêm Add-on **[mmd_tools](https://github.com/UuuNyaa/blender_mmd_tools/releases)** (Tải tệp `.zip`, vào Blender chọn *Biên Soạn > Tùy Chọn > Tiện ích > Cài đặt* và nạp tệp zip vào).
 - **Import (Nhập)**: Sử dụng tính năng *Tập Tin > Nhập > MikuMikuDance Model (.pmx)* để đưa Ayaka nguyên bản (có đầy đủ xương và vật liệu) vào Blender.
 
-### Bước 3: Tạo Hoạt Ảnh Thủ Công (Manual Animation)
-Vì chúng ta quyết định giữ lại toàn bộ bộ xương MMD gốc siêu chi tiết (bao gồm cả xương tóc, xương váy và khuôn mặt) để giữ nguyên thần thái của Ayaka, chúng ta sẽ tự làm Animation ngay trong Blender:
-1. **Chế độ Pose Mode (Tạo dáng)**: Chọn khung xương (`Kamisato Ayaka_arm`) và chuyển sang chế độ Pose Mode. Tại đây cậu có thể xoay các khớp xương tay, chân, đầu để tạo ra các tư thế khác nhau.
-2. **Keyframe (Lưu chuyển động)**: Mở cửa sổ *Timeline* ở dưới cùng, tạo dáng xong thì ấn phím `I` để lưu (Insert Keyframe) vị trí và góc xoay của xương tại từng khung hình (Frame).
-3. **Bake Physics (Nướng vật lý)**: Nhờ có MMD Tools, áo và tóc của Ayaka đã được cài sẵn vật lý (Rigidbodies). Sau khi tạo xong chuyển động của tay chân, chúng ta sẽ dùng tính năng *Bake Physics* để Blender tự động tính toán lực gió làm đung đưa tóc và váy, biến chúng thành Keyframe có thể xuất ra được.
+### Bước 3: Tạo Hoạt Ảnh Bằng Dữ Liệu VMD (Nhàn hạ & Đẹp nhất)
+Nhìn bảng xương chằng chịt tiếng Nhật kia ai cũng phải choáng ngợp! Rất may, vì chúng ta đang dùng mô hình chuẩn MMD, nên chúng ta **hoàn toàn không cần làm hoạt ảnh bằng tay** hay nhờ AI ngoài nào cả! Chúng ta sẽ sử dụng các tệp chuyển động có sẵn gọi là **VMD (Vocaloid Motion Data)** do cộng đồng chia sẻ.
+1. **Tìm & Tải VMD**: Tìm kiếm trên mạng (Youtube, DeviantArt, Bilibili) các tệp hoạt ảnh MMD có đuôi `.vmd` (Ví dụ tìm từ khóa: *MMD Idle motion dl*, *MMD Walk motion* hoặc các bài nhảy).
+2. **Nhập (Import) VMD vào Blender**: Bấm chọn bộ xương (`Kamisato Ayaka_arm`), sau đó vào *Tập Tin > Nhập > VMD (.vmd)* và chọn tệp vừa tải. Ayaka sẽ lập tức di chuyển cực kỳ mượt mà kèm theo cả biểu cảm khuôn mặt!
+3. **Bake Physics (Nướng vật lý)**: (Tùy chọn) Sử dụng tính năng Build Physics của MMD Tools để Blender tính toán độ vung vẩy của váy và tóc theo chuyển động mới.
 
 ### Bước 4: Xuất Tệp (Export) và Tích Hợp Web
 - **Định dạng 3D (.glb)**:
