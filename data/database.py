@@ -33,6 +33,16 @@ class AyakaDatabase:
                     )
                 ''')
                 
+                # Bảng lưu phiên đăng nhập Web Dashboard
+                await db.execute('''
+                    CREATE TABLE IF NOT EXISTS web_sessions (
+                        session_id TEXT PRIMARY KEY,
+                        user_id TEXT,
+                        discord_data TEXT,
+                        created_at REAL
+                    )
+                ''')
+                
                 # Cập nhật schema cho bảng users (Phase 9)
                 try:
                     await db.execute('ALTER TABLE users ADD COLUMN IF NOT EXISTS affection INTEGER DEFAULT 0')
@@ -257,4 +267,36 @@ class AyakaDatabase:
             return False
 
 # Tạo một instance duy nhất (Singleton pattern) để dùng chung
+    async def save_session(self, session_id, user_id, discord_data):
+        """Lưu phiên bản web dashboard session."""
+        if not self.pool:
+            return
+        try:
+            discord_data_str = json.dumps(discord_data)
+            async with self.pool.acquire() as db:
+                await db.execute('''
+                    INSERT INTO web_sessions (session_id, user_id, discord_data, created_at)
+                    VALUES ($1, $2, $3, EXTRACT(EPOCH FROM NOW()))
+                    ON CONFLICT (session_id) 
+                    DO UPDATE SET user_id = EXCLUDED.user_id, discord_data = EXCLUDED.discord_data
+                ''', session_id, user_id, discord_data_str)
+        except Exception as e:
+            logger.error(f"Lỗi save_session: {e}")
+
+    async def get_session(self, session_id):
+        """Lấy thông tin session."""
+        if not self.pool:
+            return None
+        try:
+            async with self.pool.acquire() as db:
+                row = await db.fetchrow('SELECT user_id, discord_data FROM web_sessions WHERE session_id = $1', session_id)
+                if row:
+                    return {
+                        "user_id": row["user_id"],
+                        "discord_data": json.loads(row["discord_data"])
+                    }
+        except Exception as e:
+            logger.error(f"Lỗi get_session: {e}")
+        return None
+
 db_manager = AyakaDatabase()

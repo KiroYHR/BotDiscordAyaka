@@ -10,8 +10,7 @@ from core import config
 
 logger = logging.getLogger("AyakaWeb")
 
-# In-memory session store: {session_id: {"user_id": str, "access_token": str}}
-SESSIONS = {}
+
 
 class WebDashboard:
     def __init__(self, bot):
@@ -92,22 +91,24 @@ class WebDashboard:
                         return web.Response(text="Không thể lấy thông tin user từ Discord.", status=400)
                         
                     session_id = str(uuid.uuid4())
-                    SESSIONS[session_id] = {
-                        "user_id": user_data['id'],
-                        "discord_data": user_data
-                    }
+                    from data.database import db_manager
+                    await db_manager.save_session(session_id, user_data['id'], user_data)
                     
                     response = web.HTTPFound('/')
-                    response.set_cookie('session_token', session_id, max_age=86400 * 7) # 7 ngày
+                    response.set_cookie('session_token', session_id, max_age=86400 * 30) # 30 ngày
                     return response
 
     async def api_me(self, request):
         """Trả về thông tin user đã đăng nhập kèm DB profile."""
         session_id = request.cookies.get('session_token')
-        if not session_id or session_id not in SESSIONS:
+        if not session_id:
             return web.json_response({"authenticated": False})
             
-        session_data = SESSIONS[session_id]
+        from data.database import db_manager
+        session_data = await db_manager.get_session(session_id)
+        if not session_data:
+            return web.json_response({"authenticated": False})
+            
         discord_data = session_data["discord_data"]
         user_id = session_data["user_id"]
         
@@ -137,11 +138,15 @@ class WebDashboard:
     async def api_daily(self, request):
         """Endpoint điểm danh qua web."""
         session_id = request.cookies.get('session_token')
-        if not session_id or session_id not in SESSIONS:
+        if not session_id:
             return web.json_response({"success": False, "msg": "Vui lòng đăng nhập trước!"})
             
-        user_id = SESSIONS[session_id]["user_id"]
         from data.database import db_manager
+        session_data = await db_manager.get_session(session_id)
+        if not session_data:
+            return web.json_response({"success": False, "msg": "Phiên đăng nhập hết hạn!"})
+            
+        user_id = session_data["user_id"]
         result = await db_manager.claim_daily(user_id)
         return web.json_response(result)
 

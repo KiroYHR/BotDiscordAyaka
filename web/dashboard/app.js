@@ -481,8 +481,8 @@ window.initLive2D = async function() {
             resizeTo: document.getElementById('live2d-wrapper')
         });
         
-        // Dùng tạm mô hình Shizuku miễn phí từ thư viện (Nguồn NPM tin cậy)
-        const modelUrl = 'https://unpkg.com/live2d-widget-model-shizuku@1.0.5/assets/shizuku.model.json';
+        // Dùng tạm mô hình Shizuku miễn phí từ thư viện (Nguồn Github đáng tin cậy)
+        const modelUrl = 'https://cdn.jsdelivr.net/gh/guansss/pixi-live2d-display@master/test/assets/shizuku/shizuku.model.json';
         live2dModel = await PIXI.live2d.Live2DModel.from(modelUrl);
         
         live2dApp.stage.addChild(live2dModel);
