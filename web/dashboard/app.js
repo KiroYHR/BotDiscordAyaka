@@ -463,142 +463,70 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// --- Logic Giai Đoạn 10: Custom 3D Model (Three.js) ---
-let threeScene, threeCamera, threeRenderer, threeModel, threeMixer, threeClock, orbitControls;
-let is3DInitialized = false;
+// --- Logic Giai Đoạn 10: Custom Live2D ---
+let live2dModel = null;
+let live2dApp = null;
 
-window.init3DModel = function() {
-    if (is3DInitialized) return; // Đã khởi tạo
+window.initLive2D = async function() {
+    if (live2dApp) return; // Đã khởi tạo
     
-    const wrapper = document.getElementById('live2d-wrapper');
-    if (!wrapper) return;
+    const canvas = document.getElementById('live2d-canvas');
+    if (!canvas) return;
     
-    is3DInitialized = true;
-    
-    const width = wrapper.clientWidth;
-    const height = wrapper.clientHeight;
-    
-    // 1. Scene
-    threeScene = new THREE.Scene();
-    
-    // 2. Camera
-    threeCamera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-    threeCamera.position.set(0, 1.5, 4); // Góc nhìn phù hợp cho Ayaka
-    
-    // 3. Renderer
-    threeRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    threeRenderer.setSize(width, height);
-    threeRenderer.setPixelRatio(window.devicePixelRatio);
-    threeRenderer.outputEncoding = THREE.sRGBEncoding; // Đảm bảo màu sắc chân thực
-    threeRenderer.domElement.style.position = 'absolute';
-    threeRenderer.domElement.style.top = '0';
-    threeRenderer.domElement.style.left = '0';
-    threeRenderer.domElement.style.cursor = 'grab';
-    wrapper.appendChild(threeRenderer.domElement);
-    
-    // 4. Ánh sáng
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6); // Sáng vừa phải
-    threeScene.add(ambientLight);
-    
-    const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
-    dirLight.position.set(5, 10, 7);
-    threeScene.add(dirLight);
-    
-    const fillLight = new THREE.DirectionalLight(0xffddaa, 0.5); // Ánh sáng phụ màu ấm
-    fillLight.position.set(-5, 0, -5);
-    threeScene.add(fillLight);
-    
-    // 5. Controls (Ngắm 360 độ)
-    orbitControls = new THREE.OrbitControls(threeCamera, threeRenderer.domElement);
-    orbitControls.enableDamping = true;
-    orbitControls.dampingFactor = 0.05;
-    orbitControls.target.set(0, 1, 0); // Trọng tâm xoay ở phần thân
-    orbitControls.minDistance = 2; // Không cho zoom vào sát mặt
-    orbitControls.maxDistance = 8;
-    
-    threeClock = new THREE.Clock();
-    
-    // 6. GLTFLoader (Tải file .glb)
-    const loader = new THREE.GLTFLoader();
-    loader.load('/assets/ayaka.glb', function(gltf) {
-        threeModel = gltf.scene;
+    try {
+        live2dApp = new PIXI.Application({
+            view: canvas,
+            transparent: true,
+            autoStart: true,
+            resizeTo: document.getElementById('live2d-wrapper')
+        });
         
-        // Tính toán kích thước thực tế của mô hình để tự động scale
-        const box = new THREE.Box3().setFromObject(threeModel);
-        const size = box.getSize(new THREE.Vector3()).length();
-        const center = box.getCenter(new THREE.Vector3());
+        // Dùng tạm mô hình Shizuku miễn phí từ thư viện (Nguồn Github đáng tin cậy)
+        const modelUrl = 'https://cdn.jsdelivr.net/gh/guansss/pixi-live2d-display@master/test/assets/shizuku/shizuku.model.json';
+        live2dModel = await PIXI.live2d.Live2DModel.from(modelUrl);
         
-        // Đưa tâm mô hình về giữa
-        threeModel.position.x += (threeModel.position.x - center.x);
-        threeModel.position.y += (threeModel.position.y - center.y);
-        threeModel.position.z += (threeModel.position.z - center.z);
+        live2dApp.stage.addChild(live2dModel);
         
-        // Phóng to/thu nhỏ sao cho mô hình luôn lấp đầy màn hình (tương đương size = 5)
-        const scale = 5 / size;
-        threeModel.scale.set(scale, scale, scale);
-        
-        // Hạ xuống một chút cho vừa vặn
-        threeModel.position.y -= 0.5;
-        
-        threeScene.add(threeModel);
-        
-        // Hoạt ảnh (Nếu mô hình có xương khớp animation)
-        if (gltf.animations && gltf.animations.length > 0) {
-            threeMixer = new THREE.AnimationMixer(threeModel);
-            const action = threeMixer.clipAction(gltf.animations[0]); // Chạy animation đầu tiên
-            action.play();
-        }
+        // Điều chỉnh tỷ lệ kích thước
+        live2dModel.scale.set(0.2); 
+        live2dModel.x = (live2dApp.renderer.width - live2dModel.width) / 2;
+        live2dModel.y = (live2dApp.renderer.height - live2dModel.height) / 2 + 100;
         
         // Xoá chữ Loading
-        const loading = document.getElementById('live2d-loading');
-        if (loading) loading.style.display = 'none';
+        document.getElementById('live2d-loading').style.display = 'none';
         
-    }, undefined, function(error) {
-        console.error("Lỗi khi tải 3D Ayaka:", error);
-        const loading = document.getElementById('live2d-loading');
-        if (loading) loading.innerHTML = "Lỗi khi tải Mô hình 3D :(";
-    });
-    
-    // 7. Vòng lặp kết xuất
-    function animate() {
-        requestAnimationFrame(animate);
-        const delta = threeClock.getDelta();
+        // Tương tác: Nhìn theo chuột
+        live2dApp.ticker.add(() => {
+            const mousePosition = live2dApp.renderer.plugins.interaction.mouse.global;
+            if (mousePosition.x > 0 && mousePosition.y > 0) {
+                // Focus: x, y in range [-1, 1]
+                const focusX = (mousePosition.x / live2dApp.renderer.width) * 2 - 1;
+                const focusY = (mousePosition.y / live2dApp.renderer.height) * 2 - 1;
+                live2dModel.focus(focusX, focusY);
+            }
+        });
         
-        if (threeMixer) {
-            threeMixer.update(delta); // Cập nhật hoạt ảnh có sẵn
-        } else if (threeModel) {
-            // Procedural floating animation (Lơ lửng nhẹ nhàng)
-            const time = Date.now() * 0.0015;
-            threeModel.position.y = -3 + Math.sin(time) * 0.2; 
-        }
-        
-        orbitControls.update(); // Bắt buộc cho Damping
-        threeRenderer.render(threeScene, threeCamera);
+        // Tương tác: Chạm
+        live2dModel.on('hit', (hitAreas) => {
+            if (hitAreas.includes('head')) {
+                live2dModel.motion('tap_body');
+            } else {
+                live2dModel.motion('tap_body');
+            }
+        });
+    } catch (error) {
+        console.error("Lỗi khi tải Live2D:", error);
+        document.getElementById('live2d-loading').innerHTML = "Lỗi khi tải Ayaka :(";
     }
-    
-    animate();
-    
-    // 8. Tự động resize
-    window.addEventListener('resize', () => {
-        if (wrapper && threeRenderer) {
-            threeCamera.aspect = wrapper.clientWidth / wrapper.clientHeight;
-            threeCamera.updateProjectionMatrix();
-            threeRenderer.setSize(wrapper.clientWidth, wrapper.clientHeight);
-        }
-    });
 };
 
 // Override lại hàm claimDaily để kết hợp hiệu ứng Live2D
 const originalClaimDaily = window.claimDaily;
 window.claimDaily = async function() {
-    // Hoạt ảnh nhảy nhẹ lên khi nhận quà (nếu có 3D model)
-    if (typeof threeModel !== 'undefined' && threeModel) {
+    // Kích hoạt hoạt ảnh vui vẻ
+    if (live2dModel) {
         try {
-            // Tạm thời đẩy Y lên một chút để tạo hiệu ứng nhảy
-            threeModel.position.y += 0.3;
-            setTimeout(() => {
-                if (threeModel) threeModel.position.y -= 0.3;
-            }, 300);
+            live2dModel.motion('tap_body'); 
         } catch (e) {}
     }
     
@@ -615,6 +543,6 @@ window.switchTab = function(tabId) {
         originalSwitchTab(tabId);
     }
     if (tabId === 'companion') {
-        window.init3DModel();
+        window.initLive2D();
     }
 };
