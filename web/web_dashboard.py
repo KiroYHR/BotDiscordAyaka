@@ -42,7 +42,7 @@ class WebDashboard:
         self.app.router.add_get('/app.js', self.serve_js)
         
         # Đường dẫn tuyệt đối để tránh lỗi không tìm thấy file
-        assets_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'web/dashboard', 'assets')
+        assets_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dashboard', 'assets')
         self.app.router.add_static('/assets/', path=assets_path, name='assets')
 
     async def login(self, request):
@@ -280,8 +280,8 @@ class WebDashboard:
 
 async def start_web_server(bot, port=928):
     """Khởi động Web Server chạy ngầm trong bot."""
-    web/dashboard = WebDashboard(bot)
-    runner = web.AppRunner(web/dashboard.app)
+    dash_board = WebDashboard(bot)
+    runner = web.AppRunner(dash_board.app)
     await runner.setup()
     
     # Chạy trên mọi IP (0.0.0.0) với cổng cấu hình
