@@ -523,9 +523,22 @@ window.init3DModel = function() {
     loader.load('/assets/ayaka.glb', function(gltf) {
         threeModel = gltf.scene;
         
-        // Điều chỉnh kích thước và vị trí (tuỳ thuộc mô hình)
-        threeModel.scale.set(30, 30, 30); 
-        threeModel.position.set(0, -3, 0); 
+        // Tính toán kích thước thực tế của mô hình để tự động scale
+        const box = new THREE.Box3().setFromObject(threeModel);
+        const size = box.getSize(new THREE.Vector3()).length();
+        const center = box.getCenter(new THREE.Vector3());
+        
+        // Đưa tâm mô hình về giữa
+        threeModel.position.x += (threeModel.position.x - center.x);
+        threeModel.position.y += (threeModel.position.y - center.y);
+        threeModel.position.z += (threeModel.position.z - center.z);
+        
+        // Phóng to/thu nhỏ sao cho mô hình luôn lấp đầy màn hình (tương đương size = 5)
+        const scale = 5 / size;
+        threeModel.scale.set(scale, scale, scale);
+        
+        // Hạ xuống một chút cho vừa vặn
+        threeModel.position.y -= 0.5;
         
         threeScene.add(threeModel);
         
