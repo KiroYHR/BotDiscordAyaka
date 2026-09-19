@@ -2,8 +2,8 @@ import sys
 import logging
 import discord
 from discord.ext import commands
-import config
-import ai_brain
+from core import config
+from core import ai_brain
 import io
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
@@ -24,7 +24,7 @@ bot = commands.Bot(command_prefix="!", intents=intents, help_command=None)
 @bot.event
 async def setup_hook():
     # Khởi tạo database trước tiên
-    from database import db_manager
+    from data.database import db_manager
     await db_manager.init_db()
     
     initial_extensions = [
@@ -37,12 +37,12 @@ async def setup_hook():
     ]
     for extension in initial_extensions:
         try:
-            await bot.load_extension(extension)
-            logger.info(f"Đã tải module {extension} thành công!")
+            await bot.load_extension(f"cogs.{extension}")
+            logger.info(f"Đã tải module cogs.{extension} thành công!")
         except Exception as e:
-            logger.error(f"Lỗi khi tải module {extension}: {e}")
+            logger.error(f"Lỗi khi tải module cogs.{extension}: {e}")
 
-from web_dashboard import start_web_server
+from web.web_dashboard import start_web_server
 
 @bot.event
 async def on_ready():

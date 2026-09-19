@@ -6,7 +6,7 @@ from urllib.parse import urlencode
 from aiohttp import web
 import aiohttp
 import discord
-import config
+from core import config
 
 logger = logging.getLogger("AyakaWeb")
 
@@ -42,7 +42,7 @@ class WebDashboard:
         self.app.router.add_get('/app.js', self.serve_js)
         
         # Đường dẫn tuyệt đối để tránh lỗi không tìm thấy file
-        assets_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dashboard', 'assets')
+        assets_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'web/dashboard', 'assets')
         self.app.router.add_static('/assets/', path=assets_path, name='assets')
 
     async def login(self, request):
@@ -112,7 +112,7 @@ class WebDashboard:
         user_id = session_data["user_id"]
         
         # Get from DB
-        from database import db_manager
+        from data.database import db_manager
         db_profile = await db_manager.get_user_profile(user_id)
         
         if not db_profile:
@@ -141,7 +141,7 @@ class WebDashboard:
             return web.json_response({"success": False, "msg": "Vui lòng đăng nhập trước!"})
             
         user_id = SESSIONS[session_id]["user_id"]
-        from database import db_manager
+        from data.database import db_manager
         result = await db_manager.claim_daily(user_id)
         return web.json_response(result)
 
@@ -201,7 +201,7 @@ class WebDashboard:
 
     async def api_get_schedules(self, request):
         """Lấy danh sách báo thức."""
-        from database import db_manager
+        from data.database import db_manager
         schedules = await db_manager.get_schedules()
         return web.json_response(schedules)
 
@@ -218,7 +218,7 @@ class WebDashboard:
             if not all([guild_id, channel_id, time_str, prompt]):
                 return web.json_response({"success": False, "error": "Thiếu dữ liệu"})
 
-            from database import db_manager
+            from data.database import db_manager
             success, err_msg = await db_manager.add_schedule(guild_id, channel_id, time_str, prompt, weather_location)
             if success:
                 return web.json_response({"success": True})
@@ -235,7 +235,7 @@ class WebDashboard:
             if not schedule_id:
                 return web.json_response({"success": False, "error": "Thiếu ID"})
                 
-            from database import db_manager
+            from data.database import db_manager
             success = await db_manager.delete_schedule(int(schedule_id))
             return web.json_response({"success": success})
         except Exception as e:
@@ -244,7 +244,7 @@ class WebDashboard:
 
     async def api_leaderboard(self, request):
         """Trả về danh sách top 50 người dùng có EXP cao nhất."""
-        from database import db_manager
+        from data.database import db_manager
         top_users = await db_manager.get_top_users(limit=50)
         
         result = []
@@ -264,24 +264,24 @@ class WebDashboard:
 
     # Các hàm phục vụ file tĩnh (Frontend)
     async def serve_index(self, request):
-        with open('dashboard/index.html', 'r', encoding='utf-8') as f:
+        with open('web/dashboard/index.html', 'r', encoding='utf-8') as f:
             return web.Response(text=f.read(), content_type='text/html')
             
     async def serve_leaderboard(self, request):
         raise web.HTTPFound('/')
 
     async def serve_css(self, request):
-        with open('dashboard/style.css', 'r', encoding='utf-8') as f:
+        with open('web/dashboard/style.css', 'r', encoding='utf-8') as f:
             return web.Response(text=f.read(), content_type='text/css')
 
     async def serve_js(self, request):
-        with open('dashboard/app.js', 'r', encoding='utf-8') as f:
+        with open('web/dashboard/app.js', 'r', encoding='utf-8') as f:
             return web.Response(text=f.read(), content_type='application/javascript')
 
 async def start_web_server(bot, port=928):
     """Khởi động Web Server chạy ngầm trong bot."""
-    dashboard = WebDashboard(bot)
-    runner = web.AppRunner(dashboard.app)
+    web/dashboard = WebDashboard(bot)
+    runner = web.AppRunner(web/dashboard.app)
     await runner.setup()
     
     # Chạy trên mọi IP (0.0.0.0) với cổng cấu hình

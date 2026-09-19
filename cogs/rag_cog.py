@@ -6,8 +6,8 @@ import os
 import aiohttp
 from google import genai
 from google.genai import types
-import config
-from prompts import AYAKA_SYSTEM_PROMPT
+from core import config
+from data.prompts import AYAKA_SYSTEM_PROMPT
 
 logger = logging.getLogger("AyakaRAG")
 

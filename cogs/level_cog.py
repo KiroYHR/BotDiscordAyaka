@@ -3,7 +3,7 @@ from discord.ext import commands
 import logging
 import time
 import random
-from database import db_manager
+from data.database import db_manager
 
 logger = logging.getLogger("AyakaLevel")
 

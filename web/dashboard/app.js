@@ -461,3 +461,88 @@ window.claimDaily = async function() {
 document.addEventListener('DOMContentLoaded', () => {
     window.fetchUserProfile();
 });
+
+
+// --- Logic Giai Đoạn 10: Custom Live2D ---
+let live2dModel = null;
+let live2dApp = null;
+
+window.initLive2D = async function() {
+    if (live2dApp) return; // Đã khởi tạo
+    
+    const canvas = document.getElementById('live2d-canvas');
+    if (!canvas) return;
+    
+    try {
+        live2dApp = new PIXI.Application({
+            view: canvas,
+            transparent: true,
+            autoStart: true,
+            resizeTo: document.getElementById('live2d-wrapper')
+        });
+        
+        // Dùng tạm mô hình Shizuku miễn phí từ thư viện
+        const modelUrl = 'https://cdn.jsdelivr.net/gh/guansss/pixi-live2d-display/test/assets/shizuku/shizuku.model.json';
+        live2dModel = await PIXI.live2d.Live2DModel.from(modelUrl);
+        
+        live2dApp.stage.addChild(live2dModel);
+        
+        // Điều chỉnh tỷ lệ kích thước
+        live2dModel.scale.set(0.2); 
+        live2dModel.x = (live2dApp.renderer.width - live2dModel.width) / 2;
+        live2dModel.y = (live2dApp.renderer.height - live2dModel.height) / 2 + 100;
+        
+        // Xoá chữ Loading
+        document.getElementById('live2d-loading').style.display = 'none';
+        
+        // Tương tác: Nhìn theo chuột
+        live2dApp.ticker.add(() => {
+            const mousePosition = live2dApp.renderer.plugins.interaction.mouse.global;
+            if (mousePosition.x > 0 && mousePosition.y > 0) {
+                // Focus: x, y in range [-1, 1]
+                const focusX = (mousePosition.x / live2dApp.renderer.width) * 2 - 1;
+                const focusY = (mousePosition.y / live2dApp.renderer.height) * 2 - 1;
+                live2dModel.focus(focusX, focusY);
+            }
+        });
+        
+        // Tương tác: Chạm
+        live2dModel.on('hit', (hitAreas) => {
+            if (hitAreas.includes('head')) {
+                live2dModel.motion('tap_body');
+            } else {
+                live2dModel.motion('tap_body');
+            }
+        });
+    } catch (error) {
+        console.error("Lỗi khi tải Live2D:", error);
+        document.getElementById('live2d-loading').innerHTML = "Lỗi khi tải Ayaka :(";
+    }
+};
+
+// Override lại hàm claimDaily để kết hợp hiệu ứng Live2D
+const originalClaimDaily = window.claimDaily;
+window.claimDaily = async function() {
+    // Kích hoạt hoạt ảnh vui vẻ
+    if (live2dModel) {
+        try {
+            live2dModel.motion('tap_body'); 
+        } catch (e) {}
+    }
+    
+    // Chạy lại logic ban đầu
+    if (originalClaimDaily) {
+        await originalClaimDaily();
+    }
+};
+
+// Sửa switchTab để khởi tạo Live2D khi nhấn vào tab Đồng Hành
+const originalSwitchTab = window.switchTab;
+window.switchTab = function(tabId) {
+    if (originalSwitchTab) {
+        originalSwitchTab(tabId);
+    }
+    if (tabId === 'companion') {
+        window.initLive2D();
+    }
+};

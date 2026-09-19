@@ -6,8 +6,8 @@ import datetime
 import logging
 import asyncio
 import aiohttp
-import config
-from database import db_manager
+from core import config
+from data.database import db_manager
 
 logger = logging.getLogger("SysCog")
 
@@ -42,7 +42,7 @@ class SysCog(commands.Cog):
             logger.error(f"Lỗi trong vòng lặp daily_greeting: {e}")
                 
     async def _run_6am_greeting(self, date_str: str):
-        from ai_brain import client
+        from core.ai_brain import client
         if not client: return
         
         # Lấy thời tiết TP.HCM và các khu vực lân cận
@@ -57,8 +57,8 @@ class SysCog(commands.Cog):
             f"Hôm nay là ngày {date_str}, bây giờ là 06:00 sáng.\n"
             f"Dưới góc độ nhân vật Kamisato Ayaka (Genshin Impact), hãy viết một lời chào buổi sáng thật dễ thương, "
             f"kèm theo thông tin ngày tháng hiện tại để gửi đến các 'Nhà Lữ Hành' trong hiệp hội Yashiro.\n"
-            f"Thông tin thời tiết tại khu vực TP.HCM hôm nay:\n{weather_info}\n"
-            f"(Hãy khéo léo lồng ghép dự báo thời tiết của TP.HCM và một vài quận tiêu biểu vào lời chào. Giữ tin nhắn ngắn gọn tầm 4-5 câu)."
+            f"Thông tin thời tiết thực tế cho ĐÚNG NGÀY {date_str} tại khu vực TP.HCM như sau:\n{weather_info}\n"
+            f"(Hãy khéo léo lồng ghép dự báo thời tiết của TP.HCM và một vài quận tiêu biểu vào lời chào. Bắt buộc phải thông báo đúng ngày {date_str}. Giữ tin nhắn ngắn gọn tầm 4-5 câu)."
         )
         
         try:
@@ -101,7 +101,7 @@ class SysCog(commands.Cog):
             return ""
 
     async def _process_single_schedule(self, schedule: dict):
-        from ai_brain import client
+        from core.ai_brain import client
         if not client:
             return
             

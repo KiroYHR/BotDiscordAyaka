@@ -1,12 +1,12 @@
 import logging
 from typing import Dict, Any
-import config
-from prompts import AYAKA_SYSTEM_PROMPT
+from core import config
+from data.prompts import AYAKA_SYSTEM_PROMPT
 from google import genai
 from google.genai import types
 import asyncio
 import datetime
-from database import db_manager
+from data.database import db_manager
 
 logger = logging.getLogger("AyakaBrain")
 

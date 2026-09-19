@@ -22,4 +22,4 @@ COPY . .
 EXPOSE 928
 
 # Khởi chạy Bot và Web Dashboard song song
-CMD ["python", "bot.py"]
+CMD ["python", "main.py"]
