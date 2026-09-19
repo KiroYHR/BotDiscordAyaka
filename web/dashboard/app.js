@@ -481,8 +481,8 @@ window.initLive2D = async function() {
             resizeTo: document.getElementById('live2d-wrapper')
         });
         
-        // Dùng tạm mô hình Shizuku miễn phí từ thư viện (Nguồn Github đáng tin cậy)
-        const modelUrl = 'https://cdn.jsdelivr.net/gh/guansss/pixi-live2d-display@master/test/assets/shizuku/shizuku.model.json';
+        // Thay thế mô hình Shizuku bằng mô hình Emile Bertin từ kho Eikanya mà Nhà Lữ Hành tìm được
+        const modelUrl = 'https://cdn.jsdelivr.net/gh/Eikanya/Live2d-model@master/%E7%A2%A7%E8%93%9D%E8%88%AA%E7%BA%BF%20Azue%20Lane/Azue%20Lane(JP)/aimierbeierding_2/aimierbeierding_2.model3.json';
         live2dModel = await PIXI.live2d.Live2DModel.from(modelUrl);
         
         live2dApp.stage.addChild(live2dModel);
