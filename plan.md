@@ -18,16 +18,11 @@
   - Do Blender mặc định không hỗ trợ tệp `.pmx`, chúng ta phải cài thêm Add-on **[mmd_tools](https://github.com/UuuNyaa/blender_mmd_tools/releases)** (Tải tệp `.zip`, vào Blender chọn *Biên Soạn > Tùy Chọn > Tiện ích > Cài đặt* và nạp tệp zip vào).
 - **Import (Nhập)**: Sử dụng tính năng *Tập Tin > Nhập > MikuMikuDance Model (.pmx)* để đưa Ayaka nguyên bản (có đầy đủ xương và vật liệu) vào Blender.
 
-### Bước 3: Gắn Xương (Rigging) và Tạo Hoạt Ảnh (Animation)
-- **Phương án 1: Dùng Mixamo (Cơ bản - Dễ nhất)**
-  - Mặc dù mô hình MMD đã có sẵn xương, nhưng hệ thống xương này rườm rà và khó tương thích trực tiếp với Web 3D.
-  - Chúng ta sẽ xuất mô hình từ Blender ra định dạng `.fbx`.
-  - Tải lên trang web Mixamo của Adobe để thuật toán tự động gắn lại bộ xương chuẩn quốc tế (Humanoid Skeleton).
-  - Chọn các hoạt ảnh ưng ý (Idle, Vẫy tay) và tải về.
-- **Phương án 2: Giữ nguyên xương MMD và làm Animation thủ công (Nâng cao)**
-  - Giữ nguyên bộ xương siêu chi tiết của MMD (có cả xương váy, xương tóc, xương mặt).
-  - Áp dụng các tính năng vật lý (Physics) của MMD Tools để tóc và váy tự đung đưa.
-  - Tự gán Keyframe trong Timeline của Blender để tạo hoạt ảnh.
+### Bước 3: Tạo Hoạt Ảnh Thủ Công (Manual Animation)
+Vì chúng ta quyết định giữ lại toàn bộ bộ xương MMD gốc siêu chi tiết (bao gồm cả xương tóc, xương váy và khuôn mặt) để giữ nguyên thần thái của Ayaka, chúng ta sẽ tự làm Animation ngay trong Blender:
+1. **Chế độ Pose Mode (Tạo dáng)**: Chọn khung xương (`Kamisato Ayaka_arm`) và chuyển sang chế độ Pose Mode. Tại đây cậu có thể xoay các khớp xương tay, chân, đầu để tạo ra các tư thế khác nhau.
+2. **Keyframe (Lưu chuyển động)**: Mở cửa sổ *Timeline* ở dưới cùng, tạo dáng xong thì ấn phím `I` để lưu (Insert Keyframe) vị trí và góc xoay của xương tại từng khung hình (Frame).
+3. **Bake Physics (Nướng vật lý)**: Nhờ có MMD Tools, áo và tóc của Ayaka đã được cài sẵn vật lý (Rigidbodies). Sau khi tạo xong chuyển động của tay chân, chúng ta sẽ dùng tính năng *Bake Physics* để Blender tự động tính toán lực gió làm đung đưa tóc và váy, biến chúng thành Keyframe có thể xuất ra được.
 
 ### Bước 4: Xuất Tệp (Export) và Tích Hợp Web
 - **Định dạng 3D (.glb)**:
