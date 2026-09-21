@@ -475,9 +475,13 @@ window.initPixelArt = function() {
     
     // Tương tác khi Click
     avatar.addEventListener('click', () => {
-        // Tạm thời ngừng thở, nhảy lên một chút (Vui mừng)
-        avatar.style.animation = 'none';
-        avatar.style.transform = 'translateY(-15px) scale(1.1)';
+        // Chuyển sang Hoạt ảnh Đi bộ (Walk Down)
+        avatar.classList.add('walking');
+        avatar.style.animation = 'none'; // Xóa animation cũ nếu có
+        // Cần setTimeout nhỏ để ép trình duyệt áp dụng class trước
+        setTimeout(() => {
+            avatar.style.animation = ''; // Reset để lấy animation từ class .walking
+        }, 10);
         
         // Hiện khung chat ngẫu nhiên
         const phrases = [
@@ -491,12 +495,12 @@ window.initPixelArt = function() {
         bubble.style.display = 'block';
         bubble.style.opacity = '1';
         
-        // Sau 3 giây, tắt khung chat và trở lại trạng thái ban đầu
+        // Sau 3 giây, tắt khung chat và trở lại trạng thái chớp mắt (Blinking)
         setTimeout(() => {
             bubble.style.opacity = '0';
             setTimeout(() => bubble.style.display = 'none', 300);
-            avatar.style.transform = '';
-            avatar.style.animation = 'pixelBreathing 2s ease-in-out infinite';
+            avatar.classList.remove('walking');
+            avatar.style.animation = ''; // Reset về animation pixelBlink ban đầu
         }, 3000);
     });
     

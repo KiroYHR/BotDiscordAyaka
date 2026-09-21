@@ -594,38 +594,39 @@ body {
 
 /* --- Pixel Art Mini-Game --- */
 .pixel-avatar {
-    width: 128px;
-    height: 192px; /* 32x48 scaled by 4 */
-    background: url('/assets/minigame/modelpixelhandmade.png') no-repeat center center;
-    background-size: cover;
-    image-rendering: pixelated; /* Cực kỳ quan trọng để giữ nét Pixel */
+    width: 136px;
+    height: 140px; 
+    background: url('/assets/minigame/ayaka_transparent.png') no-repeat;
+    background-position: -136px -40px; /* Vị trí Frame 1 của Blinking Cycle */
+    image-rendering: pixelated; 
     position: absolute;
     bottom: 20%;
     cursor: pointer;
     transition: transform 0.2s;
-    animation: pixelBreathing 2s ease-in-out infinite;
+    animation: pixelBlink 2s steps(4) infinite;
     filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3));
+    transform: scale(1.5); /* Phóng to lên 1.5 lần */
 }
 
 .pixel-avatar:hover {
-    transform: scale(1.05);
+    transform: scale(1.6);
     filter: drop-shadow(0 15px 15px rgba(140,225,230,0.6));
 }
 
 .pixel-avatar.walking {
-    animation: pixelWalk 0.5s steps(2) infinite; /* Dành cho tương lai khi có sprite sheet */
+    /* Chuyển sang hàng Walk Down (Y = -320px) */
+    background-position: -136px -320px;
+    animation: pixelWalk 1s steps(4) infinite;
 }
 
-@keyframes pixelBreathing {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
-    100% { transform: translateY(0); }
+@keyframes pixelBlink {
+    from { background-position: -136px -40px; }
+    to { background-position: -680px -40px; }
 }
 
 @keyframes pixelWalk {
-    0% { transform: translateY(0) rotate(-5deg); }
-    50% { transform: translateY(-10px) rotate(5deg); }
-    100% { transform: translateY(0) rotate(-5deg); }
+    from { background-position: -136px -320px; }
+    to { background-position: -680px -320px; }
 }
 
 .chat-bubble {
