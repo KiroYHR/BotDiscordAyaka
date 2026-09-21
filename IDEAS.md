@@ -13,6 +13,5 @@
 ### Ý Tưởng Mới:
 - [ ] với Trang Web quản lý sẽ thiết kế thêm phần đăng nhập, đăng kí tài khoản.
 - [ ] khi đăng nhập web xong thì web sẽ hiện lên một bảng điều khiển riêng cho từng user, và user đó có thể thấy thông tin của mình và các chỉ số như (Cấp Độ, EXP, Điểm Thiện Cảm, Rank) được lấy từ Discord và có thể chỉnh sủa một số thông tin của mình như tên người dùng avatar và tên hiển thị trên web (thay vì hiển thị là Ayaka sẽ là tên của user đó).
-- [ ] sẽ có cho lựa chọn các nhân vật để đóng vai như (Klee, Kokomi, Mona, Sucrose, Xiangling, Yae Miko, Yelan,...) vào máy chủ discord.
-
-
+- [ ] sẽ có cho lựa chọn các nhân vật chủ đề của trang web Bot chính (Ayaka) sẽ là chủ đề chính , nếu muốn chuyển sang nhân vật khác thì phải vào web để chuyển đổi (Klee, Yoimiya, Kokomi, Mona, Sucrose, Xiangling, Yae Miko, Yelan,...)
+- [ ] Sẽ build thành 1 ứng dụng hỗ trợ có thể cài vào discord

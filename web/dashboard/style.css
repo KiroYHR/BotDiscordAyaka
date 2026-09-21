@@ -590,3 +590,44 @@ body {
     font-weight: bold;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
+
+
+/* --- Pixel Art Mini-Game --- */
+.pixel-avatar {
+    width: 128px;
+    height: 192px; /* 32x48 scaled by 4 */
+    background: url('/assets/minigame/modelpixelhandmade.png') no-repeat center center;
+    background-size: cover;
+    image-rendering: pixelated; /* Cực kỳ quan trọng để giữ nét Pixel */
+    position: absolute;
+    bottom: 20%;
+    cursor: pointer;
+    transition: transform 0.2s;
+    animation: pixelBreathing 2s ease-in-out infinite;
+    filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3));
+}
+
+.pixel-avatar:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 15px 15px rgba(140,225,230,0.6));
+}
+
+.pixel-avatar.walking {
+    animation: pixelWalk 0.5s steps(2) infinite; /* Dành cho tương lai khi có sprite sheet */
+}
+
+@keyframes pixelBreathing {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes pixelWalk {
+    0% { transform: translateY(0) rotate(-5deg); }
+    50% { transform: translateY(-10px) rotate(5deg); }
+    100% { transform: translateY(0) rotate(-5deg); }
+}
+
+.chat-bubble {
+    transition: opacity 0.3s ease;
+}

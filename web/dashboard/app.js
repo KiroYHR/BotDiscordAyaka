@@ -463,71 +463,53 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// --- Logic Giai Đoạn 10: Custom Live2D ---
-let live2dModel = null;
-let live2dApp = null;
+// --- Logic Giai Đoạn 10: Tương tác Pixel Art ---
+let pixelArtInitialized = false;
 
-window.initLive2D = async function() {
-    if (live2dApp) return; // Đã khởi tạo
+window.initPixelArt = function() {
+    if (pixelArtInitialized) return;
     
-    const canvas = document.getElementById('live2d-canvas');
-    if (!canvas) return;
+    const avatar = document.getElementById('ayaka-pixel-avatar');
+    const bubble = document.getElementById('ayaka-chat-bubble');
+    if (!avatar || !bubble) return;
     
-    try {
-        live2dApp = new PIXI.Application({
-            view: canvas,
-            transparent: true,
-            autoStart: true,
-            resizeTo: document.getElementById('live2d-wrapper')
-        });
+    // Tương tác khi Click
+    avatar.addEventListener('click', () => {
+        // Tạm thời ngừng thở, nhảy lên một chút (Vui mừng)
+        avatar.style.animation = 'none';
+        avatar.style.transform = 'translateY(-15px) scale(1.1)';
         
-        // Thay thế mô hình Shizuku bằng mô hình Emile Bertin từ kho Eikanya mà Nhà Lữ Hành tìm được
-        const modelUrl = 'https://cdn.jsdelivr.net/gh/Eikanya/Live2d-model@master/%E7%A2%A7%E8%93%9D%E8%88%AA%E7%BA%BF%20Azue%20Lane/Azue%20Lane(JP)/aimierbeierding_2/aimierbeierding_2.model3.json';
-        live2dModel = await PIXI.live2d.Live2DModel.from(modelUrl);
+        // Hiện khung chat ngẫu nhiên
+        const phrases = [
+            "Chào mừng chủ nhân về nhà! 🌸",
+            "Cậu mệt rồi phải không? Nghỉ ngơi nhé! 🍵",
+            "Mỗi ngày được nhìn thấy cậu là niềm vui của tớ! ❄️",
+            "Kiếm thuật phái Kamisato luôn sẵn sàng bảo vệ cậu! 🗡️",
+            "Cậu có muốn ăn Sakura Mochi không? 🍡"
+        ];
+        bubble.textContent = phrases[Math.floor(Math.random() * phrases.length)];
+        bubble.style.display = 'block';
+        bubble.style.opacity = '1';
         
-        live2dApp.stage.addChild(live2dModel);
-        
-        // Điều chỉnh tỷ lệ kích thước
-        live2dModel.scale.set(0.2); 
-        live2dModel.x = (live2dApp.renderer.width - live2dModel.width) / 2;
-        live2dModel.y = (live2dApp.renderer.height - live2dModel.height) / 2 + 100;
-        
-        // Xoá chữ Loading
-        document.getElementById('live2d-loading').style.display = 'none';
-        
-        // Tương tác: Nhìn theo chuột
-        live2dApp.ticker.add(() => {
-            const mousePosition = live2dApp.renderer.plugins.interaction.mouse.global;
-            if (mousePosition.x > 0 && mousePosition.y > 0) {
-                // Focus: x, y in range [-1, 1]
-                const focusX = (mousePosition.x / live2dApp.renderer.width) * 2 - 1;
-                const focusY = (mousePosition.y / live2dApp.renderer.height) * 2 - 1;
-                live2dModel.focus(focusX, focusY);
-            }
-        });
-        
-        // Tương tác: Chạm
-        live2dModel.on('hit', (hitAreas) => {
-            if (hitAreas.includes('head')) {
-                live2dModel.motion('tap_body');
-            } else {
-                live2dModel.motion('tap_body');
-            }
-        });
-    } catch (error) {
-        console.error("Lỗi khi tải Live2D:", error);
-        document.getElementById('live2d-loading').innerHTML = "Lỗi khi tải Ayaka :(";
-    }
+        // Sau 3 giây, tắt khung chat và trở lại trạng thái ban đầu
+        setTimeout(() => {
+            bubble.style.opacity = '0';
+            setTimeout(() => bubble.style.display = 'none', 300);
+            avatar.style.transform = '';
+            avatar.style.animation = 'pixelBreathing 2s ease-in-out infinite';
+        }, 3000);
+    });
+    
+    pixelArtInitialized = true;
 };
 
-// Override lại hàm claimDaily để kết hợp hiệu ứng Live2D
+// Override lại hàm claimDaily để kết hợp hiệu ứng Pixel Art
 const originalClaimDaily = window.claimDaily;
 window.claimDaily = async function() {
     // Kích hoạt hoạt ảnh vui vẻ
-    if (live2dModel) {
-        try {
-            live2dModel.motion('tap_body'); 
-        } catch (e) {}
+    const avatar = document.getElementById('ayaka-pixel-avatar');
+    if (avatar) {
+        avatar.click(); // Giả lập click để Ayaka nhảy lên vui mừng
     }
     
     // Chạy lại logic ban đầu
@@ -536,13 +518,13 @@ window.claimDaily = async function() {
     }
 };
 
-// Sửa switchTab để khởi tạo Live2D khi nhấn vào tab Đồng Hành
+// Sửa switchTab để khởi tạo Pixel Art khi nhấn vào tab Đồng Hành
 const originalSwitchTab = window.switchTab;
 window.switchTab = function(tabId) {
     if (originalSwitchTab) {
         originalSwitchTab(tabId);
     }
     if (tabId === 'companion') {
-        window.initLive2D();
+        window.initPixelArt();
     }
 };
