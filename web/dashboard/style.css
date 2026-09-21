@@ -594,10 +594,10 @@ body {
 
 /* --- Pixel Art Mini-Game --- */
 .pixel-avatar {
-    width: 136px;
-    height: 140px; 
-    background: url('/assets/minigame/ayaka_transparent.png') no-repeat;
-    background-position: -136px -40px; /* Vị trí Frame 1 của Blinking Cycle */
+    width: 128px;
+    height: 192px; 
+    background: url('/assets/minigame/ayaka_blink_clean.png') no-repeat left top;
+    background-size: cover;
     image-rendering: pixelated; 
     position: absolute;
     bottom: 20%;
@@ -605,28 +605,28 @@ body {
     transition: transform 0.2s;
     animation: pixelBlink 2s steps(4) infinite;
     filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3));
-    transform: scale(1.5); /* Phóng to lên 1.5 lần */
+    transform: scale(1.2); 
 }
 
 .pixel-avatar:hover {
-    transform: scale(1.6);
+    transform: scale(1.3);
     filter: drop-shadow(0 15px 15px rgba(140,225,230,0.6));
 }
 
 .pixel-avatar.walking {
-    /* Chuyển sang hàng Walk Down (Y = -320px) */
-    background-position: -136px -320px;
+    background: url('/assets/minigame/ayaka_walk_clean.png') no-repeat left top;
+    background-size: cover;
     animation: pixelWalk 1s steps(4) infinite;
 }
 
 @keyframes pixelBlink {
-    from { background-position: -136px -40px; }
-    to { background-position: -680px -40px; }
+    from { background-position: 0px 0px; }
+    to { background-position: -512px 0px; }
 }
 
 @keyframes pixelWalk {
-    from { background-position: -136px -320px; }
-    to { background-position: -680px -320px; }
+    from { background-position: 0px 0px; }
+    to { background-position: -512px 0px; }
 }
 
 .chat-bubble {
