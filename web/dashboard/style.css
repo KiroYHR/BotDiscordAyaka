@@ -597,7 +597,7 @@ body {
     width: 128px;
     height: 192px; 
     background: url('/assets/minigame/ayaka_blink_clean.png') no-repeat left top;
-    background-size: cover;
+    background-size: 512px 192px;
     image-rendering: pixelated; 
     position: absolute;
     bottom: 20%;
@@ -615,7 +615,7 @@ body {
 
 .pixel-avatar.walking {
     background: url('/assets/minigame/ayaka_walk_clean.png') no-repeat left top;
-    background-size: cover;
+    background-size: 512px 192px;
     animation: pixelWalk 1s steps(4) infinite;
 }
 
