@@ -116,8 +116,11 @@
                             </div>
                             <button id="btn-daily-claim" class="btn-primary" onclick="claimDaily()"><i class="fa-solid fa-gift"></i> Điểm Danh Ngay</button>
                         </div>
-                        <div id="pixel-art-wrapper" style="width: 100%; height: 600px; border-radius: 12px; overflow: hidden; border: 2px solid rgba(255,255,255,0.2); background: url('https://img.itch.zone/aW1hZ2UvNjk5NzYyLzM4NTQzNTgucG5n/original/U8Z%2B8P.png') center/cover; position: relative; display: flex; justify-content: center; align-items: center;">
-                            <div class="chat-bubble" id="ayaka-chat-bubble" style="display: none; position: absolute; top: 100px; background: rgba(255,255,255,0.9); color: #333; padding: 10px 15px; border-radius: 15px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); font-size: 0.9rem; z-index: 10;">
+                        <div id="pixel-art-wrapper" style="width: 100%; height: 600px; border-radius: 12px; overflow: hidden; border: 2px solid rgba(255,255,255,0.2); background-color: #2b2b2b; position: relative;">
+                            <!-- Thẻ Canvas vẽ bản đồ sẽ nằm chìm dưới cùng -->
+                            <canvas id="game-map" width="960" height="640" style="position: absolute; top: 0; left: 0; transform-origin: top left;"></canvas>
+                            
+                            <div class="chat-bubble" id="ayaka-chat-bubble" style="display: none; position: absolute; background: rgba(255,255,255,0.9); color: #333; padding: 10px 15px; border-radius: 15px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); font-size: 0.9rem; z-index: 10;">
                                 Chào mừng chủ nhân về nhà! 🌸
                             </div>
                             <div class="pixel-avatar" id="ayaka-pixel-avatar"></div>
@@ -247,7 +250,8 @@
         </div>
     </div>
 
-    <!-- Thư viện Mini-Game (Tương lai có thể dùng Phaser) -->
+    <!-- Thư viện Mini-Game (Vanilla JS Engine) -->
+    <script src="game.js"></script>
     <script src="app.js?v=6"></script>
 </body>
 </html>

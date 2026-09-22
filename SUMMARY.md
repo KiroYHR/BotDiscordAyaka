@@ -149,11 +149,8 @@
 *Tiến vào thế giới đồ họa máy tính để tự tạo ra một Ayaka của riêng mình.*
 
 - **Khởi Khảo**: Việc không có sẵn các tệp tin mô hình Ayaka chất lượng cao và hoàn toàn miễn phí trên mạng (do hạn chế bản quyền của Genshin Impact) đã mở ra một chân trời mới.
-- **Kế Hoạch Blender**: Chúng ta sẽ chuyển hướng sang tìm hiểu phần mềm đồ họa 3D Blender để tự thân vận động:
-  - **Nhập/Xuất Mô Hình**: Chỉnh sửa các mô hình gốc.
-  - **Gắn Xương (Rigging)**: Căn chỉnh cấu trúc xương khớp để tạo tiền đề cho hoạt ảnh.
-  - **Hoạt Ảnh (Animation)**: Tự diễn hoạt hoặc dùng Mixamo để tạo các chuyển động cơ bản như Hô hấp (Idle), Cười, Vẫy tay và xuất ra định dạng `.glb` có nhúng sẵn Animation để dùng cho ThreeJS. Hoặc cao cấp hơn là Render ra các tệp kết cấu 2D để cấu trúc lại thành một mô hình Live2D đích thực bằng Live2D Cubism.
-
+- **Kế Hoạch Blender**: Chúng ta đã thử chuyển hướng sang phần mềm 3D Blender để tự thân vận động (Gắn xương, Hoạt ảnh). Tuy nhiên do giới hạn phần cứng máy tính không gánh nổi Render 3D, chúng ta đã quyết định cất dự án này vào `IDEAS.md` để dành cho tương lai.
+- **Minigame Pixel Art (Hiện Tại)**: Khởi động Giai đoạn 11 với hướng đi Pixel Art cổ điển (mang phong cách Thị trấn Thủy triều / Stardew Valley). Chúng ta đã bóc tách thành công Sprite Sheet của Ayaka và tích hợp hoạt ảnh lên Web Dashboard. Bước tiếp theo là sử dụng Tiled để xây dựng một bản đồ (Map) hoàn chỉnh cho cô ấy dạo chơi!
 ---
 
 > **🚀 Tổng Kết**: Chúng ta đã biến một bot Discord trắng trơn thành một hệ thống AI thông minh, có cơ sở dữ liệu lưu trữ trên mạng, có trí nhớ dài hạn, chống sập xuất sắc, sở hữu Web Dashboard giám sát và cuối cùng là tự mình sinh tồn độc lập trên đám mây 24/7! Cậu hoàn toàn có thể tự hào về khối lượng công việc khổng lồ này!

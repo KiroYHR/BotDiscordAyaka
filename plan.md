@@ -1,35 +1,33 @@
-# 📅 Chi Tiết Kế Hoạch - Giai Đoạn 11 (Chế Tạo Mô Hình Ayaka Pixel Art)
+# 📅 Chi Tiết Kế Hoạch - Giai Đoạn 11 (Minigame Pixel Art & Xây Dựng Bản Đồ)
 
 ## 1. Mục Tiêu Tổng Quan
-- Do giới hạn về phần cứng (PC không gánh nổi Blender/3D render), dự án sẽ chuyển hướng sang phong cách **Pixel Art** nhẹ nhàng, tối ưu, lấy cảm hứng từ các tựa game nông trại như "Thị Trấn Thủy Triều" (Coral Island / Stardew Valley).
-- Tự vẽ và thiết kế Sprite Sheet cho Ayaka với các cử động cơ bản cực kỳ đáng yêu (Thở, Chớp mắt, Vẫy tay).
-- Tích hợp Sprite Sheet này vào Web Dashboard để tạo cảm giác Retro/Cozy mộc mạc nhưng cuốn hút.
-- *(Lưu ý: Toàn bộ các dự định liên quan đến 3D, Blender và Live2D đã được đóng gói và cất vào `IDEAS.md` để dành cho tương lai khi có điều kiện nâng cấp máy).*
+- **Thích ứng cấu hình:** Chuyển từ đồ họa 3D/Live2D sang phong cách **Pixel Art** nhẹ nhàng, tối ưu trên Web.
+- **Tương tác hóa:** Biến Web Dashboard không chỉ là nơi xem dữ liệu mà trở thành một thế giới nhỏ (Minigame), nơi cậu có thể điều khiển bé Ayaka đi dạo quanh bản đồ.
+- **Phong cách nghệ thuật:** Lấy cảm hứng từ *Thị Trấn Thủy Triều (Coral Island) / Stardew Valley* với góc nhìn **Top-Down 3/4** (Góc nhìn chéo từ trên xuống nhưng vẫn thấy được chiều sâu mặt trước của nhân vật/cảnh vật).
+- *(Lưu ý: Các dự án liên quan đến 3D, Blender đã được đóng gói và cất vào `IDEAS.md` để dành cho tương lai).*
 
-## 2. Các Bước Thực Hiện Chi Tiết
+## 2. Tiến Độ Các Bước Thực Hiện
 
-### Bước 1: Chuẩn Bị Công Cụ Vẽ Pixel Art
-Để vẽ Pixel, chúng ta không cần siêu máy tính, chỉ cần một trong các công cụ siêu nhẹ sau:
-- **Aseprite**: Phần mềm "quốc dân" đỉnh nhất, chuyên dụng cho Pixel Animation (Khuyên dùng).
-- **Piskel** hoặc **LibreSprite**: Công cụ vẽ pixel miễn phí (Piskel có thể chạy thẳng trên trình duyệt Web).
-- **Photoshop**: Chỉnh lưới Grid về 1x1 pixel và dùng công cụ Bút chì (Pencil Tool) nét cứng.
+### Bước 1: Chế Tạo Sprite & Hoạt Ảnh Nhân Vật (✅ Đã Xong)
+- Tự vẽ và thiết kế Sprite Sheet khung cơ bản `32x48` px.
+- Dùng Python (OpenCV) bóc tách lớp nền lưới, tạo ra chuỗi hoạt ảnh mượt mà: Idle (Chớp mắt) và Walk (Đi bộ).
+- Tích hợp lên Web bằng CSS thuần (`steps()`), xử lý logic click chuột.
 
-### Bước 2: Phác Thảo & Thiết Kế Nhân Vật (Character Design)
-- **Kích thước**: Chọn kích thước khung vẽ (Canvas) cỡ nhỏ như `32x32` hoặc `64x64` pixel để dễ kiểm soát.
-- **Tạo hình**: Vẽ Ayaka dưới dạng Chibi (đầu to, thân nhỏ). Giữ lại các đặc điểm nhận dạng cốt lõi: Mái tóc xám bạc cắt bằng, nơ đỏ, và họa tiết hoa tuyết trên váy.
-- **Bảng màu (Color Palette)**: Lấy mẫu màu trực tiếp từ ảnh gốc của Ayaka nhưng thu gọn lại chỉ dùng khoảng 10-15 màu để nhìn chuẩn chất Pixel cổ điển.
+### Bước 2: Xây Dựng Bản Đồ (Map Building) bằng Tiled (🚧 Đang Tiến Hành)
+- **Công cụ:** Vẽ Tile nền (đất, cỏ, nước) bằng Piskel, sau đó dùng **Tiled (Map Editor)** để lắp ráp.
+- **Giao thức:** Sử dụng lưới `Orthogonal` (Lưới ô vuông thẳng góc) nhưng hình vẽ mang ảo giác góc nhìn 3/4.
+- **Cấu trúc Layer:** Thiết lập tối thiểu 2-3 lớp:
+  - `Ground`: Lớp đất nền.
+  - `Collision / Obstacle`: Vật thể cản đường (đá, hàng rào).
+  - `Foreground`: Tán cây che khuất đầu nhân vật.
 
-### Bước 3: Tạo Hoạt Ảnh (Animation) & Xuất Sprite Sheet
-- **Idle Animation (Đứng chờ)**: Vẽ khoảng 4 khung hình (Frames) mô phỏng nhịp thở lên xuống của Ayaka (phần thân nhấp nhô 1 pixel, chớp mắt).
-- **Xuất file**: Thay vì xuất video, chúng ta sẽ xuất toàn bộ các khung hình xếp liền nhau thành một bức ảnh dài duy nhất gọi là **Sprite Sheet** (định dạng `.png` nền trong suốt).
-
-### Bước 4: Tích Hợp Lên Web Dashboard
-- Nhúng tệp ảnh Sprite Sheet `.png` vào thư mục `web/dashboard/assets/`.
-- Sử dụng CSS thuần (thuộc tính `animation` kết hợp với hàm thời gian `steps()`) để làm cho ảnh chạy khung hình một cách ảo diệu trên giao diện Web mà không tốn đến 1% CPU của máy tính.
+### Bước 3: Lập Trình Tương Tác & Di Chuyển (JS Game Engine) (🔜 Sắp Tới)
+- Trích xuất file `.tmx` hoặc JSON từ Tiled để nạp vào Web (có thể code tay hoặc dùng thư viện nhẹ như Phaser/Kaboom).
+- Code cơ chế bắt phím `W A S D` để điều khiển Ayaka chạy quanh Map.
+- Xử lý Va chạm (Collision): Không cho phép Ayaka đi xuyên qua gốc cây, hòn đá.
+- Cơ chế Camera (Tùy chọn): Nếu Map lớn hơn màn hình, camera sẽ tự động trượt theo Ayaka.
 
 ## 3. Công Cụ Đề Xuất
-1. **Aseprite / Piskel**: Để vẽ nghệ thuật Pixel.
-2. **VS Code**: Để code HTML/CSS hiển thị bé Ayaka lên Web.
-
----
-*Lối đi Pixel Art không chỉ là giải pháp "chữa cháy" hoàn hảo cho máy tính yếu, mà nó còn mang lại một nét thẩm mỹ Indie vô cùng mộc mạc, đáng yêu và cực kỳ thịnh hành!*
+1. **Piskel**: Vẽ từng viên gạch/tán cây (Tiles) ở kích thước chuẩn `32x32`.
+2. **Tiled**: "Xây dựng" và thiết kế cả một thị trấn khổng lồ từ những viên gạch đó.
+3. **VS Code**: Cập nhật logic Javascript điều khiển.
