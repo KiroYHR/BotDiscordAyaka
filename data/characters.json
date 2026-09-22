@@ -1,0 +1,72 @@
+{
+  "genshin": [
+    {
+      "id": "gs_traveler",
+      "name": "Nhà Lữ Hành (Aether/Lumine)",
+      "rarity": "L",
+      "element": "Adaptive",
+      "image": "https://i.imgur.com/gK2T3iN.png",
+      "bio": "Nhà lữ hành đến từ thế giới khác."
+    },
+    {
+      "id": "gs_raiden",
+      "name": "Raiden Shogun",
+      "rarity": "SSR",
+      "element": "Electro",
+      "image": "https://i.imgur.com/H1tHqP7.png",
+      "bio": "Lôi Thần cai trị Inazuma."
+    },
+    {
+      "id": "gs_ayaka",
+      "name": "Kamisato Ayaka",
+      "rarity": "SR",
+      "element": "Cryo",
+      "image": "https://i.imgur.com/example1.png",
+      "bio": "Đại tiểu thư nhà Kamisato."
+    },
+    {
+      "id": "gs_amber",
+      "name": "Amber",
+      "rarity": "R",
+      "element": "Pyro",
+      "image": "https://i.imgur.com/example2.png",
+      "bio": "Kỵ sĩ trinh sát Đội Kỵ Sĩ Tây Phong."
+    }
+  ],
+  "hsr": [
+    {
+      "id": "hsr_trailblazer",
+      "name": "Nhà Khai Phá (Caelus/Stelle)",
+      "rarity": "L",
+      "path": "Adaptive",
+      "image": "https://i.imgur.com/example3.png",
+      "bio": "Người mang Stellaron trong mình."
+    },
+    {
+      "id": "hsr_seele",
+      "name": "Seele",
+      "rarity": "SSR",
+      "path": "Săn Bắn",
+      "image": "https://i.imgur.com/example4.png",
+      "bio": "Thành viên trụ cột của Lửa Ngầm."
+    }
+  ],
+  "zzz": [
+    {
+      "id": "zzz_wise_belle",
+      "name": "Phaethon (Wise/Belle)",
+      "rarity": "L",
+      "element": "None",
+      "image": "https://i.imgur.com/example5.png",
+      "bio": "Huyền thoại proxy ở New Eridu."
+    },
+    {
+      "id": "zzz_ellen",
+      "name": "Ellen Joe",
+      "rarity": "SSR",
+      "element": "Ice",
+      "image": "https://i.imgur.com/example6.png",
+      "bio": "Cô hầu gái cá mập lười biếng."
+    }
+  ]
+}

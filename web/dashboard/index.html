@@ -41,6 +41,9 @@
                 <button class="nav-btn" onclick="switchTab('leaderboard')" id="btn-tab-leaderboard">
                     <i class="fa-solid fa-trophy"></i> Bảng Xếp Hạng
                 </button>
+                <button class="nav-btn" onclick="switchTab('gacha')" id="btn-tab-gacha">
+                    <i class="fa-solid fa-star"></i> Bộ Sưu Tập Gacha
+                </button>
                 <button class="nav-btn" onclick="switchTab('system')" id="btn-tab-system">
                     <i class="fa-solid fa-microchip"></i> Hệ Thống
                 </button>
@@ -200,7 +203,27 @@
                 </section>
             </div>
 
-            <!-- Tab 4: Hệ Thống (System) -->
+            <!-- Tab 5: Bộ Sưu Tập Gacha -->
+            <div id="tab-gacha" class="tab-pane">
+                <header class="tab-header">
+                    <h2><i class="fa-solid fa-star"></i> Bộ Sưu Tập Nhân Vật Gacha</h2>
+                </header>
+                <div class="gacha-status glass" style="padding: 15px; margin-bottom: 20px; text-align: center;">
+                    <h3>Nguyên Thạch Hiện Có: <span id="gacha-primo-count" style="color: #4df8ff;">0</span> 💎</h3>
+                    <p style="color: #aaa; font-size: 0.9em;">(Dùng lệnh !gacha 1 hoặc !gacha 10 trên Discord để quay tướng)</p>
+                </div>
+                
+                <h3 style="margin-top: 20px; border-bottom: 2px solid var(--primary-color); padding-bottom: 5px;">Genshin Impact</h3>
+                <div id="gacha-genshin-grid" class="gacha-grid"></div>
+                
+                <h3 style="margin-top: 30px; border-bottom: 2px solid var(--primary-color); padding-bottom: 5px;">Honkai: Star Rail</h3>
+                <div id="gacha-hsr-grid" class="gacha-grid"></div>
+                
+                <h3 style="margin-top: 30px; border-bottom: 2px solid var(--primary-color); padding-bottom: 5px;">Zenless Zone Zero</h3>
+                <div id="gacha-zzz-grid" class="gacha-grid"></div>
+            </div>
+
+            <!-- Tab 6: Hệ Thống (System) -->
             <div id="tab-system" class="tab-pane">
                 <header class="tab-header">
                     <h2><i class="fa-solid fa-microchip"></i> Thông Tin Hệ Thống Bot</h2>
@@ -252,8 +275,9 @@
         </div>
     </div>
 
-    <!-- Thư viện Mini-Game (Vanilla JS Engine) -->
+    <!-- Thư viện Mini-Game (Vanilla JS Engine) & Gacha -->
     <script src="game.js?v=3"></script>
-    <script src="app.js?v=8"></script>
+    <script src="gacha.js?v=1"></script>
+    <script src="app.js?v=9"></script>
 </body>
 </html>

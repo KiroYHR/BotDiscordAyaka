@@ -33,7 +33,8 @@ async def setup_hook():
         'game_cog',
         'image_cog',
         'rag_cog',
-        'level_cog' # Load hệ thống level
+        'level_cog', # Load hệ thống level
+        'gacha_cog'  # Load hệ thống gacha
     ]
     for extension in initial_extensions:
         try:

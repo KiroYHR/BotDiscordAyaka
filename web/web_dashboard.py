@@ -27,6 +27,7 @@ class WebDashboard:
         self.app.router.add_post('/api/schedules', self.api_post_schedules)
         self.app.router.add_delete('/api/schedules', self.api_delete_schedules)
         self.app.router.add_get('/api/leaderboard', self.api_leaderboard)
+        self.app.router.add_get('/api/gacha/collection', self.api_gacha_collection)
         
         # OAuth2 Routes
         self.app.router.add_get('/login', self.login)
@@ -40,10 +41,14 @@ class WebDashboard:
         self.app.router.add_get('/style.css', self.serve_css)
         self.app.router.add_get('/app.js', self.serve_js)
         self.app.router.add_get('/game.js', self.serve_game_js)
+        self.app.router.add_get('/gacha.js', self.serve_gacha_js)
         
         # Đường dẫn tuyệt đối để tránh lỗi không tìm thấy file
         assets_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dashboard', 'assets')
         self.app.router.add_static('/assets/', path=assets_path, name='assets')
+        
+        data_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data')
+        self.app.router.add_static('/data/', path=data_path, name='data')
 
     async def login(self, request):
         """Chuyển hướng đến Discord OAuth2."""
@@ -268,6 +273,34 @@ class WebDashboard:
                 })
         return web.json_response(result)
 
+    async def api_gacha_collection(self, request):
+        session_id = request.cookies.get('session_token')
+        if not session_id:
+            return web.json_response({"success": False, "msg": "Vui lòng đăng nhập trước!"})
+            
+        from data.database import db_manager
+        session_data = await db_manager.get_session(session_id)
+        if not session_data:
+            return web.json_response({"success": False, "msg": "Phiên đăng nhập hết hạn!"})
+            
+        user_id = session_data["user_id"]
+            
+        collection = []
+        primos = 0
+        if db_manager.pool:
+            async with db_manager.pool.acquire() as db:
+                rows = await db.fetch("SELECT character_id, game, copies FROM gacha_inventory WHERE user_id = $1", str(user_id))
+                collection = [dict(r) for r in rows]
+                
+                user_row = await db.fetchrow("SELECT primogems FROM users WHERE user_id = $1", str(user_id))
+                primos = user_row['primogems'] if user_row else 0
+                
+        return web.json_response({
+            "success": True, 
+            "collection": collection,
+            "primogems": primos
+        })
+
     # Các hàm phục vụ file tĩnh (Frontend)
     async def serve_index(self, request):
         with open('web/dashboard/index.html', 'r', encoding='utf-8') as f:
@@ -286,6 +319,10 @@ class WebDashboard:
 
     async def serve_game_js(self, request):
         with open('web/dashboard/game.js', 'r', encoding='utf-8') as f:
+            return web.Response(text=f.read(), content_type='application/javascript')
+
+    async def serve_gacha_js(self, request):
+        with open('web/dashboard/gacha.js', 'r', encoding='utf-8') as f:
             return web.Response(text=f.read(), content_type='application/javascript')
 
 async def start_web_server(bot, port=928):

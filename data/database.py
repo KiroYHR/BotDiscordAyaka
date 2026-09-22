@@ -43,14 +43,38 @@ class AyakaDatabase:
                     )
                 ''')
                 
-                # Cập nhật schema cho bảng users (Phase 9)
+                # Cập nhật schema cho bảng users
                 try:
                     await db.execute('ALTER TABLE users ADD COLUMN IF NOT EXISTS affection INTEGER DEFAULT 0')
                     await db.execute('ALTER TABLE users ADD COLUMN IF NOT EXISTS streak INTEGER DEFAULT 0')
                     await db.execute('ALTER TABLE users ADD COLUMN IF NOT EXISTS last_daily_claim REAL DEFAULT 0')
+                    await db.execute('ALTER TABLE users ADD COLUMN IF NOT EXISTS last_monthly_claim REAL DEFAULT 0')
+                    await db.execute('ALTER TABLE users ADD COLUMN IF NOT EXISTS primogems INTEGER DEFAULT 0')
                     await db.execute("ALTER TABLE users ADD COLUMN IF NOT EXISTS selected_character TEXT DEFAULT 'airi'")
                 except Exception as e:
                     logger.warning(f"Lỗi khi Alter Table users (có thể đã tồn tại): {e}")
+                
+                # Bảng Gacha Pity
+                await db.execute('''
+                    CREATE TABLE IF NOT EXISTS gacha_pity (
+                        user_id TEXT PRIMARY KEY,
+                        pity_4star INTEGER DEFAULT 0,
+                        pity_5star INTEGER DEFAULT 0,
+                        total_pulls INTEGER DEFAULT 0
+                    )
+                ''')
+                
+                # Bảng Gacha Inventory
+                await db.execute('''
+                    CREATE TABLE IF NOT EXISTS gacha_inventory (
+                        id SERIAL PRIMARY KEY,
+                        user_id TEXT,
+                        character_id TEXT,
+                        game TEXT,
+                        copies INTEGER DEFAULT 1,
+                        UNIQUE(user_id, character_id)
+                    )
+                ''')
                 
                 # Bảng Chat History (Trí nhớ AI)
                 await db.execute('''
