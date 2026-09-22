@@ -425,8 +425,8 @@ window.fetchUserProfile = async function() {
             document.getElementById('user-affection').textContent = data.affection;
             document.getElementById('user-streak').textContent = data.streak;
             
-            // Hiện nút tab Companion
-            document.getElementById('btn-tab-companion').style.display = 'block';
+            // Hiện nút tab Companion (Đã ẩn tạm thời theo yêu cầu)
+            // document.getElementById('btn-tab-companion').style.display = 'block';
             
             // Ẩn nút đăng nhập
             const loginBtn = document.querySelector('.status-badge a[href="/login"]');

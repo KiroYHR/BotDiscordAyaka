@@ -1,49 +1,38 @@
-# 🗺️ Lộ Trình Phát Triển Kamisato Ayaka Bot (Roadmap)
+# 🛣️ Lộ Trình Phát Triển (Roadmap) - Giai Đoạn 12
 
-Chúng ta đã hoàn thành xuất sắc 2 giai đoạn cốt lõi. Dưới đây là các phương án cho Giai Đoạn 3 để cậu lựa chọn hướng đi tiếp theo cho Ayaka:
+Dự án Web Đồng Hành (Companion) tạm thời được đóng băng do những giới hạn về tài nguyên đồ họa (Thiếu Model 3D/Sprite 2D chuẩn). Trong Giai đoạn 12, chúng ta sẽ quay trở lại tập trung phát triển các tính năng cốt lõi cho Bot Discord để mang lại những trải nghiệm thú vị và thiết thực nhất!
 
-## 🟢 Lựa chọn 1: Tối ưu Trí Nhớ & Lưu trữ vĩnh viễn (Database Integration)
-Hiện tại trí nhớ của Ayaka (ngữ cảnh chat, hàng đợi nhạc) chỉ được lưu tạm trên RAM. Nếu tắt bot là quên sạch!
-- **Kế hoạch**: Tích hợp cơ sở dữ liệu (SQLite, MongoDB hoặc PostgreSQL).
-- **Tính năng mở rộng**: Lưu lại playlist nhạc yêu thích của user, tạo hệ thống tính điểm/Level chat, cấu hình riêng cho từng Server (prefix, kênh cấm bot).
+Dưới đây là các **Lựa chọn Nâng cấp (Tùy chọn)** dành cho Giai đoạn 12. Cậu hãy xem qua và quyết định xem chúng ta sẽ làm tính năng nào trước nhé:
 
-## 🟡 Lựa chọn 2: Phục thù tính năng Lời Bài Hát (Lyrics API)
-Ở Giai đoạn 1, thư viện `syncedlyrics` bị xung đột trên Windows nên chúng ta đành tạm gác lại.
-- **Kế hoạch**: Tự xây dựng API hoặc tìm một thư viện khác (ví dụ `syrics` hoặc cào dữ liệu từ Musixmatch) để lấy lời bài hát mượt mà không gây sập bot.
-- **Tính năng mở rộng**: Hiện lời bài hát chạy chữ thời gian thực (Karaoke style) hiển thị lên Discord.
+## Lựa chọn 1: Hệ Thống Kinh Tế & Cửa Hàng (Economy System) 💰
+*Biến server Discord thành một xã hội thu nhỏ với hệ thống tiền tệ.*
+- **Tiền tệ (Mora):** Người dùng có thể kiếm "Mora" thông qua việc nhắn tin (như EXP), hoặc Điểm danh hằng ngày (`!daily`).
+- **Cửa hàng (Shop):** Mua các vật phẩm ảo như: Danh hiệu (Vai trò/Role Discord), Thẻ nhân đôi EXP, Tùy chỉnh màu sắc thẻ Profile...
+- **Tương tác:** Cho phép chuyển Mora cho nhau (`!give`), tung đồng xu cá cược (`!coinflip`), hoặc chơi oẳn tù tì ăn Mora.
 
-## 🔵 Lựa chọn 3: Xây dựng Web Dashboard (Bảng điều khiển Website)
-Đưa Ayaka lên tầm cao mới với một giao diện quản lý trên web.
-- **Kế hoạch**: Dùng Flask hoặc FastAPI tích hợp vào bot.
+## Lựa chọn 2: Tích hợp Trình Tạo Ảnh AI (Image Generation) 🎨
+*Biến Ayaka thành họa sĩ thực thụ.*
+- **Tính năng:** Tích hợp API tạo ảnh (Ví dụ: Stable Diffusion, Midjourney API, hoặc DALL-E) thẳng vào bot.
+- **Cách hoạt động:** Người dùng gõ `!draw [miêu tả]`, Ayaka sẽ gọi API sinh ra ảnh và gửi trực tiếp vào kênh chat.
+- Có thể giới hạn tính năng này (Mỗi người chỉ được vẽ 3 tấm/ngày) hoặc dùng Mora (từ Lựa chọn 1) để mua lượt vẽ.
 
-## ☁️ Giai Đoạn 6: Máy Chủ Đám Mây & Báo Thức [HOÀN TẤT]
-- Nâng cấp Database lên Supabase PostgreSQL.
-- Đưa Bot lên máy chủ đám mây Render chạy 24/7.
-- Tự động fallback sang SoundCloud khi YouTube bị chặn.
-- Thiết lập báo thức cơ bản 6h sáng và 10h tối.
+## Lựa chọn 3: Nâng Cấp Hệ Thống Âm Nhạc (Music V2) 🎵
+*Khắc phục hoàn toàn các lỗi lặt vặt và nâng tầm trải nghiệm nghe nhạc.*
+- **Hỗ trợ thêm nền tảng:** Spotify, Apple Music, SoundCloud (Hiện tại code mới dùng yt-dlp, có thể cải tiến để lấy nhạc từ các nguồn khác ổn định hơn).
+- **Giao diện nghe nhạc:** Cập nhật lại tin nhắn Now Playing (Đang phát nhạc) thành một bảng điều khiển xịn xò với các nút Bấm (Buttons) để Pause, Skip, Repeat mà không cần gõ lệnh.
+- **Lời bài hát (Lyrics):** Thêm tính năng tự động tìm và hiển thị lời bài hát `!lyrics`.
 
----
+## Lựa chọn 4: Minigame Text-based trên Discord 🎲
+*Chơi game ngay trong khung chat mà không cần lên Web.*
+- **Đố vui (Trivia):** Ayaka sẽ đưa ra câu hỏi trắc nghiệm (về Genshin Impact hoặc kiến thức chung), ai bấm nút nhanh và đúng nhất sẽ được thưởng EXP/Mora.
+- **Tic-Tac-Toe hoặc Cờ Caro:** Tích hợp Minigame đánh cờ với bot hoặc giữa 2 người chơi bằng các nút bấm Discord (Buttons).
+- **Nhập vai (RPG Text):** Các sự kiện đánh quái, nhặt đồ đơn giản bằng lệnh chữ.
 
-## 🛠️ Giai Đoạn 7: Bảng Điều Khiển Lập Lịch & Thời Tiết (Web Dashboard)
-- **Lập Lịch Tùy Chỉnh trên Web**: Phát triển thêm tính năng cho trang Web để người dùng setup nhắc nhở hằng ngày. Cho phép chọn thời gian, nội dung, và Kênh Discord (của server bất kỳ) để Ayaka thông báo.
-- **Báo Cáo Thời Tiết**: Tích hợp API Thời tiết, Ayaka sẽ thông báo thời tiết khu vực đã chọn vào đúng giờ sáng sớm (vd: 6h sáng).
-
-## 🎵 Giai Đoạn 8: Nâng Cấp Chuyên Sâu (Lyrics, Level & Lệnh Help)
-- **Nâng Cấp `!lyrics`**: Cải tiến tính năng lời bài hát cho mượt mà hơn (nằm ở `music_cog.py`).
-- **Nâng Cấp Hệ Thống Cấp Độ (`!level` / `!rank`)**: Phát triển sâu hơn hệ thống thẻ Rank, bảng xếp hạng toàn server (nằm ở `level_cog.py`).
-- **Cập Nhật Lệnh Trợ Giúp**: Bổ sung lệnh `!help` hoàn chỉnh trong bot, đồng thời cập nhật file `COMMANDS_LIST.md` để mọi người dễ dàng tra cứu.
-
-## 🐾 Giai Đoạn 9: Gamification & Nuôi Thú Ảo (Chuỗi Tương Tác)
-- **Đăng nhập Web Nhận Quà (Streak)**: Khuyến khích người dùng đăng nhập Web mỗi ngày để giữ "chuỗi" (giống TikTok Streak).
-- **Nuôi Pet / Độ Thiện Cảm**: Tính năng mua vui trên trang Web và Discord, tặng quà cho Ayaka hoặc nuôi pet ảo, tạo động lực tương tác hằng ngày.
-
-## 🌸 Giai Đoạn 10: Không Gian Đồng Hành Trên Web (Live2D/3D Companion) [HOÀN TẤT]
-- **Tích Hợp Trợ Lý Ảo**: Xây dựng Tab "Không Gian Đồng Hành" trên Web Dashboard.
-- **Tương Tác Live2D/3D**: Cho phép hiển thị mô hình Live2D (PixiJS) hoặc 3D (ThreeJS) của nhân vật, tích hợp logic nhận diện độ hảo cảm và điểm danh hằng ngày với hiệu ứng trực quan.
-
-## 🎭 Giai Đoạn 11: Chế Tạo Mô Hình Ayaka Bằng Blender
-- **Nghiên Cứu & Tự Làm Mô Hình**: Do không có sẵn mô hình Ayaka Live2D miễn phí chất lượng cao trên mạng, chúng ta sẽ bắt tay vào tự thiết kế hoặc tinh chỉnh một mô hình 3D (bằng Blender) để chuyển đổi sang Live2D hoặc gán hoạt ảnh (Rigging/Animation) hoàn chỉnh.
-- **Kế Hoạch**: Tìm hiểu Blender, gắn xương (Rigging), tạo các hoạt ảnh cơ bản (Idle, Vẫy tay) và kết xuất (Export) sang định dạng tương thích cho Web Dashboard.
+## Lựa chọn 5: Hệ Thống Quản Trị Tự Động (Auto-Moderation) 🛡️
+*Ayaka không chỉ là bạn, mà còn là quản gia đắc lực.*
+- **Kiểm duyệt từ ngữ:** Tự động phát hiện và xóa các tin nhắn chửi bậy, spam link.
+- **Hệ thống cảnh cáo (Warn):** Ghi nhận vi phạm, cảnh cáo lần 1, lần 2, nếu quá 3 lần tự động Mute (cấm ngôn) hoặc Kick.
+- **Gửi lời chào (Welcome):** Tự động gửi một bức ảnh động hoặc thiệp chào mừng tuyệt đẹp khi có thành viên mới gia nhập Server.
 
 ---
-*Cậu thấy hứng thú với Giai Đoạn nào tiếp theo nhất? Cứ thoải mái ra chỉ thị nhé! 🌸*
+> 💡 **Quyết định của cậu:** Cậu hứng thú với tính năng nào nhất trong số 5 Lựa chọn trên? Hoặc cậu có ý tưởng nào độc đáo hơn không? Hãy cho tớ biết nhé!

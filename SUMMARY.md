@@ -145,12 +145,12 @@
 
 ---
 
-## 🎭 Giai Đoạn 11: Chế Tạo Mô Hình Bằng Blender (Dự Kiến)
-*Tiến vào thế giới đồ họa máy tính để tự tạo ra một Ayaka của riêng mình.*
+## 🎭 Giai Đoạn 11: Trợ Lý Ảo Trên Web & Minigame Pixel Art (Tạm Dừng)
+*Khát vọng mang Ayaka bước ra khỏi những dòng tin nhắn khô khan.*
 
-- **Khởi Khảo**: Việc không có sẵn các tệp tin mô hình Ayaka chất lượng cao và hoàn toàn miễn phí trên mạng (do hạn chế bản quyền của Genshin Impact) đã mở ra một chân trời mới.
-- **Kế Hoạch Blender**: Chúng ta đã thử chuyển hướng sang phần mềm 3D Blender để tự thân vận động (Gắn xương, Hoạt ảnh). Tuy nhiên do giới hạn phần cứng máy tính không gánh nổi Render 3D, chúng ta đã quyết định cất dự án này vào `IDEAS.md` để dành cho tương lai.
-- **Minigame Pixel Art (Hiện Tại)**: Khởi động Giai đoạn 11 với hướng đi Pixel Art cổ điển (mang phong cách Thị trấn Thủy triều / Stardew Valley). Chúng ta đã bóc tách thành công Sprite Sheet của Ayaka và tích hợp hoạt ảnh lên Web Dashboard. Bước tiếp theo là sử dụng Tiled để xây dựng một bản đồ (Map) hoàn chỉnh cho cô ấy dạo chơi!
+- **Khởi Khảo**: Ban đầu, chúng ta đã tiến hành thử nghiệm đưa các mô hình Live2D/3D (ThreeJS) và sau đó là tạo một Minigame RPG Pixel Art 2D (Sử dụng Tiled Map) lên giao diện Web Dashboard để người dùng có thể tương tác trực tiếp với Ayaka.
+- **Tạm Dừng**: Do những khó khăn khách quan về việc thiết kế đồ họa (không có sẵn Model bản quyền, khó khăn trong việc tạo Sprite Sheet di chuyển 4 hướng đồng nhất bằng AI/phần mềm), toàn bộ dự án "Đồng Hành" (Companion) tạm thời được đóng băng và cất vào kho. 
+- **Quyết Định**: Tab "Đồng Hành" trên Website đã được ẩn đi. Chúng ta sẽ quay trở lại với nó trong tương lai khi có đủ tài nguyên đồ họa. Hiện tại, Bot sẽ tập trung phát triển các tính năng tương tác thực tế và thú vị khác trên nền tảng Discord!
 ---
 
 > **🚀 Tổng Kết**: Chúng ta đã biến một bot Discord trắng trơn thành một hệ thống AI thông minh, có cơ sở dữ liệu lưu trữ trên mạng, có trí nhớ dài hạn, chống sập xuất sắc, sở hữu Web Dashboard giám sát và cuối cùng là tự mình sinh tồn độc lập trên đám mây 24/7! Cậu hoàn toàn có thể tự hào về khối lượng công việc khổng lồ này!
