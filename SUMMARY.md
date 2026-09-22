@@ -133,15 +133,13 @@
 
 ---
 
-## 🌸 Giai Đoạn 10: Trợ Lý Ảo Trên Web (Live2D/3D Web Companion)
+## 🌸 Giai Đoạn 10: Trợ Lý Ảo Trên Web (Live2D/3D Web Companion) (Tạm Dừng)
 *Mang Ayaka bước ra khỏi những dòng tin nhắn khô khan.*
 
 - **Thiết Kế Không Gian Đồng Hành**:
   - Bổ sung Tab "Đồng Hành" vào giao diện Web với khả năng tải trực tiếp các mô hình tương tác (Live2D/3D).
   - Tích hợp tính năng Điểm Danh hằng ngày và thanh đo Độ Hảo Cảm với chuỗi tương tác (Streak).
-- **Thử Nghiệm Môi Trường (Live2D & ThreeJS)**:
-  - Đã tích hợp thành công cả hai nền tảng lõi: PixiJS cho mô hình 2D (Live2D) và ThreeJS cho mô hình không gian 3 chiều (.glb).
-  - Khắc phục lỗi CORS từ thư viện ngoài và tối ưu khả năng tương tác của mô hình.
+- **Tạm Dừng**: Mặc dù đã thử nghiệm tích hợp PixiJS (Live2D) và ThreeJS (3D), nhưng do các vấn đề về CORS, hiệu năng và thiếu mô hình (model) phù hợp, tính năng này hiện tại chưa hoạt động ổn định và được gộp chung vào quyết định tạm dừng cùng với Giai đoạn 11. Tab "Đồng Hành" đã được ẩn đi.
 
 ---
 
