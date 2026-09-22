@@ -8,11 +8,11 @@ class GameEngine {
         // Map settings
         this.mapData = null;
         this.tilesetImage = new Image();
-        this.tilesetImage.src = '/assets/minigame/pipo-map001.png';
+        this.tilesetImage.src = '/assets/minigame/samplemap.png';
         
         // Tileset constants
         this.TILE_SIZE = 32;
-        this.TILESET_COLUMNS = 8; // pipo-map001 is 256px wide (256/32 = 8)
+        this.TILESET_COLUMNS = 60; // samplemap is 1920px wide (1920/32 = 60)
 
         // Player state
         this.player = {
@@ -36,8 +36,13 @@ class GameEngine {
 
     async init() {
         // Wait for tileset image to load
-        await new Promise(resolve => {
-            this.tilesetImage.onload = resolve;
+        await new Promise((resolve, reject) => {
+            if (this.tilesetImage.complete) {
+                resolve();
+            } else {
+                this.tilesetImage.onload = resolve;
+                this.tilesetImage.onerror = reject;
+            }
         });
 
         // Load map JSON
