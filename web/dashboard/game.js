@@ -18,8 +18,8 @@ class GameEngine {
         this.player = {
             x: 400, // Starting X
             y: 300, // Starting Y
-            width: 128,
-            height: 192,
+            width: 32,
+            height: 48,
             speed: 3,
             vx: 0,
             vy: 0,

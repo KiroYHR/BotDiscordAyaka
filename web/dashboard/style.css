@@ -594,8 +594,8 @@ body {
 
 /* --- Pixel Art Mini-Game --- */
 .pixel-avatar {
-    width: 128px; /* 32 * 4 */
-    height: 192px; /* 48 * 4 */
+    width: 32px; /* 1x scale (Original size) */
+    height: 48px; /* 1x scale (Original size) */
     background: url('/assets/minigame/modelpixelhandmade.png') no-repeat center center;
     background-size: 100% 100%;
     image-rendering: pixelated; 
