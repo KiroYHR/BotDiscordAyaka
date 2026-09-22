@@ -39,6 +39,7 @@ class WebDashboard:
         self.app.router.add_get('/leaderboard', self.serve_leaderboard)
         self.app.router.add_get('/style.css', self.serve_css)
         self.app.router.add_get('/app.js', self.serve_js)
+        self.app.router.add_get('/game.js', self.serve_game_js)
         
         # Đường dẫn tuyệt đối để tránh lỗi không tìm thấy file
         assets_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dashboard', 'assets')
@@ -281,6 +282,10 @@ class WebDashboard:
 
     async def serve_js(self, request):
         with open('web/dashboard/app.js', 'r', encoding='utf-8') as f:
+            return web.Response(text=f.read(), content_type='application/javascript')
+
+    async def serve_game_js(self, request):
+        with open('web/dashboard/game.js', 'r', encoding='utf-8') as f:
             return web.Response(text=f.read(), content_type='application/javascript')
 
 async def start_web_server(bot, port=928):
