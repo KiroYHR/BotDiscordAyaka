@@ -1,3 +1,4 @@
+# pyrefly: ignore [missing-import]
 import asyncpg
 import json
 import logging

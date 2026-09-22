@@ -21,13 +21,16 @@ class WebDashboard:
     def setup_routes(self):
         # API Routes
         self.app.router.add_get('/api/status', self.api_status)
-        self.app.router.add_get('/api/music', self.api_music)
-        self.app.router.add_get('/api/channels', self.api_channels)
+        self.app.router.add_post('/api/daily', self.api_daily)
+        self.app.router.add_post('/api/monthly', self.api_monthly)
+        self.app.router.add_get('/api/gacha', self.api_gacha_inventory)
         self.app.router.add_get('/api/schedules', self.api_get_schedules)
         self.app.router.add_post('/api/schedules', self.api_post_schedules)
         self.app.router.add_delete('/api/schedules', self.api_delete_schedules)
         self.app.router.add_get('/api/leaderboard', self.api_leaderboard)
         self.app.router.add_get('/api/gacha/collection', self.api_gacha_collection)
+        self.app.router.add_get('/api/music', self.api_music)
+        self.app.router.add_get('/api/channels', self.api_channels)
         
         # OAuth2 Routes
         self.app.router.add_get('/login', self.login)
@@ -154,6 +157,21 @@ class WebDashboard:
             
         user_id = session_data["user_id"]
         result = await db_manager.claim_daily(user_id)
+        return web.json_response(result)
+
+    async def api_monthly(self, request):
+        """Endpoint nhận quà tháng qua web."""
+        session_id = request.cookies.get('session_token')
+        if not session_id:
+            return web.json_response({"success": False, "msg": "Vui lòng đăng nhập trước!"})
+            
+        from data.database import db_manager
+        session_data = await db_manager.get_session(session_id)
+        if not session_data:
+            return web.json_response({"success": False, "msg": "Phiên đăng nhập hết hạn!"})
+            
+        user_id = session_data["user_id"]
+        result = await db_manager.claim_monthly(user_id)
         return web.json_response(result)
 
     async def api_status(self, request):
