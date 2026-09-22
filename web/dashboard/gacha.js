@@ -51,10 +51,11 @@ function renderGameCollection(gameId, characterList, ownedMap) {
             <div class="card-image-wrapper">
                 <img src="${char.image}" alt="${char.name}" loading="lazy" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
                 ${isOwned ? `<div class="copies-badge">C${copies-1}</div>` : ''}
+                <div class="element-badge">${char.element || char.path || ''}</div>
             </div>
             <div class="card-info">
                 <h4>${char.name}</h4>
-                <p class="element">${char.element || char.path || ''}</p>
+                <div class="stars">${'★'.repeat(char.rarity === 'SSR' || char.rarity === 'L' ? 5 : (char.rarity === 'SR' ? 4 : 3))}</div>
             </div>
         `;
         

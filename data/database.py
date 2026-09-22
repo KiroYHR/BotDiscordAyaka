@@ -215,10 +215,10 @@ class AyakaDatabase:
         previous_reset_ts = (last_reset - timedelta(days=1)).timestamp()
         
         async with self.pool.acquire() as db:
-            row = await db.fetchrow('SELECT affection, streak, last_daily_claim FROM users WHERE user_id = $1', user_id)
+            row = await db.fetchrow('SELECT affection, streak, last_daily_claim, primogems FROM users WHERE user_id = $1', user_id)
             if not row:
-                await db.execute('INSERT INTO users (user_id, affection, streak, last_daily_claim) VALUES ($1, $2, $3, $4)', user_id, 10, 1, now_ts)
-                return {"success": True, "streak": 1, "affection": 10, "affection_gained": 10}
+                await db.execute('INSERT INTO users (user_id, affection, streak, last_daily_claim, primogems) VALUES ($1, $2, $3, $4, $5)', user_id, 10, 1, now_ts, 160)
+                return {"success": True, "streak": 1, "affection": 10, "affection_gained": 10, "primos_gained": 160}
             
             last_claim = row['last_daily_claim'] or 0
             streak = row['streak'] or 0
@@ -238,14 +238,60 @@ class AyakaDatabase:
                 
             affection_gained = min(10 + (streak * 2), 50)
             affection += affection_gained
+            primos_gained = 160
             
             await db.execute('''
                 UPDATE users 
-                SET affection = $1, streak = $2, last_daily_claim = $3 
-                WHERE user_id = $4
-            ''', affection, streak, now_ts, user_id)
+                SET affection = $1, streak = $2, last_daily_claim = $3, primogems = primogems + $4
+                WHERE user_id = $5
+            ''', affection, streak, now_ts, primos_gained, user_id)
             
-            return {"success": True, "streak": streak, "affection": affection, "affection_gained": affection_gained}
+            return {"success": True, "streak": streak, "affection": affection, "affection_gained": affection_gained, "primos_gained": primos_gained}
+
+    async def claim_monthly(self, user_id: str) -> dict:
+        import time
+        from datetime import datetime, timedelta
+        import pytz
+        
+        user_id = str(user_id)
+        if not self.pool: return {"success": False, "msg": "Không thể kết nối DB."}
+        
+        vn_tz = pytz.timezone('Asia/Ho_Chi_Minh')
+        now_vn = datetime.now(vn_tz)
+        now_ts = now_vn.timestamp()
+        
+        # Reset vào ngày 1 hàng tháng lúc 03:00 Sáng
+        reset_this_month = vn_tz.localize(datetime(now_vn.year, now_vn.month, 1, 3, 0))
+        
+        if now_vn < reset_this_month:
+            # Nếu hiện tại < 3h sáng ngày 1, thì reset của tháng này vẫn là mùng 1 tháng trước
+            prev_month = now_vn.month - 1 if now_vn.month > 1 else 12
+            prev_year = now_vn.year if now_vn.month > 1 else now_vn.year - 1
+            last_reset = vn_tz.localize(datetime(prev_year, prev_month, 1, 3, 0))
+        else:
+            last_reset = reset_this_month
+            
+        last_reset_ts = last_reset.timestamp()
+        
+        async with self.pool.acquire() as db:
+            row = await db.fetchrow('SELECT last_monthly_claim FROM users WHERE user_id = $1', user_id)
+            
+            # Khởi tạo user nếu chưa có
+            if not row:
+                await db.execute('INSERT INTO users (user_id, last_monthly_claim, primogems) VALUES ($1, $2, $3)', user_id, now_ts, 1600)
+                return {"success": True, "primos_gained": 1600}
+                
+            last_claim = row['last_monthly_claim'] or 0
+            if last_claim >= last_reset_ts:
+                # Tính tháng tiếp theo
+                next_month = last_reset.month + 1 if last_reset.month < 12 else 1
+                next_year = last_reset.year if last_reset.month < 12 else last_reset.year + 1
+                next_reset = vn_tz.localize(datetime(next_year, next_month, 1, 3, 0))
+                days_left = (next_reset - now_vn).days
+                return {"success": False, "msg": f"Cậu đã nhận quà tháng này rồi! Hãy quay lại sau khoảng {days_left} ngày nữa nhé."}
+                
+            await db.execute('UPDATE users SET last_monthly_claim = $1, primogems = primogems + $2 WHERE user_id = $3', now_ts, 1600, user_id)
+            return {"success": True, "primos_gained": 1600}
 
     async def get_top_users(self, limit: int = 50) -> list:
         """Lấy danh sách người dùng top EXP."""

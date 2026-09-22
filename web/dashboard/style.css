@@ -634,57 +634,92 @@ body {
 /* Gacha Grid */
 .gacha-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 15px;
-    margin-top: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+    padding: 10px;
 }
 
 .gacha-card {
-    background: var(--glass-bg);
-    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(240,240,255,0.6));
+    border-radius: 4px;
     overflow: hidden;
     text-align: center;
     border: 2px solid transparent;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     cursor: pointer;
     position: relative;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    height: 240px; /* Rectangular shape */
+    display: flex;
+    flex-direction: column;
 }
 
 .gacha-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.15);
 }
 
 .card-image-wrapper {
     position: relative;
     width: 100%;
-    padding-top: 100%; /* 1:1 Aspect Ratio */
-    background: #f0f0f0;
+    height: 180px;
+    background: linear-gradient(to bottom, #d4d4d4, #f0f0f0);
+    overflow: hidden;
+    border-bottom: 2px solid rgba(0,0,0,0.1);
 }
 
 .card-image-wrapper img {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    bottom: -10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120%;
+    height: auto;
     object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.gacha-card:hover .card-image-wrapper img {
+    transform: translateX(-50%) scale(1.05);
 }
 
 .copies-badge {
     position: absolute;
-    top: 5px;
-    right: 5px;
-    background: rgba(0,0,0,0.7);
-    color: white;
-    padding: 2px 6px;
-    border-radius: 10px;
+    top: 6px;
+    right: 6px;
+    background: rgba(0, 0, 0, 0.75);
+    color: #FFD700;
+    padding: 2px 8px;
+    border-radius: 12px;
     font-size: 0.8em;
     font-weight: bold;
+    border: 1px solid #FFD700;
+    z-index: 2;
+}
+
+.element-badge {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.7em;
+    font-weight: 800;
+    text-transform: uppercase;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    z-index: 2;
 }
 
 .card-info {
-    padding: 10px 5px;
+    padding: 10px;
+    background: #fff;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .card-info h4 {
@@ -693,52 +728,72 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     color: var(--text-primary);
+    margin-bottom: 4px;
 }
 
-.card-info .element {
-    font-size: 0.75em;
-    color: var(--text-secondary);
+.card-info .stars {
+    font-size: 0.8em;
+    color: #FFD700;
+    text-shadow: 0 0 2px rgba(0,0,0,0.2);
 }
 
-/* Unowned Filter */
+/* Unowned Filter - Silhouette Effect */
 .gacha-card.unowned .card-image-wrapper img {
-    filter: grayscale(100%) opacity(40%);
+    filter: brightness(0) invert(0.4);
+    opacity: 0.5;
 }
 
 .gacha-card.unowned {
-    border-color: #e0e0e0;
+    border-color: #ccc;
+    background: rgba(200, 200, 200, 0.3);
+}
+.gacha-card.unowned .card-info {
+    background: #f5f5f5;
 }
 
-/* Rarity Borders */
+/* Rarity Backgrounds */
+.gacha-card.owned.rarity-r .card-image-wrapper {
+    background: linear-gradient(to bottom, #a1b0c4, #e8f0f8);
+}
 .gacha-card.owned.rarity-r {
-    border-color: #C0C0C0;
+    border-color: #8c9bb0;
 }
 
+.gacha-card.owned.rarity-sr .card-image-wrapper {
+    background: linear-gradient(to bottom, #a388b3, #e5d1f0);
+}
 .gacha-card.owned.rarity-sr {
-    border-color: #FFD700;
+    border-color: #a388b3;
 }
 
+.gacha-card.owned.rarity-ssr .card-image-wrapper {
+    background: linear-gradient(to bottom, #cf9c53, #f7e3c3);
+}
+
+/* Rainbow Animated Border for SSR */
 .gacha-card.owned.rarity-ssr {
     border-color: transparent;
     background-clip: padding-box;
     position: relative;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
 }
-
-/* Rainbow Animated Border for SSR */
 .gacha-card.owned.rarity-ssr::before {
     content: '';
     position: absolute;
-    top: -2px; left: -2px; right: -2px; bottom: -2px;
+    top: -3px; left: -3px; right: -3px; bottom: -3px;
     background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
     z-index: -1;
-    border-radius: 12px;
-    animation: glowing-rainbow 20s linear infinite;
+    border-radius: 6px;
+    animation: glowing-rainbow 10s linear infinite;
     background-size: 400%;
 }
 
+.gacha-card.owned.rarity-l .card-image-wrapper {
+    background: linear-gradient(to bottom, #b34d4d, #f2c7c7);
+}
 .gacha-card.owned.rarity-l {
     border-color: #ff0055;
-    box-shadow: 0 0 10px rgba(255, 0, 85, 0.5);
+    box-shadow: 0 0 15px rgba(255, 0, 85, 0.5);
 }
 
 @keyframes glowing-rainbow {

@@ -70,10 +70,11 @@ class LevelCog(commands.Cog):
                 streak = result["streak"]
                 affection = result["affection"]
                 gained = result["affection_gained"]
+                primos = result.get("primos_gained", 160)
                 
                 embed = discord.Embed(
                     title="💖 Điểm Danh Thành Công!",
-                    description=f"Ayaka rất vui vì hôm nay lại được gặp {ctx.author.mention}! 🌸\nCậu vừa nhận được **{gained} Điểm Hảo Cảm**.",
+                    description=f"Ayaka rất vui vì hôm nay lại được gặp {ctx.author.mention}! 🌸\nCậu vừa nhận được **{gained} Điểm Hảo Cảm** và **{primos} 💎 Nguyên Thạch**.",
                     color=discord.Color.brand_red()
                 )
                 embed.add_field(name="🔥 Chuỗi Điểm Danh", value=f"**{streak} ngày**", inline=True)
@@ -85,6 +86,20 @@ class LevelCog(commands.Cog):
         except Exception as e:
             logger.error(f"Lỗi khi điểm danh: {e}")
             await ctx.reply("❌ Không thể điểm danh lúc này, có chút lỗi xảy ra cậu ạ.")
+
+    @commands.command(name="monthly", aliases=["thang"])
+    async def check_monthly(self, ctx):
+        """Nhận quà ưu đãi hàng tháng (1600 Nguyên Thạch)."""
+        try:
+            result = await db_manager.claim_monthly(str(ctx.author.id))
+            if result.get("success"):
+                primos = result.get("primos_gained", 1600)
+                await ctx.reply(f"🎁 {ctx.author.mention} đã nhận được **{primos} Nguyên Thạch** từ phần quà ưu đãi hằng tháng! 💎 (Tương đương 10 lượt quay)")
+            else:
+                await ctx.reply(f"❌ {result.get('msg')}")
+        except Exception as e:
+            logger.error(f"Lỗi khi nhận monthly: {e}")
+            await ctx.reply("❌ Không thể nhận quà lúc này, có chút lỗi xảy ra cậu ạ.")
 
     @commands.command(name="rank", aliases=["level", "capdo"])
     async def check_rank(self, ctx, member: discord.Member = None):

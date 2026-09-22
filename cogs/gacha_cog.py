@@ -49,59 +49,6 @@ class GachaCog(commands.Cog):
             row = await db.fetchrow("SELECT primogems FROM users WHERE user_id = $1", str(user_id))
             return row['primogems'] if row else 0
 
-    @commands.command(name="daily")
-    async def daily(self, ctx):
-        user_id = str(ctx.author.id)
-        now = time.time()
-        
-        if not self.db.pool:
-            return await ctx.reply("❌ Không kết nối được Database!")
-            
-        async with self.db.pool.acquire() as db:
-            row = await db.fetchrow("SELECT last_daily_claim FROM users WHERE user_id = $1", user_id)
-            last_claim = row['last_daily_claim'] if row else 0
-            
-            if now - last_claim < 86400:
-                hours_left = int(86400 - (now - last_claim)) // 3600
-                await ctx.reply(f"⏳ Cậu đã nhận danh rùi! Hãy quay lại sau {hours_left} giờ nữa nhé.")
-                return
-                
-            await db.execute('''
-                INSERT INTO users (user_id, primogems, last_daily_claim)
-                VALUES ($1, 160, $2)
-                ON CONFLICT(user_id) DO UPDATE SET 
-                    primogems = users.primogems + 160,
-                    last_daily_claim = $2
-            ''', user_id, now)
-            
-        await ctx.reply(f"✨ {ctx.author.mention} đã nhận được **160 Nguyên Thạch** từ quà đăng nhập hằng ngày! 💎")
-
-    @commands.command(name="monthly")
-    async def monthly(self, ctx):
-        user_id = str(ctx.author.id)
-        now = time.time()
-        
-        if not self.db.pool: return
-            
-        async with self.db.pool.acquire() as db:
-            row = await db.fetchrow("SELECT last_monthly_claim FROM users WHERE user_id = $1", user_id)
-            last_claim = row['last_monthly_claim'] if row and row.get('last_monthly_claim') else 0
-            
-            if now - last_claim < 2592000:
-                days_left = int(2592000 - (now - last_claim)) // 86400
-                await ctx.reply(f"⏳ Cậu đã nhận quà tháng này rùi! Hãy quay lại sau {days_left} ngày nữa nhé.")
-                return
-                
-            await db.execute('''
-                INSERT INTO users (user_id, primogems, last_monthly_claim)
-                VALUES ($1, 1600, $2)
-                ON CONFLICT(user_id) DO UPDATE SET 
-                    primogems = users.primogems + 1600,
-                    last_monthly_claim = $2
-            ''', user_id, now)
-            
-        await ctx.reply(f"🎁 {ctx.author.mention} đã nhận được **1600 Nguyên Thạch** từ phần quà ưu đãi hằng tháng! 💎 (Tương đương 10 lượt quay)")
-
     @commands.command(name="gacha", aliases=["quay", "roll"])
     async def gacha(self, ctx, amount: int = 1):
         if amount not in [1, 10]:

@@ -1,44 +1,105 @@
 import urllib.request
+from bs4 import BeautifulSoup
 import json
 import os
 
-print("Bắt đầu cào dữ liệu nhân vật Genshin Impact từ nguồn mở...")
-
-url = "https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/characters.json"
-try:
-    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-    response = urllib.request.urlopen(req)
-    data = json.loads(response.read())
+def fetch_genshin_characters():
+    print("Đang cào dữ liệu Genshin Impact...")
+    url = "https://genshin-impact.fandom.com/wiki/Character/List"
+    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
     
-    characters_json = {"genshin": [], "hsr": [], "zzz": []}
-    
-    # Chỉ lấy tạm 50 nhân vật đầu tiên để minh họa
-    count = 0
-    for char_id, char_info in data.items():
-        if count >= 50:
-            break
+    chars = []
+    try:
+        response = urllib.request.urlopen(req)
+        soup = BeautifulSoup(response.read(), 'html.parser')
+        table = soup.find('table', {'class': 'article-table'})
         
-        # Enka format
-        quality = char_info.get("QualityType", "QUALITY_PURPLE")
-        rarity = "SSR" if "ORANGE" in quality else "SR"
-        if "PROTAGONIST" in quality:
-            rarity = "L"
+        for row in table.find_all('tr')[1:]:
+            cols = row.find_all('td')
+            if len(cols) < 4: continue
             
-        element = char_info.get("Element", "None")
-        
-        characters_json["genshin"].append({
-            "id": f"gs_{char_id}",
-            "name": f"Nhân vật {char_id} (Cần mapping tên)",
-            "rarity": rarity,
-            "element": element,
-            "image": "https://api.ambr.top/assets/UI/UI_AvatarIcon_Side_PlayerBoy.png", # Placeholder
-            "bio": "Dữ liệu được tự động cào từ nguồn mở."
-        })
-        count += 1
-        
-    print(f"Đã cào thành công {count} nhân vật Genshin!")
-    print("Do thiếu API chuẩn hóa tên (tiếng Việt) và hình ảnh đẹp, dữ liệu trên web HoYoWiki vẫn là lý tưởng nhất.")
-    print("Nếu muốn cào từ HoYoWiki, bạn sẽ cần dùng một thư viện trình duyệt ảo (như Selenium) để vượt qua Cloudflare.")
+            name = cols[0].text.strip()
+            rarity_img = cols[1].find('img')
+            rarity = "SSR" if rarity_img and "5Star" in rarity_img.get('alt', '') else "SR"
+            
+            if name in ["Aloy", "Traveler"]: rarity = "L"
+            
+            element_img = cols[2].find('img')
+            element = element_img.get('alt', '').replace('Element', '').strip() if element_img else "None"
+            
+            img_tag = cols[0].find('img')
+            image = img_tag.get('data-src') or img_tag.get('src') if img_tag else ""
+            if image and image.startswith('data:'): image = "" # Bỏ qua base64 placeholder
+            
+            # Làm sạch URL ảnh (bỏ phần /revision/...)
+            if image:
+                image = image.split('/revision/')[0]
+                
+            chars.append({
+                "id": f"gs_{name.lower().replace(' ', '_')}",
+                "name": name,
+                "rarity": rarity,
+                "element": element,
+                "image": image,
+                "bio": "Một nhân vật trong Genshin Impact."
+            })
+    except Exception as e:
+        print(f"Lỗi Genshin: {e}")
+    return chars
+
+def fetch_hsr_characters():
+    print("Đang cào dữ liệu Honkai: Star Rail...")
+    url = "https://honkai-star-rail.fandom.com/wiki/Character/List"
+    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
     
-except Exception as e:
-    print(f"Lỗi: {e}")
+    chars = []
+    try:
+        response = urllib.request.urlopen(req)
+        soup = BeautifulSoup(response.read(), 'html.parser')
+        table = soup.find('table', {'class': 'article-table'})
+        
+        for row in table.find_all('tr')[1:]:
+            cols = row.find_all('td')
+            if len(cols) < 4: continue
+            
+            name = cols[0].text.strip()
+            rarity_img = cols[1].find('img')
+            rarity = "SSR" if rarity_img and "5Star" in rarity_img.get('alt', '') else "SR"
+            
+            if name in ["Trailblazer"]: rarity = "L"
+            
+            path_img = cols[3].find('img')
+            path = path_img.get('alt', '').replace('Path', '').strip() if path_img else "None"
+            
+            img_tag = cols[0].find('img')
+            image = img_tag.get('data-src') or img_tag.get('src') if img_tag else ""
+            if image: image = image.split('/revision/')[0]
+                
+            chars.append({
+                "id": f"hsr_{name.lower().replace(' ', '_')}",
+                "name": name,
+                "rarity": rarity,
+                "element": path, # Dùng path thay thế element
+                "image": image,
+                "bio": "Một nhân vật trong Honkai: Star Rail."
+            })
+    except Exception as e:
+        print(f"Lỗi HSR: {e}")
+    return chars
+
+if __name__ == "__main__":
+    print("Bắt đầu chạy script cào dữ liệu Fandom Wiki...")
+    
+    genshin = fetch_genshin_characters()
+    hsr = fetch_hsr_characters()
+    
+    final_data = {
+        "genshin": genshin,
+        "hsr": hsr,
+        "zzz": [] # ZZZ có cấu trúc bảng khác, có thể tự bổ sung sau.
+    }
+    
+    with open("data/characters.json", "w", encoding="utf-8") as f:
+        json.dump(final_data, f, ensure_ascii=False, indent=4)
+        
+    print(f"Hoàn thành! Đã lưu {len(genshin)} NV Genshin, {len(hsr)} NV HSR vào data/characters.json")
