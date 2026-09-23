@@ -23,7 +23,6 @@ class WebDashboard:
         self.app.router.add_get('/api/status', self.api_status)
         self.app.router.add_post('/api/daily', self.api_daily)
         self.app.router.add_post('/api/monthly', self.api_monthly)
-        self.app.router.add_get('/api/gacha', self.api_gacha_inventory)
         self.app.router.add_get('/api/schedules', self.api_get_schedules)
         self.app.router.add_post('/api/schedules', self.api_post_schedules)
         self.app.router.add_delete('/api/schedules', self.api_delete_schedules)
@@ -36,8 +35,6 @@ class WebDashboard:
         self.app.router.add_get('/login', self.login)
         self.app.router.add_get('/callback', self.callback)
         self.app.router.add_get('/api/me', self.api_me)
-        self.app.router.add_post('/api/daily', self.api_daily)
-        
         # Static file routes
         self.app.router.add_get('/', self.serve_index)
         self.app.router.add_get('/leaderboard', self.serve_leaderboard)
