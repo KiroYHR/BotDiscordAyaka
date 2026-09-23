@@ -20,8 +20,8 @@ class AyakaDatabase:
             return
 
         try:
-            # Tạo Connection Pool cho PostgreSQL
-            self.pool = await asyncpg.create_pool(self.db_url)
+            # Tạo Connection Pool cho PostgreSQL (giới hạn 5 kết nối để không vượt quá giới hạn 15 của Supabase free tier)
+            self.pool = await asyncpg.create_pool(self.db_url, min_size=1, max_size=5)
             
             async with self.pool.acquire() as db:
                 # Bảng Users (Level, EXP) - dùng DOUBLE PRECISION thay cho REAL nếu cần, nhưng PostgreSQL hỗ trợ REAL.

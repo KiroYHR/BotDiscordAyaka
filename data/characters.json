@@ -1,72 +1,2192 @@
 {
-  "genshin": [
-    {
-      "id": "gs_traveler",
-      "name": "Nhà Lữ Hành (Aether/Lumine)",
-      "rarity": "L",
-      "element": "Adaptive",
-      "image": "https://i.imgur.com/gK2T3iN.png",
-      "bio": "Nhà lữ hành đến từ thế giới khác."
-    },
-    {
-      "id": "gs_raiden",
-      "name": "Raiden Shogun",
-      "rarity": "SSR",
-      "element": "Electro",
-      "image": "https://i.imgur.com/H1tHqP7.png",
-      "bio": "Lôi Thần cai trị Inazuma."
-    },
-    {
-      "id": "gs_ayaka",
-      "name": "Kamisato Ayaka",
-      "rarity": "SR",
-      "element": "Cryo",
-      "image": "https://i.imgur.com/example1.png",
-      "bio": "Đại tiểu thư nhà Kamisato."
-    },
-    {
-      "id": "gs_amber",
-      "name": "Amber",
-      "rarity": "R",
-      "element": "Pyro",
-      "image": "https://i.imgur.com/example2.png",
-      "bio": "Kỵ sĩ trinh sát Đội Kỵ Sĩ Tây Phong."
-    }
-  ],
-  "hsr": [
-    {
-      "id": "hsr_trailblazer",
-      "name": "Nhà Khai Phá (Caelus/Stelle)",
-      "rarity": "L",
-      "path": "Adaptive",
-      "image": "https://i.imgur.com/example3.png",
-      "bio": "Người mang Stellaron trong mình."
-    },
-    {
-      "id": "hsr_seele",
-      "name": "Seele",
-      "rarity": "SSR",
-      "path": "Săn Bắn",
-      "image": "https://i.imgur.com/example4.png",
-      "bio": "Thành viên trụ cột của Lửa Ngầm."
-    }
-  ],
-  "zzz": [
-    {
-      "id": "zzz_wise_belle",
-      "name": "Phaethon (Wise/Belle)",
-      "rarity": "L",
-      "element": "None",
-      "image": "https://i.imgur.com/example5.png",
-      "bio": "Huyền thoại proxy ở New Eridu."
-    },
-    {
-      "id": "zzz_ellen",
-      "name": "Ellen Joe",
-      "rarity": "SSR",
-      "element": "Ice",
-      "image": "https://i.imgur.com/example6.png",
-      "bio": "Cô hầu gái cá mập lười biếng."
-    }
-  ]
+    "genshin": [
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/a3/Aino_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/3/30/Albedo_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/2/2c/Alhaitham_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/e/e5/Aloy_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/1/1d/Alyosha_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/7/75/Amber_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/7/7b/Arataki_Itto_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/9/9a/Arlecchino_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/c/cb/Baizhu_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/6/6a/Barbara_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/e/e1/Beidou_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/7/79/Bennett_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/d/dd/Candace_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/d/d2/Charlotte_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/0/03/Chasca_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/8/8a/Chevreuse_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/8/88/Chiori_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/3/35/Chongyun_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/d/dd/Citlali_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/5/5b/Clorinde_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/a2/Collei_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/3/35/Columbina_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/3/31/Cyno_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/6/6d/Dahlia_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/3/3f/Dehya_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/3/3d/Diluc_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/4/40/Diona_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/5/54/Dori_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/b/ba/Durin_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/aa/Emilie_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/2/2a/Escoffier_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/af/Eula_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/b/b2/Faruzan_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/9/9a/Fischl_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/af/Flins_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/e/ee/Freminet_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/e/e6/Furina_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/7/77/Gaming_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/7/79/Ganyu_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/f/fe/Gorou_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/e/e9/Hu_Tao_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/3/38/Iansan_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/5/5f/Ifa_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/9/96/Illuga_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/0/0b/Ineffa_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/b/bf/Jahoda_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/6/64/Jean_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/1/1a/Kachina_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/e/e3/Kaedehara_Kazuha_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/b/b6/Kaeya_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/5/51/Kamisato_Ayaka_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/2/27/Kamisato_Ayato_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/1/1f/Kaveh_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/5/52/Keqing_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/9/9a/Kinich_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/b/b6/Kirara_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/9/9c/Klee_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/d/df/Kujou_Sara_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/b/b3/Kuki_Shinobu_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/e/e6/Lan_Yan_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/2/27/Lauma_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/1/1a/Layla_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/a9/Linnea_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/6/65/Lisa_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/8/86/Lohen_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/ad/Lynette_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/b/b2/Lyney_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/d/da/Mavuika_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/d/dd/Mika_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/4/41/Mona_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/0/0b/Mualani_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/f/f9/Nahida_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/c/c0/Navia_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/5/5b/Nefer_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/2/21/Neuvillette_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/a0/Nicole_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/5/58/Nilou_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/e/e0/Ningguang_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/8/8e/Noelle_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/8/87/Odette_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/5/5e/Ororon_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/9/99/Prune_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/b/b3/Qiqi_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/2/24/Raiden_Shogun_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/b/b8/Razor_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/3/35/Rosaria_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/c/c8/Sandrone_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/f/ff/Sangonomiya_Kokomi_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/2/22/Sayu_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/9/90/Sethos_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/af/Shenhe_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/2/20/Shikanoin_Heizou_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/3/37/Sigewinne_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/0/03/Skirk_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/0/0e/Sucrose_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/8/85/Tartaglia_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/5/5b/Thoma_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/8/87/Tighnari_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/5/59/Traveler_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/d/dd/Varesa_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/9/98/Varka_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/f/f1/Venti_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/9/95/Vesna_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/9/97/Vodyanitsa_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/f/f8/Wanderer_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/0/02/Wonderland_Manekin_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/b/bb/Wriothesley_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/3/39/Xiangling_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/d/d3/Xianyun_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/f/fd/Xiao_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/ab/Xilonen_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/d/d4/Xingqiu_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/2/24/Xinyan_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/b/ba/Yae_Miko_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/5/54/Yanfei_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/8/83/Yaoyao_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/d/d3/Yelan_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/8/88/Yoimiya_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/f/f6/Yumemizuki_Mizuki_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "4 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/9/9c/Yun_Jin_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/a6/Zhongli_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        },
+        {
+            "id": "gs_",
+            "name": "",
+            "rarity": "SR",
+            "element": "5 Stars",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/2/22/Zibai_Icon.png",
+            "bio": "Một nhân vật trong Genshin Impact."
+        }
+    ],
+    "hsr": [
+        {
+            "id": "hsr_acheron",
+            "name": "Acheron",
+            "rarity": "SR",
+            "element": "Type Lightning Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/2/24/Character_Acheron_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_aglaea",
+            "name": "Aglaea",
+            "rarity": "SR",
+            "element": "Type Lightning Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/f/f8/Character_Aglaea_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_anaxa",
+            "name": "Anaxa",
+            "rarity": "SR",
+            "element": "Type Wind Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/f/f0/Character_Anaxa_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_archer",
+            "name": "Archer",
+            "rarity": "SR",
+            "element": "Type Quantum Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/8/8f/Character_Archer_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_argenti",
+            "name": "Argenti",
+            "rarity": "SR",
+            "element": "Type Physical Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/c/c0/Character_Argenti_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_arlan",
+            "name": "Arlan",
+            "rarity": "SR",
+            "element": "Type Lightning Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/a/a9/Character_Arlan_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_ashveil",
+            "name": "Ashveil",
+            "rarity": "SR",
+            "element": "Type Lightning Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/8/88/Character_Ashveil_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_asta",
+            "name": "Asta",
+            "rarity": "SR",
+            "element": "Type Fire Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/9/9f/Character_Asta_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_aventurine",
+            "name": "Aventurine",
+            "rarity": "SR",
+            "element": "Type Imaginary Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/d/da/Character_Aventurine_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_aventurine_•_waveflair",
+            "name": "Aventurine • Waveflair",
+            "rarity": "SR",
+            "element": "Type Quantum Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/f/fc/Character_Aventurine_%E2%80%A2_Waveflair_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_bailu",
+            "name": "Bailu",
+            "rarity": "SR",
+            "element": "Type Lightning Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/4/47/Character_Bailu_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_black_swan",
+            "name": "Black Swan",
+            "rarity": "SR",
+            "element": "Type Wind Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/9/90/Character_Black_Swan_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_blade",
+            "name": "Blade",
+            "rarity": "SR",
+            "element": "Type Wind Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/9/90/Character_Blade_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_boothill",
+            "name": "Boothill",
+            "rarity": "SR",
+            "element": "Type Physical Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/7/78/Character_Boothill_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_bronya",
+            "name": "Bronya",
+            "rarity": "SR",
+            "element": "Type Wind Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/0/0f/Character_Bronya_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_castorice",
+            "name": "Castorice",
+            "rarity": "SR",
+            "element": "Type Quantum Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/d/da/Character_Castorice_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_cerydra",
+            "name": "Cerydra",
+            "rarity": "SR",
+            "element": "Type Wind Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/c/c9/Character_Cerydra_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_cipher",
+            "name": "Cipher",
+            "rarity": "SR",
+            "element": "Type Quantum Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/9/99/Character_Cipher_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_clara",
+            "name": "Clara",
+            "rarity": "SR",
+            "element": "Type Physical Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/a/a4/Character_Clara_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_cyrene",
+            "name": "Cyrene",
+            "rarity": "SR",
+            "element": "Type Ice Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/9/99/Character_Cyrene_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_dan_heng",
+            "name": "Dan Heng",
+            "rarity": "SR",
+            "element": "Type Wind Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/1/1a/Character_Dan_Heng_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_dan_heng_•_imbibitor_lunae",
+            "name": "Dan Heng • Imbibitor Lunae",
+            "rarity": "SR",
+            "element": "Type Imaginary Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/2/2a/Character_Dan_Heng_%E2%80%A2_Imbibitor_Lunae_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_dan_heng_•_permansor_terrae",
+            "name": "Dan Heng • Permansor Terrae",
+            "rarity": "SR",
+            "element": "Type Physical Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/f/fc/Character_Dan_Heng_%E2%80%A2_Permansor_Terrae_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_dr._ratio",
+            "name": "Dr. Ratio",
+            "rarity": "SR",
+            "element": "Type Imaginary Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/4/47/Character_Dr._Ratio_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_evanescia",
+            "name": "Evanescia",
+            "rarity": "SR",
+            "element": "Type Physical Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/c/c3/Character_Evanescia_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_evernight",
+            "name": "Evernight",
+            "rarity": "SR",
+            "element": "Type Ice Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/b/b7/Character_Evernight_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_feixiao",
+            "name": "Feixiao",
+            "rarity": "SR",
+            "element": "Type Wind Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/7/75/Character_Feixiao_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_firefly",
+            "name": "Firefly",
+            "rarity": "SR",
+            "element": "Type Fire Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/9/9e/Character_Firefly_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_fu_xuan",
+            "name": "Fu Xuan",
+            "rarity": "SR",
+            "element": "Type Quantum Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/1/1a/Character_Fu_Xuan_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_fugue",
+            "name": "Fugue",
+            "rarity": "SR",
+            "element": "Type Fire Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/c/c0/Character_Fugue_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_gallagher",
+            "name": "Gallagher",
+            "rarity": "SR",
+            "element": "Type Fire Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/1/12/Character_Gallagher_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_gepard",
+            "name": "Gepard",
+            "rarity": "SR",
+            "element": "Type Ice Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/7/75/Character_Gepard_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_gilgamesh",
+            "name": "Gilgamesh",
+            "rarity": "SR",
+            "element": "Type Lightning Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/d/d6/Character_Gilgamesh_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_guinaifen",
+            "name": "Guinaifen",
+            "rarity": "SR",
+            "element": "Type Fire Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/9/98/Character_Guinaifen_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_hanya",
+            "name": "Hanya",
+            "rarity": "SR",
+            "element": "Type Physical Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/9/99/Character_Hanya_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_herta",
+            "name": "Herta",
+            "rarity": "SR",
+            "element": "Type Ice Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/b/bf/Character_Herta_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_himeko",
+            "name": "Himeko",
+            "rarity": "SR",
+            "element": "Type Fire Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/0/00/Character_Himeko_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_himeko_•_nova",
+            "name": "Himeko • Nova",
+            "rarity": "SR",
+            "element": "Type Fire Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/8/80/Character_Himeko_%E2%80%A2_Nova_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_hook",
+            "name": "Hook",
+            "rarity": "SR",
+            "element": "Type Fire Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/d/d5/Character_Hook_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_huohuo",
+            "name": "Huohuo",
+            "rarity": "SR",
+            "element": "Type Wind Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/6/68/Character_Huohuo_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_hyacine",
+            "name": "Hyacine",
+            "rarity": "SR",
+            "element": "Type Wind Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/c/c0/Character_Hyacine_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_hysilens",
+            "name": "Hysilens",
+            "rarity": "SR",
+            "element": "Type Physical Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/1/19/Character_Hysilens_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_jade",
+            "name": "Jade",
+            "rarity": "SR",
+            "element": "Type Quantum Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/f/fd/Character_Jade_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_jiaoqiu",
+            "name": "Jiaoqiu",
+            "rarity": "SR",
+            "element": "Type Fire Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/4/48/Character_Jiaoqiu_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_jing_yuan",
+            "name": "Jing Yuan",
+            "rarity": "SR",
+            "element": "Type Lightning Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/8/88/Character_Jing_Yuan_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_jingliu",
+            "name": "Jingliu",
+            "rarity": "SR",
+            "element": "Type Ice Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/f/f9/Character_Jingliu_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_kafka",
+            "name": "Kafka",
+            "rarity": "SR",
+            "element": "Type Lightning Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/8/8c/Character_Kafka_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_lingsha",
+            "name": "Lingsha",
+            "rarity": "SR",
+            "element": "Type Fire Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/a/ab/Character_Lingsha_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_luka",
+            "name": "Luka",
+            "rarity": "SR",
+            "element": "Type Physical Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/c/c7/Character_Luka_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_luocha",
+            "name": "Luocha",
+            "rarity": "SR",
+            "element": "Type Imaginary Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/2/20/Character_Luocha_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_lynx",
+            "name": "Lynx",
+            "rarity": "SR",
+            "element": "Type Quantum Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/6/6c/Character_Lynx_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_march_7th",
+            "name": "March 7th",
+            "rarity": "SR",
+            "element": "Type Ice Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/d/d3/Character_March_7th_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_march_7th",
+            "name": "March 7th",
+            "rarity": "SR",
+            "element": "Type Imaginary Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/7/7b/Character_March_7th_%28The_Hunt%29_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_misha",
+            "name": "Misha",
+            "rarity": "SR",
+            "element": "Type Ice Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/4/4d/Character_Misha_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_mortenax_blade",
+            "name": "Mortenax Blade",
+            "rarity": "SR",
+            "element": "Type Fire Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/4/4a/Character_Mortenax_Blade_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_moze",
+            "name": "Moze",
+            "rarity": "SR",
+            "element": "Type Lightning Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/2/25/Character_Moze_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_mydei",
+            "name": "Mydei",
+            "rarity": "SR",
+            "element": "Type Imaginary Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/8/89/Character_Mydei_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_natasha",
+            "name": "Natasha",
+            "rarity": "SR",
+            "element": "Type Physical Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/6/61/Character_Natasha_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_pela",
+            "name": "Pela",
+            "rarity": "SR",
+            "element": "Type Ice Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/c/c2/Character_Pela_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_phainon",
+            "name": "Phainon",
+            "rarity": "SR",
+            "element": "Type Physical Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/e/ef/Character_Phainon_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_qingque",
+            "name": "Qingque",
+            "rarity": "SR",
+            "element": "Type Quantum Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/2/2e/Character_Qingque_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_rappa",
+            "name": "Rappa",
+            "rarity": "SR",
+            "element": "Type Imaginary Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/8/84/Character_Rappa_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_rin_tohsaka",
+            "name": "Rin Tohsaka",
+            "rarity": "SR",
+            "element": "Type Quantum Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/f/f8/Character_Rin_Tohsaka_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_robin",
+            "name": "Robin",
+            "rarity": "SR",
+            "element": "Type Physical Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/7/72/Character_Robin_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_robin_•_summeretto",
+            "name": "Robin • Summeretto",
+            "rarity": "SR",
+            "element": "Type Wind Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/1/18/Character_Robin_%E2%80%A2_Summeretto_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_ruan_mei",
+            "name": "Ruan Mei",
+            "rarity": "SR",
+            "element": "Type Ice Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/1/16/Character_Ruan_Mei_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_saber",
+            "name": "Saber",
+            "rarity": "SR",
+            "element": "Type Wind Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/4/43/Character_Saber_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_sampo",
+            "name": "Sampo",
+            "rarity": "SR",
+            "element": "Type Wind Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/5/53/Character_Sampo_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_seele",
+            "name": "Seele",
+            "rarity": "SR",
+            "element": "Type Quantum Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/9/9a/Character_Seele_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_serval",
+            "name": "Serval",
+            "rarity": "SR",
+            "element": "Type Lightning Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/7/7c/Character_Serval_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_silver_wolf",
+            "name": "Silver Wolf",
+            "rarity": "SR",
+            "element": "Type Quantum Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/a/a3/Character_Silver_Wolf_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_silver_wolf_lv.999",
+            "name": "Silver Wolf LV.999",
+            "rarity": "SR",
+            "element": "Type Imaginary Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/0/03/Character_Silver_Wolf_LV.999_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_sparkle",
+            "name": "Sparkle",
+            "rarity": "SR",
+            "element": "Type Quantum Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/6/6b/Character_Sparkle_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_sparxie",
+            "name": "Sparxie",
+            "rarity": "SR",
+            "element": "Type Fire Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/4/46/Character_Sparxie_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_sunday",
+            "name": "Sunday",
+            "rarity": "SR",
+            "element": "Type Imaginary Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/3/38/Character_Sunday_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_sushang",
+            "name": "Sushang",
+            "rarity": "SR",
+            "element": "Type Physical Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/9/97/Character_Sushang_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_the_dahlia",
+            "name": "The Dahlia",
+            "rarity": "SR",
+            "element": "Type Fire Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/7/71/Character_The_Dahlia_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_the_herta",
+            "name": "The Herta",
+            "rarity": "SR",
+            "element": "Type Ice Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/3/39/Character_The_Herta_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_tingyun",
+            "name": "Tingyun",
+            "rarity": "SR",
+            "element": "Type Lightning Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/4/4f/Character_Tingyun_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_topaz_&_numby",
+            "name": "Topaz & Numby",
+            "rarity": "SR",
+            "element": "Type Fire Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/8/89/Character_Topaz_%26_Numby_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_trailblazer",
+            "name": "Trailblazer",
+            "rarity": "L",
+            "element": "Type Physical Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/8/89/Character_Trailblazer_%28Destruction%29_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_trailblazer",
+            "name": "Trailblazer",
+            "rarity": "L",
+            "element": "Type Fire Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/c/c3/Character_Trailblazer_%28Preservation%29_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_trailblazer",
+            "name": "Trailblazer",
+            "rarity": "L",
+            "element": "Type Imaginary Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/f/fd/Character_Trailblazer_%28Harmony%29_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_trailblazer",
+            "name": "Trailblazer",
+            "rarity": "L",
+            "element": "Type Ice Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/4/43/Character_Trailblazer_%28Remembrance%29_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_trailblazer",
+            "name": "Trailblazer",
+            "rarity": "L",
+            "element": "Type Lightning Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/7/76/Character_Trailblazer_%28Elation%29_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_tribbie",
+            "name": "Tribbie",
+            "rarity": "SR",
+            "element": "Type Quantum Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/f/f3/Character_Tribbie_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_welt",
+            "name": "Welt",
+            "rarity": "SR",
+            "element": "Type Imaginary Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/1/11/Character_Welt_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_xueyi",
+            "name": "Xueyi",
+            "rarity": "SR",
+            "element": "Type Quantum Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/2/23/Character_Xueyi_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_yanqing",
+            "name": "Yanqing",
+            "rarity": "SR",
+            "element": "Type Ice Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/5/57/Character_Yanqing_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_yao_guang",
+            "name": "Yao Guang",
+            "rarity": "SR",
+            "element": "Type Physical Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/1/1e/Character_Yao_Guang_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_yukong",
+            "name": "Yukong",
+            "rarity": "SR",
+            "element": "Type Imaginary Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/3/32/Character_Yukong_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        },
+        {
+            "id": "hsr_yunli",
+            "name": "Yunli",
+            "rarity": "SR",
+            "element": "Type Physical Small",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/4/43/Character_Yunli_Icon.png",
+            "bio": "Một nhân vật trong Honkai: Star Rail."
+        }
+    ],
+    "zzz": [
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Electric",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/a/a8/Agent_Alexandrina_Sebastiane_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Physical",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/7/7e/Agent_Alice_Thymefield_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Electric",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/b/b1/Agent_Anby_Demara_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Electric",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/1/13/Agent_Anton_Ivanov_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Ether",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/2/2d/Agent_Aria_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Electric",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/f/fe/Agent_Asaba_Harumasa_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Ether",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/b/b8/Agent_Astra_Yao_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Fire",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/7/70/Agent_Banyue_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Fire",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/b/ba/Agent_Ben_Bigger_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Physical",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/9/99/Agent_Billy_Kid_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Fire",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/f/f9/Agent_Burnice_White_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Physical",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/a/af/Agent_Caesar_King_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Electric",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/b/be/Agent_Cissia_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Electric",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/b/b3/Agent_Claret_Flint_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Physical",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/e/e4/Agent_Corin_Wickes_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Physical",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/2/25/Agent_Dialyn_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Ice",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/e/ed/Agent_Ellen_Joe_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Fire",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/1/17/Agent_Evelyn_Chevalier_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Electric",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/e/e6/Agent_Grace_Howard_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Frost",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/9/94/Agent_Hoshimi_Miyabi_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Ice",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/9/99/Agent_Hugo_Vlad_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Physical",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/e/e7/Agent_Jane_Doe_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Fire",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/4/4a/Agent_Ju_Fufu_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Fire",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/a/a8/Agent_Koleda_Belobog_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Fire",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/7/7c/Agent_Komano_Manato_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Fire",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/b/b5/Agent_Lighter_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Ether",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/f/ff/Agent_Lucia_Elowen_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Fire",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/b/b8/Agent_Luciana_de_Montefio_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Ether",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/a/a3/Agent_Nangong_Yu_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Physical",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/d/d0/Agent_Nekomiya_Mana_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Ether",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/2/21/Agent_Nicole_Demara_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Fire",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/1/18/Agent_Norma_Hollowell_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Fire",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/6/63/Agent_Orphie_Magnusson_%26_Magus_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Physical",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/a/ab/Agent_Pan_Yinhu_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Physical",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/c/ca/Agent_Piper_Wheel_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Ice",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/c/ce/Agent_Promeia_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Physical",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/8/8c/Agent_Pulchra_Fellini_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Ether",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/4/4b/Agent_Pyrois_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Electric",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/3/39/Agent_Qingyi_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Lumiflux",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/c/ce/Agent_Remielle_Dan_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Electric",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/f/fb/Agent_Seed_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Electric",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/6/6d/Agent_Seth_Lowell_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Ice",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/e/ef/Agent_Sigrid_de_L%27Azur_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Electric",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/9/95/Agent_Soldier_0_-_Anby_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Fire",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/6/62/Agent_Soldier_11_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Ice",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/8/89/Agent_Soukaku_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Physical",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/5/59/Agent_Starlight_-_Billy_Kid_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Physical",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/0/0f/Agent_Sunna_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Electric",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/d/df/Agent_Trigger_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Electric",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/8/8c/Agent_Tsukishiro_Yanagi_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Physical",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/f/fc/Agent_Ukinami_Yuzuha_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Wind",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/f/fb/Agent_Velina_Airgid_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Ether",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/d/d5/Agent_Vivian_Banshee_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Ice",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/2/2f/Agent_Von_Lycaon_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Honed Edge",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/9/94/Agent_Ye_Shunguang_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Ice",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/6/6f/Agent_Yidhari_Murphy_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Auric Ink",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/f/f7/Agent_Yixuan_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Ice",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/d/d4/Agent_Zhao_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        },
+        {
+            "id": "zzz_",
+            "name": "",
+            "rarity": "SR",
+            "element": "Ether",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/f/fb/Agent_Zhu_Yuan_Icon.png",
+            "bio": "Một đặc vụ trong Zenless Zone Zero."
+        }
+    ]
 }
