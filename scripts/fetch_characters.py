@@ -18,13 +18,13 @@ def fetch_genshin_characters():
             cols = row.find_all('td')
             if len(cols) < 4: continue
             
-            name = cols[0].text.strip()
-            rarity_img = cols[1].find('img')
+            name = cols[1].text.strip()
+            rarity_img = cols[2].find('img')
             rarity = "SSR" if rarity_img and "5Star" in rarity_img.get('alt', '') else "SR"
             
             if name in ["Aloy", "Traveler"]: rarity = "L"
             
-            element_img = cols[2].find('img')
+            element_img = cols[3].find('img')
             element = element_img.get('alt', '').replace('Element', '').strip() if element_img else "None"
             
             img_tag = cols[0].find('img')
