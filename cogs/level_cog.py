@@ -4,6 +4,7 @@ import logging
 import time
 import random
 from data.database import db_manager
+from core import config
 
 logger = logging.getLogger("AyakaLevel")
 
@@ -149,7 +150,7 @@ class LevelCog(commands.Cog):
             
             # Nút Xem Leaderboard trên Web
             view = discord.ui.View()
-            view.add_item(discord.ui.Button(label="Xem Bảng Xếp Hạng Đầy Đủ", url="https://ayaka-bot-0ywq.onrender.com/#leaderboard", emoji="🌐"))
+            view.add_item(discord.ui.Button(label="Xem Bảng Xếp Hạng Đầy Đủ", url=f"{config.WEB_BASE_URL}/#leaderboard", emoji="🌐"))
             
             await ctx.reply(embed=embed, view=view)
         except Exception as e:

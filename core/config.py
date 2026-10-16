@@ -10,7 +10,8 @@ GEMINI_MODEL_NAME = os.getenv("GEMINI_MODEL_NAME", "gemini-3.6-flash")
 
 DISCORD_CLIENT_ID = os.getenv("DISCORD_CLIENT_ID", "").strip()
 DISCORD_CLIENT_SECRET = os.getenv("DISCORD_CLIENT_SECRET", "").strip()
-DISCORD_REDIRECT_URI = os.getenv("DISCORD_REDIRECT_URI", "https://ayaka-bot-0ywq.onrender.com/callback")
+WEB_BASE_URL = os.getenv("WEB_BASE_URL", "https://botdiscordayaka.onrender.com").strip().rstrip("/")
+DISCORD_REDIRECT_URI = os.getenv("DISCORD_REDIRECT_URI", f"{WEB_BASE_URL}/callback")
 
 if not DISCORD_BOT_TOKEN:
     raise ValueError("Lỗi: DISCORD_BOT_TOKEN chưa được cấu hình trong file .env")

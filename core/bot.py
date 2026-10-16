@@ -26,6 +26,8 @@ async def setup_hook():
     # Khởi tạo database trước tiên
     from data.database import db_manager
     await db_manager.init_db()
+    # Gắn database vào bot để các cog (gacha, minigame, welcome) dùng qua self.bot.db
+    bot.db = db_manager
     
     initial_extensions = [
         'music_cog',

@@ -11,6 +11,25 @@ from data.database import db_manager
 
 logger = logging.getLogger("SysCog")
 
+# Toạ độ cố định (OpenWeatherMap không nhận diện được tên "District 1, ..." nên dùng lat/lon)
+HCM_LOCATIONS = [
+    ("TP.HCM", 10.7769, 106.7009),
+    ("Quận 1", 10.7756, 106.7004),
+    ("Thủ Đức", 10.8494, 106.7537),
+    ("Quận 7", 10.7340, 106.7218),
+]
+NO_WEATHER_TEXT = "tạm thời chưa lấy được dữ liệu ☁️"
+
+# Mã thời tiết WMO của Open-Meteo
+WMO_CODES_VI = {
+    0: "trời quang", 1: "ít mây", 2: "mây rải rác", 3: "nhiều mây",
+    45: "sương mù", 48: "sương mù đóng băng",
+    51: "mưa phùn nhẹ", 53: "mưa phùn", 55: "mưa phùn dày",
+    61: "mưa nhẹ", 63: "mưa vừa", 65: "mưa to",
+    80: "mưa rào nhẹ", 81: "mưa rào", 82: "mưa rào rất to",
+    95: "dông", 96: "dông kèm mưa đá", 99: "dông mạnh kèm mưa đá",
+}
+
 class SysCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -43,15 +62,14 @@ class SysCog(commands.Cog):
                 
     async def _run_6am_greeting(self, date_str: str):
         from core.ai_brain import client
-        if not client: return
         
-        # Lấy thời tiết TP.HCM và các khu vực lân cận
-        hcm_weather = await self.fetch_weather("Ho Chi Minh City,VN")
-        q1_weather = await self.fetch_weather("District 1, Ho Chi Minh City, VN")
-        thu_duc_weather = await self.fetch_weather("Thu Duc, Ho Chi Minh City, VN")
-        q7_weather = await self.fetch_weather("District 7, Ho Chi Minh City, VN")
-        
-        weather_info = f"TP.HCM chung: {hcm_weather}\nQuận 1: {q1_weather}\nThủ Đức: {thu_duc_weather}\nQuận 7: {q7_weather}"
+        # Lấy thời tiết TP.HCM và các khu vực lân cận (dùng toạ độ cho chính xác, không phụ thuộc tên)
+        results = await asyncio.gather(*[
+            self.fetch_weather(name, lat=lat, lon=lon) for name, lat, lon in HCM_LOCATIONS
+        ])
+        weather_info = "\n".join(
+            f"{name}: {res or NO_WEATHER_TEXT}" for (name, _, _), res in zip(HCM_LOCATIONS, results)
+        )
         
         full_prompt = (
             f"Hôm nay là ngày {date_str}, bây giờ là 06:00 sáng.\n"
@@ -61,15 +79,18 @@ class SysCog(commands.Cog):
             f"(Hãy khéo léo lồng ghép dự báo thời tiết của TP.HCM và một vài quận tiêu biểu vào lời chào. Bắt buộc phải thông báo đúng ngày {date_str}. Giữ tin nhắn ngắn gọn tầm 4-5 câu)."
         )
         
-        try:
-            loop = asyncio.get_event_loop()
-            response = await loop.run_in_executor(
-                None, 
-                lambda: client.models.generate_content(model=config.GEMINI_MODEL_NAME, contents=full_prompt)
-            )
-            message_text = response.text
-        except Exception as e:
-            logger.error(f"Lỗi AI 6am greeting: {e}")
+        message_text = None
+        if client:
+            try:
+                loop = asyncio.get_event_loop()
+                response = await loop.run_in_executor(
+                    None, 
+                    lambda: client.models.generate_content(model=config.GEMINI_MODEL_NAME, contents=full_prompt)
+                )
+                message_text = (response.text or "").strip() or None
+            except Exception as e:
+                logger.error(f"Lỗi AI 6am greeting: {e}")
+        if not message_text:
             message_text = f"🌸 Chào buổi sáng mọi người! Hôm nay là ngày {date_str}, chúc các Nhà Lữ Hành một ngày mới an lành và tràn đầy năng lượng nhé!\n\n**Dự báo thời tiết nhanh:**\n{weather_info}"
             
         # Tìm kênh bản-tin-hiệp-hội-yashiro ở tất cả các server
@@ -81,24 +102,59 @@ class SysCog(commands.Cog):
                 except:
                     pass
 
-    async def fetch_weather(self, location: str) -> str:
-        if not location or not config.WEATHER_API_KEY:
-            return ""
-        try:
-            url = f"http://api.openweathermap.org/data/2.5/weather?q={location}&appid={config.WEATHER_API_KEY}&units=metric&lang=vi"
-            async with aiohttp.ClientSession() as session:
-                async with session.get(url) as resp:
+    async def _get_json(self, session: aiohttp.ClientSession, url: str, params: dict = None, retries: int = 2):
+        """GET JSON có timeout + thử lại, trả về None nếu thất bại."""
+        for attempt in range(retries):
+            try:
+                async with session.get(url, params=params, timeout=aiohttp.ClientTimeout(total=10)) as resp:
                     if resp.status == 200:
-                        data = await resp.json()
+                        return await resp.json()
+                    logger.warning(f"Weather API {url} trả về HTTP {resp.status} (lần {attempt + 1})")
+            except Exception as e:
+                logger.warning(f"Weather API {url} lỗi (lần {attempt + 1}): {e}")
+            await asyncio.sleep(1)
+        return None
+
+    async def fetch_weather(self, location: str, lat: float = None, lon: float = None) -> str:
+        """Lấy thời tiết hiện tại. Ưu tiên OpenWeatherMap, dự phòng Open-Meteo (không cần key). Trả "" nếu thất bại."""
+        if not location and (lat is None or lon is None):
+            return ""
+        async with aiohttp.ClientSession() as session:
+            # 1) OpenWeatherMap
+            if config.WEATHER_API_KEY:
+                params = {"appid": config.WEATHER_API_KEY, "units": "metric", "lang": "vi"}
+                if lat is not None and lon is not None:
+                    params.update(lat=lat, lon=lon)
+                else:
+                    params["q"] = location
+                data = await self._get_json(session, "https://api.openweathermap.org/data/2.5/weather", params)
+                if data:
+                    try:
                         desc = data['weather'][0]['description']
-                        temp = data['main']['temp']
+                        temp = round(data['main']['temp'])
                         humidity = data['main']['humidity']
-                        city = data['name']
-                        return f"(Thời tiết thực tế tại {city}: {desc}, Nhiệt độ {temp}°C, Độ ẩm {humidity}%)"
-            return ""
-        except Exception as e:
-            logger.error(f"Lỗi fetch weather: {e}")
-            return ""
+                        return f"{desc}, {temp}°C, độ ẩm {humidity}%"
+                    except (KeyError, IndexError, TypeError) as e:
+                        logger.warning(f"Dữ liệu OpenWeatherMap không hợp lệ: {e}")
+
+            # 2) Open-Meteo (dự phòng) - cần toạ độ, nếu chỉ có tên thì geocode trước
+            if lat is None or lon is None:
+                city = location.split(",")[0].strip()
+                geo = await self._get_json(session, "https://geocoding-api.open-meteo.com/v1/search",
+                                           {"name": city, "count": 1, "language": "vi"})
+                if not geo or not geo.get("results"):
+                    return ""
+                lat, lon = geo["results"][0]["latitude"], geo["results"][0]["longitude"]
+            data = await self._get_json(session, "https://api.open-meteo.com/v1/forecast", {
+                "latitude": lat, "longitude": lon,
+                "current": "temperature_2m,relative_humidity_2m,weather_code",
+                "timezone": "Asia/Ho_Chi_Minh",
+            })
+            if data and "current" in data:
+                cur = data["current"]
+                desc = WMO_CODES_VI.get(cur.get("weather_code"), "không rõ")
+                return f"{desc}, {round(cur['temperature_2m'])}°C, độ ẩm {cur['relative_humidity_2m']}%"
+        return ""
 
     async def _process_single_schedule(self, schedule: dict):
         from core.ai_brain import client
@@ -116,7 +172,10 @@ class SysCog(commands.Cog):
         channel = guild.get_channel(int(channel_id))
         if not channel: return
         
-        weather_info = await self.fetch_weather(location) if location else ""
+        weather_info = ""
+        if location:
+            weather = await self.fetch_weather(location)
+            weather_info = f"(Thời tiết hiện tại ở {location}: {weather or NO_WEATHER_TEXT})"
         
         # Xây dựng prompt dành riêng cho nhắc nhở
         full_prompt = (
@@ -234,7 +293,7 @@ class HelpSelect(discord.ui.Select):
             embed.description = (
                 "• Tương tác (nhắn tin) trong server sẽ giúp cậu nhận được EXP.\n"
                 "• `!rank`, `!level` hoặc `!capdo`: Xem Thẻ Cấp Độ của cậu hoặc người khác.\n"
-                "• **Bảng Xếp Hạng:** Xem danh sách Top server tại [ayaka-bot-0ywq.onrender.com/#leaderboard](https://ayaka-bot-0ywq.onrender.com/#leaderboard)"
+                f"• **Bảng Xếp Hạng:** Xem danh sách Top server tại [{config.WEB_BASE_URL.split('://')[-1]}/#leaderboard]({config.WEB_BASE_URL}/#leaderboard)"
             )
         elif self.values[0] == "sys":
             embed.title = "⚙️ Lệnh Hệ Thống"
