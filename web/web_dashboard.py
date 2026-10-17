@@ -291,12 +291,24 @@ class WebDashboard:
     async def api_gacha_collection(self, request):
         session_id = request.cookies.get('session_token')
         if not session_id:
-            return web.json_response({"success": False, "msg": "Vui lòng đăng nhập trước!"})
+            return web.json_response({
+                "success": True, 
+                "collection": [], 
+                "primogems": 0, 
+                "authenticated": False, 
+                "msg": "Vui lòng đăng nhập để đồng bộ kho nhân vật của bạn!"
+            })
             
         from data.database import db_manager
         session_data = await db_manager.get_session(session_id)
         if not session_data:
-            return web.json_response({"success": False, "msg": "Phiên đăng nhập hết hạn!"})
+            return web.json_response({
+                "success": True, 
+                "collection": [], 
+                "primogems": 0, 
+                "authenticated": False, 
+                "msg": "Phiên đăng nhập đã hết hạn!"
+            })
             
         user_id = session_data["user_id"]
             
@@ -312,7 +324,8 @@ class WebDashboard:
                 
         return web.json_response({
             "success": True, 
-            "collection": collection,
+            "authenticated": True,
+            "collection": collection, 
             "primogems": primos
         })
 

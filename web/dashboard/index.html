@@ -209,22 +209,63 @@
                     <h2><i class="fa-solid fa-star"></i> Bộ Sưu Tập Nhân Vật Gacha</h2>
                 </header>
                 <div class="gacha-status glass" style="padding: 15px; margin-bottom: 20px; text-align: center;">
-                    <h3>Nguyên Thạch Hiện Có: <span id="gacha-primo-count" style="color: #4df8ff; text-shadow: 0 0 5px #4df8ff;">0</span> <i class="fa-solid fa-gem" style="color: #4df8ff; text-shadow: 0 0 5px #4df8ff;"></i></h3>
-                    <p style="color: #aaa; font-size: 0.9em; margin-bottom: 15px;">(Dùng lệnh !gacha 1 hoặc !gacha 10 trên Discord để quay tướng)</p>
-                    <div style="display: flex; justify-content: center; gap: 15px;">
+                    <h3>Nguyên Thạch Hiện Có: <span id="gacha-primo-count" style="color: #4df8ff; text-shadow: 0 0 8px #4df8ff;">0</span> <i class="fa-solid fa-gem" style="color: #4df8ff; text-shadow: 0 0 8px #4df8ff;"></i></h3>
+                    <p style="color: #bbb; font-size: 0.9em; margin-bottom: 15px;">(Dùng lệnh <code>!gacha 1</code> hoặc <code>!gacha 10</code> trên Discord để cầu nguyện đa vũ trụ)</p>
+                    <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
                         <button id="btn-claim-daily" class="btn-primary" style="background: linear-gradient(45deg, #1d976c, #93f9b9); color: #000; font-weight: bold;"><i class="fa-solid fa-calendar-day"></i> Điểm Danh Ngày (+160 💎)</button>
                         <button id="btn-claim-monthly" class="btn-primary" style="background: linear-gradient(45deg, #f12711, #f5af19); color: #fff; font-weight: bold;"><i class="fa-solid fa-gift"></i> Quà Tháng (+1600 💎)</button>
                     </div>
                 </div>
+
+                <!-- 3 Game Tabs Hàng Ngang -->
+                <div class="gacha-game-tabs">
+                    <button class="gacha-game-tab active" data-game="genshin" onclick="selectGachaGame('genshin')">
+                        <i class="fa-solid fa-wind"></i> Genshin Impact <span class="gacha-tab-count" id="count-genshin">(0/134)</span>
+                    </button>
+                    <button class="gacha-game-tab" data-game="hsr" onclick="selectGachaGame('hsr')">
+                        <i class="fa-solid fa-train-subway"></i> Honkai: Star Rail <span class="gacha-tab-count" id="count-hsr">(0/99)</span>
+                    </button>
+                    <button class="gacha-game-tab" data-game="zzz" onclick="selectGachaGame('zzz')">
+                        <i class="fa-solid fa-tape"></i> Zenless Zone Zero <span class="gacha-tab-count" id="count-zzz">(0/62)</span>
+                    </button>
+                </div>
+
+                <!-- Thanh Bộ Lọc & Tìm Kiếm -->
+                <div class="gacha-filter-bar glass">
+                    <div class="filter-group">
+                        <span class="filter-label"><i class="fa-solid fa-filter"></i> Bậc:</span>
+                        <div class="filter-buttons" id="rarity-filters">
+                            <button class="filter-btn active" data-rarity="all" onclick="setRarityFilter('all')">Tất cả</button>
+                            <button class="filter-btn btn-rarity-l" data-rarity="L" onclick="setRarityFilter('L')">🔥 L</button>
+                            <button class="filter-btn btn-rarity-ssr" data-rarity="SSR" onclick="setRarityFilter('SSR')">🌈 SSR</button>
+                            <button class="filter-btn btn-rarity-sr" data-rarity="SR" onclick="setRarityFilter('SR')">🟨 SR</button>
+                            <button class="filter-btn btn-rarity-r" data-rarity="R" onclick="setRarityFilter('R')">⬜ R</button>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <span class="filter-label"><i class="fa-solid fa-box-archive"></i> Trạng thái:</span>
+                        <div class="filter-buttons" id="ownership-filters">
+                            <button class="filter-btn active" data-owned="all" onclick="setOwnershipFilter('all')">Tất cả</button>
+                            <button class="filter-btn" data-owned="owned" onclick="setOwnershipFilter('owned')">✨ Đã có</button>
+                            <button class="filter-btn" data-owned="unowned" onclick="setOwnershipFilter('unowned')">🔒 Chưa có</button>
+                        </div>
+                    </div>
+
+                    <div class="filter-search">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="gacha-search-input" placeholder="Tìm kiếm nhân vật..." oninput="onGachaSearch(this.value)">
+                    </div>
+                </div>
+
+                <!-- Thống kê tiến độ -->
+                <div class="gacha-stats-banner">
+                    <span id="gacha-current-game-title">Genshin Impact</span>
+                    <span id="gacha-progress-text">Tiến độ sưu tập: 0 / 134 (0%)</span>
+                </div>
                 
-                <h3 style="margin-top: 20px; border-bottom: 2px solid var(--primary-color); padding-bottom: 5px;">Genshin Impact</h3>
-                <div id="gacha-genshin-grid" class="gacha-grid"></div>
-                
-                <h3 style="margin-top: 30px; border-bottom: 2px solid var(--primary-color); padding-bottom: 5px;">Honkai: Star Rail</h3>
-                <div id="gacha-hsr-grid" class="gacha-grid"></div>
-                
-                <h3 style="margin-top: 30px; border-bottom: 2px solid var(--primary-color); padding-bottom: 5px;">Zenless Zone Zero</h3>
-                <div id="gacha-zzz-grid" class="gacha-grid"></div>
+                <!-- Grid hiển thị danh sách thẻ của game được chọn -->
+                <div id="gacha-collection-grid" class="gacha-grid"></div>
             </div>
 
             <!-- Tab 6: Hệ Thống (System) -->
