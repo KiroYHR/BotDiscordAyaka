@@ -1,4 +1,4 @@
-// Gacha Collection UI Logic - Multi-game & Advanced Filtering
+// Gacha Collection UI Logic - Multi-game, Priority Sorting (L -> SSR -> SR -> R) & Web Roll
 
 let gachaState = {
     selectedGame: 'genshin',
@@ -8,6 +8,14 @@ let gachaState = {
     charData: { genshin: [], hsr: [], zzz: [] },
     ownedMap: {},
     userPrimogems: 0
+};
+
+// Thứ tự ưu tiên độ hiếm: L -> SSR -> SR -> R
+const RARITY_WEIGHT = {
+    'L': 1,
+    'SSR': 2,
+    'SR': 3,
+    'R': 4
 };
 
 async function loadGachaCollection() {
@@ -110,7 +118,16 @@ function renderCurrentGachaView() {
     const container = document.getElementById('gacha-collection-grid');
     if (!container) return;
 
-    const gameList = gachaState.charData[gachaState.selectedGame] || [];
+    const rawList = gachaState.charData[gachaState.selectedGame] || [];
+    
+    // SẮP XẾP ƯU TIÊN THEO BẬC: L -> SSR -> SR -> R (thay vì theo nguyên tố)
+    const gameList = [...rawList].sort((a, b) => {
+        const rA = RARITY_WEIGHT[a.rarity] || 99;
+        const rB = RARITY_WEIGHT[b.rarity] || 99;
+        if (rA !== rB) return rA - rB;
+        return a.name.localeCompare(b.name, 'vi');
+    });
+
     const totalInGame = gameList.length;
     const ownedInGame = gameList.filter(c => (gachaState.ownedMap[c.id] || 0) > 0).length;
     const pct = totalInGame > 0 ? Math.round((ownedInGame / totalInGame) * 100) : 0;
@@ -171,7 +188,10 @@ function renderCurrentGachaView() {
         card.innerHTML = `
             <div class="card-image-wrapper">
                 <img src="${char.image}" alt="${char.name}" loading="lazy" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
-                ${isOwned ? `<div class="copies-badge">${copies >= 7 ? 'MAX C6' : `C${copies-1}`}</div>` : ''}
+                ${isOwned 
+                    ? `<div class="copies-badge">${copies >= 7 ? 'MAX C6' : `C${copies-1}`}</div>` 
+                    : `<div class="lock-overlay"><i class="fa-solid fa-lock"></i> Chưa có</div>`
+                }
                 ${tagText ? `<div class="element-badge">${tagText}</div>` : ''}
                 <div class="rarity-badge rarity-tag-${rarityKey}">${char.rarity}</div>
             </div>
@@ -217,6 +237,84 @@ function showCharacterDetails(char, copies) {
     }
     if (iconEl) iconEl.className = 'modal-icon fa-solid fa-sparkles';
     
+    modal.classList.add('active');
+    if (okBtn) {
+        okBtn.onclick = () => modal.classList.remove('active');
+    }
+}
+
+// Hàm Cầu Nguyện x1 và x10 trực tiếp từ Web Dashboard
+async function rollGachaWeb(count) {
+    const cost = count === 10 ? 1600 : 160;
+    
+    const btn = document.getElementById(count === 10 ? 'btn-roll-10' : 'btn-roll-1');
+    if (btn) btn.disabled = true;
+
+    try {
+        const res = await fetch('/api/gacha/roll', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ count: count })
+        });
+        const data = await res.json();
+        
+        if (data.success) {
+            showGachaResultModal(data, count);
+            loadGachaCollection();
+        } else {
+            alert(`❌ ${data.msg || "Không thể thực hiện cầu nguyện."}`);
+        }
+    } catch (e) {
+        alert("Lỗi kết nối tới máy chủ khi cầu nguyện.");
+    } finally {
+        if (btn) btn.disabled = false;
+    }
+}
+
+function showGachaResultModal(data, count) {
+    const modal = document.getElementById('custom-modal');
+    if (!modal) {
+        alert(data.results.join('\n'));
+        return;
+    }
+
+    const titleEl = document.getElementById('modal-title');
+    const msgEl = document.getElementById('modal-message');
+    const iconEl = document.getElementById('modal-icon');
+    const okBtn = document.getElementById('modal-btn-ok');
+
+    if (titleEl) titleEl.innerHTML = `🌠 Kết Quả Cầu Nguyện x${count}`;
+    if (iconEl) iconEl.className = 'modal-icon fa-solid fa-wand-magic-sparkles';
+
+    const cardsHtml = (data.pulled_cards || []).map(c => {
+        const rKey = (c.rarity || 'r').toLowerCase();
+        return `
+            <div style="display: flex; align-items: center; gap: 10px; padding: 6px 10px; margin-bottom: 6px; border-radius: 8px; background: rgba(0,0,0,0.25); border-left: 4px solid ${rKey === 'l' ? '#ff0055' : (rKey === 'ssr' ? '#f5af19' : (rKey === 'sr' ? '#a855f7' : '#60a5fa'))};">
+                <img src="${c.image}" style="width: 38px; height: 38px; border-radius: 6px; object-fit: cover;" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                <div style="flex: 1; text-align: left;">
+                    <div style="font-weight: bold; font-size: 0.9em;">${c.name} <span class="rarity-tag-${rKey}">[${c.rarity}]</span></div>
+                    <div style="font-size: 0.75em; opacity: 0.8;">${c.element || ''} ${c.is_refund ? '• 🔁 Đã quy đổi vé' : `• Bản thứ ${c.copies}/7`}</div>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    const refundText = data.refund_primos > 0 
+        ? `<div style="margin-top: 10px; padding: 8px; border-radius: 8px; background: rgba(255, 215, 0, 0.15); color: #ffd700; font-weight: bold; font-size: 0.88em;">💎 Quy đổi hoàn trả: +${data.refund_primos.toLocaleString()} Nguyên Thạch!</div>` 
+        : '';
+
+    if (msgEl) {
+        msgEl.innerHTML = `
+            <div style="max-height: 320px; overflow-y: auto; padding-right: 5px; margin-bottom: 10px;">
+                ${cardsHtml}
+            </div>
+            ${refundText}
+            <div style="font-size: 0.82em; color: #8ACBEB; margin-top: 8px;">
+                Bảo hiểm hiện tại: SR (${data.pity_4star}/10) • SSR (${data.pity_5star}/100)
+            </div>
+        `;
+    }
+
     modal.classList.add('active');
     if (okBtn) {
         okBtn.onclick = () => modal.classList.remove('active');

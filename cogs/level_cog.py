@@ -1,111 +1,18 @@
-import discord
-from discord.ext import commands
-import logging
+import os
 import time
 import random
+import asyncio
+import logging
+from io import BytesIO
+import aiohttp
+import discord
+from discord.ext import commands
+from PIL import Image, ImageDraw, ImageFont, ImageFilter
+
 from data.database import db_manager
 from core import config
 
 logger = logging.getLogger("AyakaLevel")
-
-class LevelCog(commands.Cog):
-    def __init__(self, bot):
-        self.bot = bot
-        self.cooldowns = {} # {user_id: last_message_timestamp}
-
-    @commands.Cog.listener()
-    async def on_message(self, message: discord.Message):
-        if message.author.bot or not message.guild:
-            return
-            
-        if message.content.startswith("!"):
-            return
-
-        user_id = str(message.author.id)
-        now = time.time()
-        
-        # Cooldown 60s để chống spam
-        if now - self.cooldowns.get(user_id, 0) < 60:
-            return
-            
-        self.cooldowns[user_id] = now
-        
-        # Nhận cố định 5 EXP mỗi tin nhắn (Cooldown 1 phút)
-        exp_to_add = 5
-        
-        try:
-            result = await db_manager.add_exp(user_id, exp_to_add)
-            if result.get("leveled_up"):
-                new_level = result["new_level"]
-                embed = discord.Embed(
-                    title="🎉 Lên Cấp!", 
-                    description=f"Chúc mừng {message.author.mention}! Cậu vừa đột phá lên **Cấp {new_level}**! 🌸",
-                    color=discord.Color.gold()
-                )
-                await message.channel.send(embed=embed)
-        except Exception as e:
-            logger.error(f"Lỗi khi cộng EXP: {e}")
-
-    @commands.command(name="reset_exp_all")
-    @commands.has_permissions(administrator=True)
-    async def reset_exp_all(self, ctx):
-        """(Admin) Xóa toàn bộ điểm EXP của tất cả mọi người."""
-        if not db_manager.pool:
-            await ctx.reply("❌ Không thể kết nối đến cơ sở dữ liệu.")
-            return
-            
-        try:
-            async with db_manager.pool.acquire() as db:
-                await db.execute('DELETE FROM users')
-            await ctx.reply("✅ Đã reset toàn bộ điểm EXP của tất cả Nhà Lữ Hành về 0!")
-        except Exception as e:
-            logger.error(f"Lỗi khi reset EXP: {e}")
-            await ctx.reply("❌ Đã xảy ra lỗi khi reset EXP.")
-
-    @commands.command(name="daily", aliases=["diemdanh"])
-    async def check_daily(self, ctx):
-        """Điểm danh mỗi ngày để nhận điểm Hảo Cảm với Ayaka."""
-        try:
-            result = await db_manager.claim_daily(str(ctx.author.id))
-            if result.get("success"):
-                streak = result["streak"]
-                affection = result["affection"]
-                gained = result["affection_gained"]
-                primos = result.get("primos_gained", 160)
-                
-                embed = discord.Embed(
-                    title="💖 Điểm Danh Thành Công!",
-                    description=f"Ayaka rất vui vì hôm nay lại được gặp {ctx.author.mention}! 🌸\nCậu vừa nhận được **{gained} Điểm Hảo Cảm** và **{primos} 💎 Nguyên Thạch**.",
-                    color=discord.Color.brand_red()
-                )
-                embed.add_field(name="🔥 Chuỗi Điểm Danh", value=f"**{streak} ngày**", inline=True)
-                embed.add_field(name="💖 Tổng Hảo Cảm", value=f"**{affection} trái tim**", inline=True)
-                embed.set_thumbnail(url=ctx.author.avatar.url if ctx.author.avatar else None)
-                await ctx.reply(embed=embed)
-            else:
-                await ctx.reply(f"❌ {result.get('msg')}")
-        except Exception as e:
-            logger.error(f"Lỗi khi điểm danh: {e}")
-            await ctx.reply("❌ Không thể điểm danh lúc này, có chút lỗi xảy ra cậu ạ.")
-
-    @commands.command(name="monthly", aliases=["thang"])
-    async def check_monthly(self, ctx):
-        """Nhận quà ưu đãi hàng tháng (1600 Nguyên Thạch)."""
-        try:
-            result = await db_manager.claim_monthly(str(ctx.author.id))
-            if result.get("success"):
-                primos = result.get("primos_gained", 1600)
-                await ctx.reply(f"🎁 {ctx.author.mention} đã nhận được **{primos} Nguyên Thạch** từ phần quà ưu đãi hằng tháng! 💎 (Tương đương 10 lượt quay)")
-            else:
-                await ctx.reply(f"❌ {result.get('msg')}")
-        except Exception as e:
-            logger.error(f"Lỗi khi nhận monthly: {e}")
-            await ctx.reply("❌ Không thể nhận quà lúc này, có chút lỗi xảy ra cậu ạ.")
-
-import os
-import asyncio
-from io import BytesIO
-from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FONT_DIR = os.path.join(ROOT_DIR, "assets", "fonts")
@@ -248,20 +155,26 @@ def render_rank_card(avatar_bytes, display_name: str, username: str, rank_str: s
     d.text((tx + 120, stat_box_y), f"{exp:,} EXP", font=load_font("Bold", 18), fill=(255, 255, 255, 255))
 
     d.text((tx + 260, stat_box_y), "Nguyên Thạch:", font=load_font("Medium", 16), fill=(210, 220, 245, 255))
-    d.text((tx + 390, stat_box_y), f"{primogems:,} 💎", font=load_font("Bold", 18), fill=(100, 240, 255, 255))
+    primo_str = f"{primogems:,} 💎"
+    d.text((tx + 395, stat_box_y), primo_str, font=load_font("Bold", 18), fill=(120, 245, 255, 255))
 
     # Thanh tiến trình EXP
-    bar_x, bar_y, bar_w, bar_h = tx, 205, 475, 24
+    bar_x = tx
+    bar_y = 205
+    bar_w = 460
+    bar_h = 24
+    pct = min(1.0, max(0.0, exp_in_level / max(1, exp_needed)))
+
     # Nền thanh
-    d.rounded_rectangle((bar_x, bar_y, bar_x + bar_w, bar_y + bar_h), radius=12, fill=(10, 15, 40, 180), outline=(255, 255, 255, 60), width=1)
+    d.rounded_rectangle((bar_x, bar_y, bar_x + bar_w, bar_y + bar_h), radius=12, fill=(20, 25, 60, 200), outline=(138, 203, 235, 120), width=2)
     
-    pct = max(0.0, min(1.0, exp_in_level / exp_needed if exp_needed > 0 else 1.0))
+    # Phần đã đạt
     fill_w = int(bar_w * pct)
-    if fill_w > 8:
-        bar_fill = Image.new("RGBA", (fill_w, bar_h), (0, 0, 0, 0))
-        bf_draw = ImageDraw.Draw(bar_fill)
-        bf_draw.rounded_rectangle((0, 0, fill_w, bar_h), radius=12, fill=(140, 210, 255, 255))
-        overlay.alpha_composite(bar_fill, (bar_x, bar_y))
+    if fill_w > 12:
+        fill_img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        fd = ImageDraw.Draw(fill_img)
+        fd.rounded_rectangle((bar_x, bar_y, bar_x + fill_w, bar_y + bar_h), radius=12, fill=(138, 203, 235, 255))
+        overlay.alpha_composite(fill_img)
 
     # Text % và EXP trong/dưới thanh
     pct_text = f"{int(pct * 100)}%"
@@ -276,8 +189,48 @@ def render_rank_card(avatar_bytes, display_name: str, username: str, rank_str: s
     card.convert("RGB").save(out, format="PNG", optimize=True)
     return out.getvalue()
 
+
+class LevelCog(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+        self.cooldowns = {} # {user_id: last_message_timestamp}
+
+    @commands.Cog.listener()
+    async def on_message(self, message: discord.Message):
+        if message.author.bot or not message.guild:
+            return
+            
+        if message.content.startswith("!"):
+            return
+
+        user_id = str(message.author.id)
+        now = time.time()
+        
+        # Cooldown 60s để chống spam
+        if now - self.cooldowns.get(user_id, 0) < 60:
+            return
+            
+        self.cooldowns[user_id] = now
+        
+        # Nhận cố định 5 EXP mỗi tin nhắn (Cooldown 1 phút)
+        exp_to_add = 5
+        
+        try:
+            result = await db_manager.add_exp(user_id, exp_to_add)
+            if result.get("leveled_up"):
+                new_level = result["new_level"]
+                embed = discord.Embed(
+                    title="🎉 Lên Cấp!", 
+                    description=f"Chúc mừng {message.author.mention}! Cậu vừa đột phá lên **Cấp {new_level}**! 🌸",
+                    color=discord.Color.gold()
+                )
+                await message.channel.send(embed=embed)
+        except Exception as e:
+            logger.error(f"Lỗi khi cộng EXP: {e}")
+
     @commands.command(name="rank", aliases=["level", "capdo"])
     async def check_rank(self, ctx, member: discord.Member = None):
+        """Kiểm tra thẻ cấp độ và thứ hạng của bản thân hoặc thành viên khác."""
         target = member or ctx.author
         
         try:
@@ -307,10 +260,9 @@ def render_rank_card(avatar_bytes, display_name: str, username: str, rank_str: s
             # Tải avatar
             avatar_bytes = None
             try:
-                import aiohttp
+                avatar_url = target.display_avatar.with_format("png").with_size(512).url
                 async with aiohttp.ClientSession() as session:
-                    async with session.get(str(target.display_avatar.replace(size=512, format="png").url),
-                                           timeout=aiohttp.ClientTimeout(total=8)) as resp:
+                    async with session.get(str(avatar_url), timeout=aiohttp.ClientTimeout(total=8)) as resp:
                         if resp.status == 200:
                             avatar_bytes = await resp.read()
             except Exception as e:
@@ -331,6 +283,62 @@ def render_rank_card(avatar_bytes, display_name: str, username: str, rank_str: s
         except Exception as e:
             logger.error(f"Lỗi kiểm tra rank: {e}")
             await ctx.reply("❌ Không thể tra cứu thông tin cấp độ lúc này cậu ạ.")
+
+    @commands.command(name="reset_exp_all")
+    @commands.has_permissions(administrator=True)
+    async def reset_exp_all(self, ctx):
+        """(Admin) Xóa toàn bộ điểm EXP của tất cả mọi người."""
+        if not db_manager.pool:
+            await ctx.reply("❌ Không thể kết nối đến cơ sở dữ liệu.")
+            return
+            
+        try:
+            async with db_manager.pool.acquire() as db:
+                await db.execute('DELETE FROM users')
+            await ctx.reply("✅ Đã reset toàn bộ điểm EXP của tất cả Nhà Lữ Hành về 0!")
+        except Exception as e:
+            logger.error(f"Lỗi khi reset EXP: {e}")
+            await ctx.reply("❌ Đã xảy ra lỗi khi reset EXP.")
+
+    @commands.command(name="daily", aliases=["diemdanh"])
+    async def check_daily(self, ctx):
+        """Điểm danh mỗi ngày để nhận điểm Hảo Cảm với Ayaka."""
+        try:
+            result = await db_manager.claim_daily(str(ctx.author.id))
+            if result.get("success"):
+                streak = result["streak"]
+                affection = result["affection"]
+                gained = result["affection_gained"]
+                primos = result.get("primos_gained", 160)
+                
+                embed = discord.Embed(
+                    title="💖 Điểm Danh Thành Công!",
+                    description=f"Ayaka rất vui vì hôm nay lại được gặp {ctx.author.mention}! 🌸\nCậu vừa nhận được **{gained} Điểm Hảo Cảm** và **{primos} 💎 Nguyên Thạch**.",
+                    color=discord.Color.brand_red()
+                )
+                embed.add_field(name="🔥 Chuỗi Điểm Danh", value=f"**{streak} ngày**", inline=True)
+                embed.add_field(name="💖 Tổng Hảo Cảm", value=f"**{affection} trái tim**", inline=True)
+                embed.set_thumbnail(url=ctx.author.avatar.url if ctx.author.avatar else None)
+                await ctx.reply(embed=embed)
+            else:
+                await ctx.reply(f"❌ {result.get('msg')}")
+        except Exception as e:
+            logger.error(f"Lỗi khi điểm danh: {e}")
+            await ctx.reply("❌ Không thể điểm danh lúc này, có chút lỗi xảy ra cậu ạ.")
+
+    @commands.command(name="monthly", aliases=["thang"])
+    async def check_monthly(self, ctx):
+        """Nhận quà ưu đãi hàng tháng (1600 Nguyên Thạch)."""
+        try:
+            result = await db_manager.claim_monthly(str(ctx.author.id))
+            if result.get("success"):
+                primos = result.get("primos_gained", 1600)
+                await ctx.reply(f"🎁 {ctx.author.mention} đã nhận được **{primos} Nguyên Thạch** từ phần quà ưu đãi hằng tháng! 💎 (Tương đương 10 lượt quay)")
+            else:
+                await ctx.reply(f"❌ {result.get('msg')}")
+        except Exception as e:
+            logger.error(f"Lỗi khi nhận monthly: {e}")
+            await ctx.reply("❌ Không thể nhận quà lúc này, có chút lỗi xảy ra cậu ạ.")
 
 async def setup(bot):
     await bot.add_cog(LevelCog(bot))

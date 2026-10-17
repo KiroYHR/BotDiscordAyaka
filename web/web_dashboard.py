@@ -28,6 +28,7 @@ class WebDashboard:
         self.app.router.add_delete('/api/schedules', self.api_delete_schedules)
         self.app.router.add_get('/api/leaderboard', self.api_leaderboard)
         self.app.router.add_get('/api/gacha/collection', self.api_gacha_collection)
+        self.app.router.add_post('/api/gacha/roll', self.api_gacha_roll)
         self.app.router.add_get('/api/music', self.api_music)
         self.app.router.add_get('/api/channels', self.api_channels)
         
@@ -328,6 +329,34 @@ class WebDashboard:
             "collection": collection, 
             "primogems": primos
         })
+
+    async def api_gacha_roll(self, request):
+        """Thực hiện quay gacha x1 hoặc x10 trực tiếp từ Web Dashboard."""
+        session_id = request.cookies.get('session_token')
+        if not session_id:
+            return web.json_response({"success": False, "msg": "Vui lòng đăng nhập Discord trước khi cầu nguyện!"})
+            
+        from data.database import db_manager
+        session_data = await db_manager.get_session(session_id)
+        if not session_data:
+            return web.json_response({"success": False, "msg": "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại!"})
+            
+        user_id = str(session_data["user_id"])
+        
+        try:
+            body = await request.json()
+            count = int(body.get('count', 1))
+            if count not in [1, 10]:
+                return web.json_response({"success": False, "msg": "Chỉ có thể cầu nguyện x1 hoặc x10!"})
+        except Exception:
+            count = 1
+            
+        gacha_cog = self.bot.get_cog("GachaCog")
+        if not gacha_cog:
+            return web.json_response({"success": False, "msg": "Hệ thống gacha đang bận, vui lòng thử lại sau!"})
+            
+        res = await gacha_cog.perform_pulls(user_id, count)
+        return web.json_response(res)
 
     # Các hàm phục vụ file tĩnh (Frontend)
     async def serve_index(self, request):

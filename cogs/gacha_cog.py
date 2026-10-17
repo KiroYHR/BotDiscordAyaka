@@ -2,10 +2,8 @@ import discord
 from discord.ext import commands
 import json
 import random
-import time
 import os
 import logging
-from typing import Dict, List
 
 logger = logging.getLogger("AyakaGacha")
 
@@ -13,20 +11,19 @@ class GachaCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.db = bot.db
-        self.characters = self.load_characters()
-        self.unified_pool = self.build_unified_pool()
+        self.unified_pool = self.load_unified_pool()
 
-    def load_characters(self) -> Dict:
-        try:
-            with open("data/characters.json", "r", encoding="utf-8") as f:
-                return json.load(f)
-        except Exception as e:
-            logger.error(f"Lỗi tải characters.json: {e}")
-            return {"genshin": [], "hsr": [], "zzz": []}
-
-    def build_unified_pool(self) -> Dict[str, List[Dict]]:
+    def load_unified_pool(self):
         pool = {'L': [], 'SSR': [], 'SR': [], 'R': []}
-        for game, chars in self.characters.items():
+        path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'characters.json')
+        if not os.path.exists(path):
+            logger.error("Không tìm thấy file data/characters.json!")
+            return pool
+            
+        with open(path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+            
+        for game, chars in data.items():
             for c in chars:
                 c['game'] = game  # Inject game key into the dict for database saving
                 rarity = c.get('rarity', 'R')
@@ -49,39 +46,37 @@ class GachaCog(commands.Cog):
             row = await db.fetchrow("SELECT primogems FROM users WHERE user_id = $1", str(user_id))
             return row['primogems'] if row else 0
 
-    @commands.command(name="gacha", aliases=["quay", "roll"])
-    async def gacha(self, ctx, amount: int = 1):
-        if amount not in [1, 10]:
-            return await ctx.reply("❌ Cậu chỉ có thể gacha x1 hoặc x10 thôi nhé! (VD: `!gacha 10`)")
-            
-        user_id = str(ctx.author.id)
+    async def perform_pulls(self, user_id: str, amount: int) -> dict:
+        """Hàm dùng chung để thực hiện gacha cho cả Discord command và Web API."""
         cost = amount * 160
-        
         primos = await self.get_user_primogems(user_id)
         if primos < cost:
-            return await ctx.reply(f"❌ Cậu không đủ Nguyên Thạch! Cần {cost} 💎 nhưng cậu chỉ có {primos} 💎. Hãy dùng `!daily` hoặc chờ tháng sau nhé!")
-            
+            return {
+                "success": False,
+                "msg": f"Cậu không đủ Nguyên Thạch! Cần {cost} 💎 nhưng hiện chỉ có {primos} 💎."
+            }
+
         await self.init_user_pity(user_id)
-        
+
         async with self.db.pool.acquire() as db:
             pity_row = await db.fetchrow("SELECT * FROM gacha_pity WHERE user_id = $1", user_id)
             pity_4star = pity_row['pity_4star']
             pity_5star = pity_row['pity_5star']
-            
+
             results = []
+            pulled_cards = []
             refund_primos = 0
-            
+
             for _ in range(amount):
                 pity_4star += 1
                 pity_5star += 1
-                
+
                 roll = random.random() * 100 # 0.0 to 100.0
                 rarity = 'R'
-                
+
                 # Check L (0.1%)
                 if roll <= 0.1:
                     rarity = 'L'
-                    # L doesn't reset normal pity according to user
                 # Check SSR (0.6% or Hard Pity 100)
                 elif roll <= 0.7 or pity_5star >= 100:
                     rarity = 'SSR'
@@ -91,22 +86,22 @@ class GachaCog(commands.Cog):
                 elif roll <= 5.8 or pity_4star >= 10:
                     rarity = 'SR'
                     pity_4star = 0
-                
+
                 pool = self.unified_pool.get(rarity, [])
-                if not pool: # Fallback
+                if not pool:
                     pool = self.unified_pool.get('R', [])
                     rarity = 'R'
-                    
+
                 if pool:
                     char = random.choice(pool)
                     char_id = char['id']
                     game = char['game']
-                    
+
                     inv_row = await db.fetchrow("SELECT copies FROM gacha_inventory WHERE user_id=$1 AND character_id=$2", user_id, char_id)
                     copies = inv_row['copies'] if inv_row else 0
-                    
+
                     if copies >= 7:
-                        # Luật hoàn trả khi đã max C6 (7 bản): R = 0, SR = 1 vé (160), SSR = 3 vé (480), L = 5 vé (800)
+                        # Hoàn trả khi đã max C6 (7 bản): R = 0, SR = 160, SSR = 480, L = 800
                         if rarity == 'L':
                             refund_primos += 800
                             results.append(f"🔁 **{char['name']}** (LIMITED) ➔ Max 7 bản! Quy đổi **5 lượt** (+800 💎)")
@@ -117,18 +112,28 @@ class GachaCog(commands.Cog):
                             refund_primos += 160
                             results.append(f"🔁 **{char['name']}** (SR) ➔ Max 7 bản! Quy đổi **1 lượt** (+160 💎)")
                         else:
-                            # R không tặng thêm
                             results.append(f"🔁 {char['name']} (R) ➔ Max 7 bản! (Không tặng thêm 💎)")
+
+                        pulled_cards.append({
+                            "id": char_id,
+                            "name": char['name'],
+                            "rarity": rarity,
+                            "game": game,
+                            "image": char.get('image', ''),
+                            "element": char.get('element') or char.get('path') or '',
+                            "copies": copies,
+                            "is_refund": True
+                        })
                     else:
                         await db.execute('''
                             INSERT INTO gacha_inventory (user_id, character_id, game, copies)
                             VALUES ($1, $2, $3, 1)
                             ON CONFLICT(user_id, character_id) DO UPDATE SET copies = gacha_inventory.copies + 1
                         ''', user_id, char_id, game)
-                        
+
                         curr_copy = copies + 1
                         copy_str = f" [C{curr_copy-1}]" if curr_copy > 1 else " [Mới!]"
-                        
+
                         if rarity == 'L':
                             results.append(f"🔥 **{char['name']}** (LIMITED){copy_str} 💠💠💠💠💠💠")
                         elif rarity == 'SSR':
@@ -137,14 +142,52 @@ class GachaCog(commands.Cog):
                             results.append(f"🟨 **{char['name']}** (SR){copy_str} 🌟🌟🌟🌟")
                         else:
                             results.append(f"⬜ {char['name']} (R){copy_str}")
-            
+
+                        pulled_cards.append({
+                            "id": char_id,
+                            "name": char['name'],
+                            "rarity": rarity,
+                            "game": game,
+                            "image": char.get('image', ''),
+                            "element": char.get('element') or char.get('path') or '',
+                            "copies": curr_copy,
+                            "is_refund": False
+                        })
+
             net_cost = cost - refund_primos
             await db.execute('''
                 UPDATE gacha_pity SET pity_4star=$1, pity_5star=$2, total_pulls=total_pulls+$3 WHERE user_id=$4
             ''', pity_4star, pity_5star, amount, user_id)
-            
+
             await db.execute('UPDATE users SET primogems = primogems - $1 WHERE user_id = $2', net_cost, user_id)
-            
+            user_row = await db.fetchrow("SELECT primogems FROM users WHERE user_id = $1", user_id)
+            remaining_primos = user_row['primogems'] if user_row else 0
+
+        return {
+            "success": True,
+            "results": results,
+            "pulled_cards": pulled_cards,
+            "pity_4star": pity_4star,
+            "pity_5star": pity_5star,
+            "refund_primos": refund_primos,
+            "remaining_primos": remaining_primos
+        }
+
+    @commands.command(name="gacha", aliases=["quay", "roll"])
+    async def gacha(self, ctx, amount: int = 1):
+        if amount not in [1, 10]:
+            return await ctx.reply("❌ Cậu chỉ có thể gacha x1 hoặc x10 thôi nhé! (VD: `!gacha 1` hoặc `!gacha 10`)")
+
+        user_id = str(ctx.author.id)
+        res = await self.perform_pulls(user_id, amount)
+        if not res["success"]:
+            return await ctx.reply(f"❌ {res['msg']}")
+
+        results = res["results"]
+        pity_4star = res["pity_4star"]
+        pity_5star = res["pity_5star"]
+        refund_primos = res["refund_primos"]
+
         embed = discord.Embed(
             title=f"🌠 Cầu Nguyện x{amount} Đa Vũ Trụ",
             description="\n".join(results),
@@ -152,10 +195,10 @@ class GachaCog(commands.Cog):
         )
         embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.display_avatar.url)
         embed.set_footer(text=f"Bảo hiểm: SR ({pity_4star}/10) • SSR ({pity_5star}/100)")
-        
+
         if refund_primos > 0:
             embed.add_field(name="💎 Quy Đổi Hoàn Trả", value=f"Đã hoàn trả **{refund_primos:,} Nguyên Thạch** vào túi đồ!", inline=False)
-            
+
         await ctx.reply(embed=embed)
 
 async def setup(bot):

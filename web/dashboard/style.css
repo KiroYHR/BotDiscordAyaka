@@ -982,36 +982,83 @@ body {
     text-shadow: 0 0 2px rgba(0,0,0,0.2);
 }
 
-/* Thẻ chưa sở hữu: làm mờ grayscale & opacity */
+/* Viền mặc định theo BẬC (Hiển thị rõ ràng cho cả thẻ đã có lẫn chưa có) */
+.gacha-card.rarity-l {
+    border: 2px solid #ff0055;
+    box-shadow: 0 0 10px rgba(255, 0, 85, 0.45);
+}
+
+.gacha-card.rarity-ssr {
+    border: 2px solid #f5af19;
+    box-shadow: 0 0 10px rgba(245, 175, 25, 0.45);
+}
+
+.gacha-card.rarity-sr {
+    border: 2px solid #a855f7;
+    box-shadow: 0 0 9px rgba(168, 85, 247, 0.4);
+}
+
+.gacha-card.rarity-r {
+    border: 2px solid #60a5fa;
+    box-shadow: 0 0 8px rgba(96, 165, 250, 0.35);
+}
+
+/* Thẻ chưa sở hữu: giữ nguyên viền bậc, chỉ làm mờ ảnh & hiện ổ khóa */
 .gacha-card.unowned {
-    opacity: 0.38;
-    filter: grayscale(100%);
-    border-color: rgba(0, 0, 0, 0.1);
+    opacity: 0.82;
     transition: all 0.3s ease;
 }
 
+.gacha-card.unowned .card-image-wrapper img {
+    filter: grayscale(85%) contrast(0.85);
+    opacity: 0.55;
+}
+
 .gacha-card.unowned:hover {
-    opacity: 0.75;
-    filter: grayscale(35%);
+    opacity: 0.95;
     transform: translateY(-4px) scale(1.01);
 }
 
-/* Hiệu ứng viền theo bậc khi ĐÃ SỞ HỮU */
+.gacha-card.unowned:hover .card-image-wrapper img {
+    filter: grayscale(40%) contrast(0.95);
+    opacity: 0.8;
+}
+
+.lock-overlay {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background: rgba(0, 0, 0, 0.72);
+    color: #e2e8f0;
+    font-size: 0.68em;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(4px);
+    z-index: 2;
+}
+
+/* Thẻ ĐÃ SỞ HỮU: Phát sáng rực rỡ hơn */
+.gacha-card.owned {
+    opacity: 1;
+}
+
 .gacha-card.owned.rarity-r {
-    border: 2px solid #a0aec0;
-    box-shadow: 0 2px 8px rgba(160, 174, 192, 0.35);
+    border: 2px solid #94a3b8;
+    box-shadow: 0 0 12px rgba(148, 163, 184, 0.6);
 }
 
 .gacha-card.owned.rarity-sr {
     border: 2px solid #ffd700;
-    box-shadow: 0 0 12px rgba(255, 215, 0, 0.45);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.65);
 }
 
-/* Rainbow Animated Border cho SSR */
+/* Rainbow Animated Border cho SSR đã sở hữu */
 .gacha-card.owned.rarity-ssr {
     border-color: transparent;
     position: relative;
-    box-shadow: 0 0 15px rgba(255, 165, 0, 0.5);
+    box-shadow: 0 0 16px rgba(255, 165, 0, 0.6);
 }
 
 .gacha-card.owned.rarity-ssr::before {
@@ -1025,10 +1072,10 @@ body {
     background-size: 400%;
 }
 
-/* Đỏ huyền bí cho bậc L */
+/* Đỏ huyền bí neon cho bậc L đã sở hữu */
 .gacha-card.owned.rarity-l {
     border: 2px solid #ff0055;
-    box-shadow: 0 0 18px rgba(255, 0, 85, 0.75), inset 0 0 8px rgba(255, 0, 85, 0.3);
+    box-shadow: 0 0 20px rgba(255, 0, 85, 0.85), inset 0 0 8px rgba(255, 0, 85, 0.35);
 }
 
 @keyframes glowing-rainbow {

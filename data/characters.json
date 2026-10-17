@@ -37,7 +37,7 @@
             "name": "Aether (Hỏa)",
             "rarity": "L",
             "element": "Hỏa",
-            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/a5/Character_Aether_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/a5/Aether_Icon.png",
             "bio": "Nhà Lữ Hành Aether mang sức mạnh nguyên tố Hỏa từ Teyvat."
         },
         {
@@ -45,7 +45,7 @@
             "name": "Lumine (Hỏa)",
             "rarity": "L",
             "element": "Hỏa",
-            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/a5/Character_Lumine_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/8/80/Lumine_Avatar.png",
             "bio": "Nhà Lữ Hành Lumine mang sức mạnh nguyên tố Hỏa từ Teyvat."
         },
         {
@@ -197,7 +197,7 @@
             "name": "Aether (Thủy)",
             "rarity": "L",
             "element": "Thủy",
-            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/a5/Character_Aether_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/a5/Aether_Icon.png",
             "bio": "Nhà Lữ Hành Aether mang sức mạnh nguyên tố Thủy từ Teyvat."
         },
         {
@@ -205,7 +205,7 @@
             "name": "Lumine (Thủy)",
             "rarity": "L",
             "element": "Thủy",
-            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/a5/Character_Lumine_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/8/80/Lumine_Avatar.png",
             "bio": "Nhà Lữ Hành Lumine mang sức mạnh nguyên tố Thủy từ Teyvat."
         },
         {
@@ -341,7 +341,7 @@
             "name": "Aether (Thảo)",
             "rarity": "L",
             "element": "Thảo",
-            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/a5/Character_Aether_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/a5/Aether_Icon.png",
             "bio": "Nhà Lữ Hành Aether mang sức mạnh nguyên tố Thảo từ Teyvat."
         },
         {
@@ -349,7 +349,7 @@
             "name": "Lumine (Thảo)",
             "rarity": "L",
             "element": "Thảo",
-            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/a5/Character_Lumine_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/8/80/Lumine_Avatar.png",
             "bio": "Nhà Lữ Hành Lumine mang sức mạnh nguyên tố Thảo từ Teyvat."
         },
         {
@@ -445,7 +445,7 @@
             "name": "Aether (Lôi)",
             "rarity": "L",
             "element": "Lôi",
-            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/a5/Character_Aether_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/a5/Aether_Icon.png",
             "bio": "Nhà Lữ Hành Aether mang sức mạnh nguyên tố Lôi từ Teyvat."
         },
         {
@@ -453,7 +453,7 @@
             "name": "Lumine (Lôi)",
             "rarity": "L",
             "element": "Lôi",
-            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/a5/Character_Lumine_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/8/80/Lumine_Avatar.png",
             "bio": "Nhà Lữ Hành Lumine mang sức mạnh nguyên tố Lôi từ Teyvat."
         },
         {
@@ -613,7 +613,7 @@
             "name": "Aether (Phong)",
             "rarity": "L",
             "element": "Phong",
-            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/a5/Character_Aether_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/a5/Aether_Icon.png",
             "bio": "Nhà Lữ Hành Aether mang sức mạnh nguyên tố Phong từ Teyvat."
         },
         {
@@ -621,7 +621,7 @@
             "name": "Lumine (Phong)",
             "rarity": "L",
             "element": "Phong",
-            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/a5/Character_Lumine_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/8/80/Lumine_Avatar.png",
             "bio": "Nhà Lữ Hành Lumine mang sức mạnh nguyên tố Phong từ Teyvat."
         },
         {
@@ -637,7 +637,7 @@
             "name": "Kẻ Lang Thang",
             "rarity": "SR",
             "element": "Phong",
-            "image": "https://static.wikia.nocookie.net/gensin-impact/images/thumb/Character_Ke_lang_thang_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/0/01/Wanderer_Avatar.png",
             "bio": "Đoạn Tuyệt Thế Gian trong Genshin Impact."
         },
         {
@@ -797,7 +797,7 @@
             "name": "Aether (Băng)",
             "rarity": "L",
             "element": "Băng",
-            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/a5/Character_Aether_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/a5/Aether_Icon.png",
             "bio": "Nhà Lữ Hành Aether mang sức mạnh nguyên tố Băng từ Teyvat."
         },
         {
@@ -805,7 +805,7 @@
             "name": "Lumine (Băng)",
             "rarity": "L",
             "element": "Băng",
-            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/a5/Character_Lumine_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/8/80/Lumine_Avatar.png",
             "bio": "Nhà Lữ Hành Lumine mang sức mạnh nguyên tố Băng từ Teyvat."
         },
         {
@@ -973,7 +973,7 @@
             "name": "Aether (Nham)",
             "rarity": "L",
             "element": "Nham",
-            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/a5/Character_Aether_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/a5/Aether_Icon.png",
             "bio": "Nhà Lữ Hành Aether mang sức mạnh nguyên tố Nham từ Teyvat."
         },
         {
@@ -981,7 +981,7 @@
             "name": "Lumine (Nham)",
             "rarity": "L",
             "element": "Nham",
-            "image": "https://static.wikia.nocookie.net/gensin-impact/images/a/a5/Character_Lumine_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/gensin-impact/images/8/80/Lumine_Avatar.png",
             "bio": "Nhà Lữ Hành Lumine mang sức mạnh nguyên tố Nham từ Teyvat."
         },
         {
@@ -1081,7 +1081,7 @@
             "element": "Lượng Tử",
             "path": "Vui Vẻ",
             "faction": "Vũ Trụ",
-            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/thumb/Character_Aeonaha_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/8/89/Character_Trailblazer_%28Destruction%29_Icon.png",
             "bio": "Nhân vật thuộc Vũ Trụ trên bước đường Vui Vẻ trong Honkai: Star Rail."
         },
         {
@@ -1121,7 +1121,7 @@
             "element": "Lượng Tử",
             "path": "Vui Vẻ",
             "faction": "Planarcadia / Công Ty Hành Tinh Hòa Bình",
-            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/thumb/Character_Aventurine_waveflair_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/d/da/Character_Aventurine_Icon.png",
             "bio": "Nhân vật thuộc Planarcadia / Công Ty Hành Tinh Hòa Bình trên bước đường Vui Vẻ trong Honkai: Star Rail."
         },
         {
@@ -1181,7 +1181,7 @@
             "element": "Lượng Tử",
             "path": "Hư Vô",
             "faction": "Thợ Săn Stellaron",
-            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/thumb/Character_Soi_bac_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/a/a3/Character_Silver_Wolf_Icon.png",
             "bio": "Nhân vật thuộc Thợ Săn Stellaron trên bước đường Hư Vô trong Honkai: Star Rail."
         },
         {
@@ -1271,7 +1271,7 @@
             "element": "Vật Lý",
             "path": "Hủy Diệt",
             "faction": "Đội Tàu Astral",
-            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/thumb/Character_Caelus_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/8/89/Character_Trailblazer_%28Destruction%29_Icon.png",
             "bio": "Nhà Khai Phá Caelus bước đi trên Vận Mệnh Hủy Diệt (Vật Lý)."
         },
         {
@@ -1281,7 +1281,7 @@
             "element": "Vật Lý",
             "path": "Hủy Diệt",
             "faction": "Đội Tàu Astral",
-            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/thumb/Character_Stelle_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/c/c3/Character_Trailblazer_%28Preservation%29_Icon.png",
             "bio": "Nhà Khai Phá Stelle bước đi trên Vận Mệnh Hủy Diệt (Vật Lý)."
         },
         {
@@ -1291,7 +1291,7 @@
             "element": "Vật Lý",
             "path": "Bảo Hộ",
             "faction": "Amphoreus / Đội Tàu Astral",
-            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/thumb/Character_Dan_heng_permansor_terrae_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/2/2a/Character_Dan_Heng_%E2%80%A2_Imbibitor_Lunae_Icon.png",
             "bio": "Nhân vật thuộc Amphoreus / Đội Tàu Astral trên bước đường Bảo Hộ trong Honkai: Star Rail."
         },
         {
@@ -1391,7 +1391,7 @@
             "element": "Phong",
             "path": "Ký Ức",
             "faction": "Planarcadia / Penacony",
-            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/thumb/Character_Robin_summeretto_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/7/72/Character_Robin_Icon.png",
             "bio": "Nhân vật thuộc Planarcadia / Penacony trên bước đường Ký Ức trong Honkai: Star Rail."
         },
         {
@@ -1511,7 +1511,7 @@
             "element": "Hỏa",
             "path": "Trí Thức",
             "faction": "Planarcadia / Đội Tàu Astral",
-            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/thumb/Character_Himeko_nova_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/0/00/Character_Himeko_Icon.png",
             "bio": "Nhân vật thuộc Planarcadia / Đội Tàu Astral trên bước đường Trí Thức trong Honkai: Star Rail."
         },
         {
@@ -1531,7 +1531,7 @@
             "element": "Hỏa",
             "path": "Bảo Hộ",
             "faction": "Đội Tàu Astral",
-            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/thumb/Character_Caelus_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/8/89/Character_Trailblazer_%28Destruction%29_Icon.png",
             "bio": "Nhà Khai Phá Caelus bước đi trên Vận Mệnh Bảo Hộ (Hỏa)."
         },
         {
@@ -1541,7 +1541,7 @@
             "element": "Hỏa",
             "path": "Bảo Hộ",
             "faction": "Đội Tàu Astral",
-            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/thumb/Character_Stelle_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/c/c3/Character_Trailblazer_%28Preservation%29_Icon.png",
             "bio": "Nhà Khai Phá Stelle bước đi trên Vận Mệnh Bảo Hộ (Hỏa)."
         },
         {
@@ -1671,7 +1671,7 @@
             "element": "Số Ảo",
             "path": "Vui Vẻ",
             "faction": "Planarcadia / Thợ Săn Stellaron",
-            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/thumb/Character_Soi_bac_lv999_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/a/a3/Character_Silver_Wolf_Icon.png",
             "bio": "Nhân vật thuộc Planarcadia / Thợ Săn Stellaron trên bước đường Vui Vẻ trong Honkai: Star Rail."
         },
         {
@@ -1681,7 +1681,7 @@
             "element": "Số Ảo",
             "path": "Hòa Hợp",
             "faction": "Đội Tàu Astral",
-            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/thumb/Character_Caelus_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/8/89/Character_Trailblazer_%28Destruction%29_Icon.png",
             "bio": "Nhà Khai Phá Caelus bước đi trên Vận Mệnh Hòa Hợp (Số Ảo)."
         },
         {
@@ -1691,7 +1691,7 @@
             "element": "Số Ảo",
             "path": "Hòa Hợp",
             "faction": "Đội Tàu Astral",
-            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/thumb/Character_Stelle_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/c/c3/Character_Trailblazer_%28Preservation%29_Icon.png",
             "bio": "Nhà Khai Phá Stelle bước đi trên Vận Mệnh Hòa Hợp (Số Ảo)."
         },
         {
@@ -1751,7 +1751,7 @@
             "element": "Số Ảo",
             "path": "Hủy Diệt",
             "faction": "Xianzhou \"Luofu\" / Đội Tàu Astral",
-            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/thumb/Character_Dan_heng_am_nguyet_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/2/2a/Character_Dan_Heng_%E2%80%A2_Imbibitor_Lunae_Icon.png",
             "bio": "Nhân vật thuộc Xianzhou \"Luofu\" / Đội Tàu Astral trên bước đường Hủy Diệt trong Honkai: Star Rail."
         },
         {
@@ -1781,7 +1781,7 @@
             "element": "Số Ảo",
             "path": "Săn Bắn",
             "faction": "Đội Tàu Astral",
-            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/thumb/Character_March_7th_san_ban_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/7/7b/Character_March_7th_%28The_Hunt%29_Icon.png",
             "bio": "Nhân vật thuộc Đội Tàu Astral trên bước đường Săn Bắn trong Honkai: Star Rail."
         },
         {
@@ -1841,7 +1841,7 @@
             "element": "Lôi",
             "path": "Vui Vẻ",
             "faction": "Đội Tàu Astral",
-            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/thumb/Character_Caelus_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/8/89/Character_Trailblazer_%28Destruction%29_Icon.png",
             "bio": "Nhà Khai Phá Caelus bước đi trên Vận Mệnh Vui Vẻ (Lôi)."
         },
         {
@@ -1851,7 +1851,7 @@
             "element": "Lôi",
             "path": "Vui Vẻ",
             "faction": "Đội Tàu Astral",
-            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/thumb/Character_Stelle_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/c/c3/Character_Trailblazer_%28Preservation%29_Icon.png",
             "bio": "Nhà Khai Phá Stelle bước đi trên Vận Mệnh Vui Vẻ (Lôi)."
         },
         {
@@ -1931,7 +1931,7 @@
             "element": "Băng",
             "path": "Vui Vẻ",
             "faction": "Công Ty Hành Tinh Hòa Bình",
-            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/thumb/Character_Pearl_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/3/39/Character_The_Herta_Icon.png",
             "bio": "Nhân vật thuộc Công Ty Hành Tinh Hòa Bình trên bước đường Vui Vẻ trong Honkai: Star Rail."
         },
         {
@@ -1951,7 +1951,7 @@
             "element": "Băng",
             "path": "Trí Thức",
             "faction": "Trạm Không Gian Herta / Vũ Trụ",
-            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/thumb/Character_Ai_herta_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/3/39/Character_The_Herta_Icon.png",
             "bio": "Nhân vật thuộc Trạm Không Gian Herta / Vũ Trụ trên bước đường Trí Thức trong Honkai: Star Rail."
         },
         {
@@ -1961,7 +1961,7 @@
             "element": "Băng",
             "path": "Ký Ức",
             "faction": "Đội Tàu Astral",
-            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/thumb/Character_Caelus_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/8/89/Character_Trailblazer_%28Destruction%29_Icon.png",
             "bio": "Nhà Khai Phá Caelus bước đi trên Vận Mệnh Ký Ức (Băng)."
         },
         {
@@ -1971,7 +1971,7 @@
             "element": "Băng",
             "path": "Ký Ức",
             "faction": "Đội Tàu Astral",
-            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/thumb/Character_Stelle_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/houkai-star-rail/images/c/c3/Character_Trailblazer_%28Preservation%29_Icon.png",
             "bio": "Nhà Khai Phá Stelle bước đi trên Vận Mệnh Ký Ức (Băng)."
         },
         {
@@ -2073,7 +2073,7 @@
             "element": "Ether",
             "role": "Proxy",
             "faction": "Random Play / Phaethon",
-            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/9/90/Agent_Wise_Icon.png",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/5/54/Wise_%28White_Day_2023%29_Artwork.png",
             "bio": "Anh trai trong cặp Proxy Phaethon huyền thoại của New Eridu."
         },
         {
@@ -2083,7 +2083,7 @@
             "element": "Ether",
             "role": "Proxy",
             "faction": "Random Play / Phaethon",
-            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/e/ec/Agent_Belle_Icon.png",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/5/5a/Belle_%28Valentine%27s_Day_2023%29_Artwork.png",
             "bio": "Em gái tràn đầy năng lượng trong cặp Proxy Phaethon huyền thoại."
         },
         {
@@ -2183,7 +2183,7 @@
             "element": "Hỏa",
             "role": "Tiên Phong",
             "faction": "Đội Obol",
-            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/thumb/Agent_Orphie_va_magus_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/6/62/Agent_Soldier_11_Icon.png",
             "bio": "Thành viên thuộc Đội Obol (Tiên Phong - Hỏa) tại New Eridu."
         },
         {
@@ -2213,7 +2213,7 @@
             "element": "Điện",
             "role": "Tiên Phong",
             "faction": "Biệt Đội Bạc",
-            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/thumb/Agent_Chien_binh_0_anby_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/b/b1/Agent_Anby_Demara_Icon.png",
             "bio": "Thành viên thuộc Biệt Đội Bạc (Tiên Phong - Điện) tại New Eridu."
         },
         {
@@ -2253,7 +2253,7 @@
             "element": "Hỏa",
             "role": "Tiên Phong",
             "faction": "Đội Obol",
-            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/thumb/Agent_Chien_binh_11_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/6/62/Agent_Soldier_11_Icon.png",
             "bio": "Thành viên thuộc Đội Obol (Tiên Phong - Hỏa) tại New Eridu."
         },
         {
@@ -2273,7 +2273,7 @@
             "element": "Phong",
             "role": "Khống Chế",
             "faction": "Xưởng Flint",
-            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/thumb/Agent_Roxy_ifrita_pryce_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/b/b8/Agent_Luciana_de_Montefio_Icon.png",
             "bio": "Thành viên thuộc Xưởng Flint (Khống Chế - Phong) tại New Eridu."
         },
         {
@@ -2483,7 +2483,7 @@
             "element": "Ether",
             "role": "Chi Viện",
             "faction": "Ngôi Nhà Quái Dị",
-            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/thumb/Agent_Lucia_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/b/b8/Agent_Luciana_de_Montefio_Icon.png",
             "bio": "Thành viên thuộc Ngôi Nhà Quái Dị (Chi Viện - Ether) tại New Eridu."
         },
         {
@@ -2543,7 +2543,7 @@
             "element": "Vật Lý",
             "role": "Mệnh Phá",
             "faction": "Nhà Thỏ Xảo Quyệt",
-            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/thumb/Agent_Anh_sao_billy_kid_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/9/99/Agent_Billy_Kid_Icon.png",
             "bio": "Thành viên thuộc Nhà Thỏ Xảo Quyệt (Mệnh Phá - Vật Lý) tại New Eridu."
         },
         {
@@ -2643,7 +2643,7 @@
             "element": "Hỏa",
             "role": "Chi Viện",
             "faction": "Những Đứa Con Của Calydon",
-            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/thumb/Agent_Lucy_Thumb.png",
+            "image": "https://static.wikia.nocookie.net/zenless-zone-zero/images/b/b8/Agent_Luciana_de_Montefio_Icon.png",
             "bio": "Thành viên thuộc Những Đứa Con Của Calydon (Chi Viện - Hỏa) tại New Eridu."
         },
         {

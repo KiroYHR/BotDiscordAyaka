@@ -211,7 +211,9 @@
                 <div class="gacha-status glass" style="padding: 15px; margin-bottom: 20px; text-align: center;">
                     <h3>Nguyên Thạch Hiện Có: <span id="gacha-primo-count" style="color: #4df8ff; text-shadow: 0 0 8px #4df8ff;">0</span> <i class="fa-solid fa-gem" style="color: #4df8ff; text-shadow: 0 0 8px #4df8ff;"></i></h3>
                     <p style="color: #bbb; font-size: 0.9em; margin-bottom: 15px;">(Dùng lệnh <code>!gacha 1</code> hoặc <code>!gacha 10</code> trên Discord để cầu nguyện đa vũ trụ)</p>
-                    <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                    <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+                        <button id="btn-roll-1" class="btn-primary" onclick="rollGachaWeb(1)" style="background: linear-gradient(135deg, #4facfe, #00f2fe); color: #0d1117; font-weight: bold;"><i class="fa-solid fa-wand-magic-sparkles"></i> Cầu Nguyện x1 (160 💎)</button>
+                        <button id="btn-roll-10" class="btn-primary" onclick="rollGachaWeb(10)" style="background: linear-gradient(135deg, #ff0844, #ffb199); color: #fff; font-weight: bold;"><i class="fa-solid fa-sparkles"></i> Cầu Nguyện x10 (1600 💎)</button>
                         <button id="btn-claim-daily" class="btn-primary" style="background: linear-gradient(45deg, #1d976c, #93f9b9); color: #000; font-weight: bold;"><i class="fa-solid fa-calendar-day"></i> Điểm Danh Ngày (+160 💎)</button>
                         <button id="btn-claim-monthly" class="btn-primary" style="background: linear-gradient(45deg, #f12711, #f5af19); color: #fff; font-weight: bold;"><i class="fa-solid fa-gift"></i> Quà Tháng (+1600 💎)</button>
                     </div>
