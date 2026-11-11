@@ -18,10 +18,19 @@ const RARITY_WEIGHT = {
     'R': 4
 };
 
+function normalizeCharacterId(charId) {
+    if (!charId) return charId;
+    if (charId.startsWith('gs_aether_')) return 'gs_aether';
+    if (charId.startsWith('gs_lumine_')) return 'gs_lumine';
+    if (charId.startsWith('hsr_caelus_')) return 'hsr_caelus';
+    if (charId.startsWith('hsr_stelle_')) return 'hsr_stelle';
+    return charId;
+}
+
 async function loadGachaCollection() {
     try {
         // 1. Tải danh sách nhân vật mẫu
-        const charRes = await fetch('/data/characters.json');
+        const charRes = await fetch('/data/characters.json?v=2');
         if (charRes.ok) {
             gachaState.charData = await charRes.json();
         }
@@ -38,7 +47,8 @@ async function loadGachaCollection() {
             const collection = data.collection || [];
             gachaState.ownedMap = {};
             collection.forEach(item => {
-                gachaState.ownedMap[item.character_id] = item.copies;
+                const normId = normalizeCharacterId(item.character_id);
+                gachaState.ownedMap[normId] = Math.min(7, (gachaState.ownedMap[normId] || 0) + (item.copies || 0));
             });
         }
 
@@ -185,9 +195,10 @@ function renderCurrentGachaView() {
         const starsStr = '★'.repeat(starsCount);
         const tagText = char.element || char.path || char.role || '';
 
+        const fallbackImg = char.fallback_image || 'https://cdn.discordapp.com/embed/avatars/0.png';
         card.innerHTML = `
             <div class="card-image-wrapper">
-                <img src="${char.image}" alt="${char.name}" loading="lazy" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                <img src="${char.image}" alt="${char.name}" loading="lazy" data-fallback="${fallbackImg}" onerror="if(this.src!==this.dataset.fallback){this.src=this.dataset.fallback;}else{this.src='https://cdn.discordapp.com/embed/avatars/0.png';}">
                 ${isOwned 
                     ? `<div class="copies-badge">${copies >= 7 ? 'MAX C6' : `C${copies-1}`}</div>` 
                     : `<div class="lock-overlay"><i class="fa-solid fa-lock"></i> Chưa có</div>`

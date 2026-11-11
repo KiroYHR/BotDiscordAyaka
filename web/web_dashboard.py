@@ -318,7 +318,18 @@ class WebDashboard:
         if db_manager.pool:
             async with db_manager.pool.acquire() as db:
                 rows = await db.fetch("SELECT character_id, game, copies FROM gacha_inventory WHERE user_id = $1", str(user_id))
-                collection = [dict(r) for r in rows]
+                merged = {}
+                for r in rows:
+                    cid = r['character_id']
+                    if cid.startswith('gs_aether_'): cid = 'gs_aether'
+                    elif cid.startswith('gs_lumine_'): cid = 'gs_lumine'
+                    elif cid.startswith('hsr_caelus_'): cid = 'hsr_caelus'
+                    elif cid.startswith('hsr_stelle_'): cid = 'hsr_stelle'
+                    if cid in merged:
+                        merged[cid]['copies'] = min(7, merged[cid]['copies'] + r['copies'])
+                    else:
+                        merged[cid] = {'character_id': cid, 'game': r['game'], 'copies': min(7, r['copies'])}
+                collection = list(merged.values())
                 
                 user_row = await db.fetchrow("SELECT primogems FROM users WHERE user_id = $1", str(user_id))
                 primos = user_row['primogems'] if user_row else 0

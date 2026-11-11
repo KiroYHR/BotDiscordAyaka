@@ -97,8 +97,15 @@ class GachaCog(commands.Cog):
                     char_id = char['id']
                     game = char['game']
 
-                    inv_row = await db.fetchrow("SELECT copies FROM gacha_inventory WHERE user_id=$1 AND character_id=$2", user_id, char_id)
-                    copies = inv_row['copies'] if inv_row else 0
+                    if char_id in ('gs_aether', 'gs_lumine', 'hsr_caelus', 'hsr_stelle'):
+                        inv_row = await db.fetchrow(
+                            "SELECT COALESCE(SUM(copies), 0) AS copies FROM gacha_inventory WHERE user_id=$1 AND (character_id=$2 OR character_id LIKE $3)",
+                            user_id, char_id, f"{char_id}_%"
+                        )
+                        copies = min(7, int(inv_row['copies'])) if inv_row else 0
+                    else:
+                        inv_row = await db.fetchrow("SELECT copies FROM gacha_inventory WHERE user_id=$1 AND character_id=$2", user_id, char_id)
+                        copies = inv_row['copies'] if inv_row else 0
 
                     if copies >= 7:
                         # Hoàn trả khi đã max C6 (7 bản): R = 0, SR = 160, SSR = 480, L = 800
